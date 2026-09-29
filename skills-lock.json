@@ -1,0 +1,191 @@
+{
+  "version": 1,
+  "skills": {
+    "add-3d-assets": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/add-3d-assets/SKILL.md",
+      "computedHash": "2517ddf3019263138e300dbcc8687c3e62628b3bd09457cf76f549910d3176bc"
+    },
+    "add-assets": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/add-assets/SKILL.md",
+      "computedHash": "78f055d138f8da6c80189c498f5cb762c722cd0e25dde48a5136d64a2b3ad5ea"
+    },
+    "add-audio": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/add-audio/SKILL.md",
+      "computedHash": "73d47f8498375e2719301c17a5d22276858ccc3e91cccc31bd0b04e41a9b1771"
+    },
+    "add-feature": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/add-feature/SKILL.md",
+      "computedHash": "978af2951e2a53b990749c8e575a5820d3e8e0570b35a385c89448470a42d619"
+    },
+    "add-multiplayer": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/add-multiplayer/SKILL.md",
+      "computedHash": "dfa4366a29130703a73570cfdd96d547ea897a19dba561500985d5211ae519c8"
+    },
+    "design-game": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/design-game/SKILL.md",
+      "computedHash": "81269ceaa9f5797ad4d8510d81090845be8ce703ae7e192472a7e3cd419e7cd2"
+    },
+    "fetch-tweet": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/fetch-tweet/SKILL.md",
+      "computedHash": "3497d28d74d9511bc2f284a349139cede132ad954fd434af0dbaafa78047bf35"
+    },
+    "game-3d-assets": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/game-3d-assets/SKILL.md",
+      "computedHash": "150d4c40f89f4d0ba19fd3e2108e17c964a0cda27803f4c3ec595f49b25f97ec"
+    },
+    "game-architecture": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/game-architecture/SKILL.md",
+      "computedHash": "e7d56f1b637bca15a2f8c35c1780225f97e8df99fad39ae6377398dfeb9178a0"
+    },
+    "game-assets": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/game-assets/SKILL.md",
+      "computedHash": "11874de3054e82b21db3b090e45f65555b7540b22b8de98f692a38d7324acda8"
+    },
+    "game-audio": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/game-audio/SKILL.md",
+      "computedHash": "eb2ba3da86b490c299638b201efbdc014ca6f45108e5cae9b7ebcdae7c01c22e"
+    },
+    "game-deploy": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/game-deploy/SKILL.md",
+      "computedHash": "331c802655e52957dd6c76ab75cec3afc309e311efbae8f3a42ca66113e09763"
+    },
+    "game-designer": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/game-designer/SKILL.md",
+      "computedHash": "428491168b0dfcb32eb58e71b76ffbc7988a3558d5c2a554c90ef3d0e9ddb993"
+    },
+    "game-qa": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/game-qa/SKILL.md",
+      "computedHash": "db82414223e6c25758e3861c16b09ffdb2a3e6c93baedf28f0631d116d6b45e9"
+    },
+    "improve-game": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/improve-game/SKILL.md",
+      "computedHash": "b07a0967b4de766eff01a2e5009e7f1a39c392399d37200d48f3136b3fa0f4d2"
+    },
+    "make-game": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/make-game/SKILL.md",
+      "computedHash": "11fbc4f4334e54918b5557a05bf02a60c64f3045df54d6787f0a70506dde9882"
+    },
+    "meshyai": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/meshyai/SKILL.md",
+      "computedHash": "a4e9aebf5d20e00882e60880fc9f85c088e31bbe531a2f7bfb253531479c8f35"
+    },
+    "monetize-game": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/monetize-game/SKILL.md",
+      "computedHash": "96a2e8d61ca1339cd82ff3694f704535b60700111a0cd6fc821fdabf5613525b"
+    },
+    "phaser": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/phaser/SKILL.md",
+      "computedHash": "db2dacd817400cb9f5f87132081909ed8d3a11663c0ee126562b8d7204b097c2"
+    },
+    "promo-video": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/promo-video/SKILL.md",
+      "computedHash": "257f1562d7f30fb0a72b60f94e5eac84777347fd3df32ab381f2bac14ece1238"
+    },
+    "qa-game": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/qa-game/SKILL.md",
+      "computedHash": "91a3634eaddb74be97404a3ad702cdd3a1abc71b209c80f57c407ecc4a556617"
+    },
+    "quick-game": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/quick-game/SKILL.md",
+      "computedHash": "fc1448a55ed316a9c64073338f0b22102cac6a75c6e4731c405d8bc7dd8c6413"
+    },
+    "record-promo": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/record-promo/SKILL.md",
+      "computedHash": "53057c8a36069d20990f57354254c0de49a1450a1732d5c5575473299b1a2331"
+    },
+    "retrodiffusion": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/retrodiffusion/SKILL.md",
+      "computedHash": "c2d91fdae5bf711d5b423eed1a1b7bba132cdfceddb4ffca54a8a9a7249e5b48"
+    },
+    "review-game": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/review-game/SKILL.md",
+      "computedHash": "3ebb884d4a2631aa942144ab9550a408c60694382cc722d36ca620c9dbfc2790"
+    },
+    "scaffold-gateables": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/scaffold-gateables/SKILL.md",
+      "computedHash": "10014851c07760dee7646449a91ee5fcdb1907f72f04d19e90000761eec0d9da"
+    },
+    "threejs-game": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-game/SKILL.md",
+      "computedHash": "a6211f9e3116bfe784f6181615e16b50e02c2c473ad8dc5a053f70252436ee3b"
+    },
+    "threejs-perf": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-perf/SKILL.md",
+      "computedHash": "c3c91183ed1d5e00e45b955de49202b7f6ce3fb9cf3fa79ef86b9b0478ee1a22"
+    },
+    "use-template": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/use-template/SKILL.md",
+      "computedHash": "864029912216fb5859bf5534ecf5e08ef5685a2c5b867c281d8894db619f0c4c"
+    },
+    "viral-game": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/viral-game/SKILL.md",
+      "computedHash": "c3cb1b9cefc82d21585a298e17e1281f211db4a0e2733974240c22dd43214aea"
+    },
+    "worldlabs": {
+      "source": "playableintelligence/game-creator",
+      "sourceType": "github",
+      "skillPath": "skills/worldlabs/SKILL.md",
+      "computedHash": "ba6f7817428861c753b190bb39eb7a4facd1289ca6d489911eb8cd71896c7630"
+    }
+  }
+}
