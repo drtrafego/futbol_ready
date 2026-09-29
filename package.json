@@ -1,38 +1,19 @@
 {
-  "name": "jogo-bernardo",
-  "version": "1.0.0",
+  "name": "arena-de-bairro",
+  "version": "0.3.0",
   "private": true,
+  "type": "module",
+  "description": "Arena de Bairro: visual ilustrado aprovado integrado ao prototipo 2.5D jogavel.",
+  "engines": {
+    "node": ">=22.16.0"
+  },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "test": "vitest run"
-  },
-  "dependencies": {
-    "@hookform/resolvers": "^3.9.1",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.469.0",
-    "motion": "^11.15.0",
-    "next": "^15.1.7",
-    "phaser": "^4.2.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-hook-form": "^7.54.2",
-    "tailwind-merge": "^2.6.0",
-    "zod": "^3.24.1",
-    "zustand": "^5.0.2"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.0.0",
-    "@types/node": "^20.0.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "eslint": "^9.0.0",
-    "eslint-config-next": "^15.1.7",
-    "tailwindcss": "^4.0.0",
-    "typescript": "^5.0.0",
-    "vitest": "^2.1.8"
-  },
-  "packageManager": "pnpm@10.33.0"
+    "dev": "node tools/server.mjs",
+    "dev:lan": "node tools/server.mjs --host=0.0.0.0",
+    "build": "node tools/build.mjs",
+    "preview": "node tools/server.mjs --dir=dist --port=4173",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node tools/check.mjs",
+    "verify": "npm run check && npm test && npm run build"
+  }
 }
