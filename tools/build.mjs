@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const order=['config','navigation','simulation','save','scene','render','input','ui','main'];
+const order=['config','competition','roster','facilities','profile','navigation','simulation','save','scene','render','input','ui','main'];
 const pieces=[];
 for(const name of order){
  const source=await readFile(path.join(root,'src',name+'.js'),'utf8');

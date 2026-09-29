@@ -8,6 +8,60 @@
   <title>Arena de Bairro — Arte integrada 0.3</title>
   <style>
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#173e35;font-synthesis:none;--ink:#173e35;--cream:#f8f7e9;--lime:#ddeb85;--gold:#f4d37f}*{box-sizing:border-box}body{margin:0;overflow:hidden;overscroll-behavior:none;background:#abc69b}button{font:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:focus-visible{outline:3px solid #437eb8;outline-offset:4px}button:disabled{cursor:default}#game{display:block;position:fixed;inset:0;touch-action:none}#ui{position:fixed;inset:0;pointer-events:none;user-select:none}#ui button,#joystick{pointer-events:auto}.topbar{position:absolute;top:max(20px,env(safe-area-inset-top));left:26px;right:26px;display:flex;align-items:center;gap:16px}.brand{display:flex;gap:12px;align-items:center;margin-right:auto}.crest{display:grid;place-content:center;line-height:1.1;text-align:center;font-size:27px;font-weight:950;width:50px;height:60px;background:var(--ink);color:var(--lime);clip-path:polygon(0 0,100% 0,100% 72%,50% 100%,0 72%);border-top:4px solid var(--lime)}.crest span{font-size:10px;letter-spacing:3px}h1{font-size:25px;margin:0;font-weight:950;letter-spacing:-1px;line-height:.98}h1 span{display:block;font-size:14px;letter-spacing:1.8px;font-weight:800}.brand p{font-size:8px;letter-spacing:2.4px;font-weight:800;margin:7px 0 0}.wallet{background:var(--ink);color:var(--cream);padding:11px 23px 11px 13px;display:flex;align-items:center;gap:12px;border-radius:17px;box-shadow:0 5px 0 #153d3520;min-width:130px}.wallet small{font-size:8px;font-weight:800;letter-spacing:2px;display:block;opacity:.75}.wallet strong{font-size:27px;line-height:1.1;font-variant-numeric:tabular-nums}.coin{color:var(--gold);font-size:37px;line-height:1;text-shadow:2px 3px #aa842d}.icon-button{width:48px;height:48px;border:1px solid #173e3533;border-radius:15px;background:#f6f7e8d9;font-size:23px;color:var(--ink)}.mission-card{position:absolute;left:26px;top:116px;width:260px;background:#f8f7e9f0;padding:20px;border-radius:18px;border:1px solid #fff8;box-shadow:0 10px 40px #153d350d}.eyebrow{font-size:8px;letter-spacing:1.5px;font-weight:900;display:flex;align-items:center;gap:6px;color:#627462}.live-dot{height:6px;width:6px;border-radius:50%;background:#5c9465}.eyebrow>span:last-child{margin-left:auto}.mission-card h2{font-size:22px;line-height:1.08;letter-spacing:-.7px;margin:13px 0 9px}.mission-card p{font-size:12px;line-height:1.55;margin:0 0 15px;color:#596e5e}.progress-track{height:4px;border-radius:4px;background:#e0e5cf;overflow:hidden}.progress-track>div{height:100%;width:0;background:#527d50;transition:width .2s}.text-button{background:none;border:0;display:flex;justify-content:space-between;align-items:center;width:100%;padding:13px 0 0;color:var(--ink);font-size:10px;letter-spacing:.7px;font-weight:850;min-height:38px}.text-button span{font-size:20px}.text-button:disabled{opacity:.4}.stats-strip{position:absolute;right:27px;top:112px;display:flex;gap:17px;align-items:center;border-bottom:1px solid #173e3530;padding-bottom:9px}.stats-strip span{font-size:8px;letter-spacing:1px;color:#375d48;font-weight:800}.stats-strip strong{display:block;font-size:17px;letter-spacing:0;margin-top:4px;font-variant-numeric:tabular-nums}.bottom-ui{position:absolute;left:26px;right:26px;bottom:max(19px,env(safe-area-inset-bottom));display:flex;align-items:flex-end;gap:20px}.control-wrap{display:flex;align-items:center;flex-direction:column;gap:8px}.control-wrap>span{font-size:8px;letter-spacing:1.4px;font-weight:800;opacity:.7}#joystick{width:116px;height:116px;border-radius:50%;background:#f8f7e947;border:1.5px solid #173e3524;display:grid;place-items:center;touch-action:none;position:relative;box-shadow:inset 0 0 0 14px #f8f7e926}.stick-knob{width:48px;height:48px;border-radius:50%;background:#173e35d9;border:2px solid #e5efb9;box-shadow:0 4px 10px #173e3533;position:absolute}.stick-cross{font-size:75px;color:#173e3522}.control-hint{padding-bottom:25px;display:flex;align-items:center;flex-direction:column;gap:4px}.control-hint span{display:flex;gap:4px}kbd{display:inline-grid;place-items:center;font-family:inherit;font-size:10px;font-weight:800;border:1px solid #173e3550;border-radius:4px;width:22px;height:21px;background:#f8f7e947}.control-hint p{font-size:9px;opacity:.7;margin:4px 0}.bottom-actions{display:flex;gap:9px;flex-direction:column;align-items:stretch;margin-left:auto;min-width:181px}.bottom-actions small{text-align:center;font-size:7px;letter-spacing:1.1px;color:#244e3c;max-width:190px}.primary-button{border:0;background:var(--ink);color:var(--lime);border-radius:13px;padding:17px 23px;font-size:12px;font-weight:900;letter-spacing:1.1px;box-shadow:0 4px 0 #102d26;min-height:48px}.primary-button:hover{background:#255346}.primary-button:active{transform:translateY(2px);box-shadow:0 2px 0 #102d26}.primary-button span{font-size:20px;margin-right:8px}.secondary-button{border:1px solid #173e3535;background:#f8f7e9df;color:var(--ink);border-radius:12px;padding:13px 17px;font-size:10px;font-weight:850;letter-spacing:.6px;min-height:44px}.danger-button{border:1px solid #b4746135;background:#faf0e8;color:#a35340;border-radius:12px;padding:13px 17px;font-size:10px;font-weight:800;letter-spacing:.5px;min-height:44px}#toast{position:absolute;left:50%;top:94px;transform:translateX(-50%);padding:12px 20px;border-radius:14px;background:#173e35f0;color:#f4e3a6;font-size:12px;text-align:center;max-width:min(530px,86vw);box-shadow:0 4px 15px #173e3520;z-index:5}dialog{border:1px solid #e8ebd8;border-radius:25px;background:var(--cream);color:var(--ink);padding:30px;width:min(760px,calc(100vw - 24px));max-height:calc(100dvh - 36px);box-shadow:0 25px 100px #092b3955;overscroll-behavior:contain}dialog::backdrop{background:#143b365e;backdrop-filter:blur(5px)}.dialog-eyebrow{font-size:9px;font-weight:850;letter-spacing:1.6px;color:#6a7d60}.dialog-heading{display:flex;align-items:center;justify-content:space-between;gap:20px}.dialog-heading h2{font-size:29px;letter-spacing:-1px;margin:10px 0 5px;line-height:1.04}.close-button{border:0;border-radius:50%;width:44px;height:44px;background:#e9eddc;color:#47654d;font-size:30px;flex-shrink:0}.dialog-subtitle,dialog>p{font-size:12px;line-height:1.6;color:#697864}.dialog-footnote{font-size:10px;color:#67775b;margin:18px 0 0}#upgrade-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:21px}.upgrade-card{border:1px solid #d9e1ca;border-radius:14px;padding:16px;background:#fffdf7;display:grid;grid-template-columns:35px 1fr;gap:5px 10px}.upgrade-icon{font-size:25px;grid-row:1/3}.upgrade-card h3{font-size:13px;letter-spacing:-.3px;margin:0}.upgrade-card p{font-size:10px;line-height:1.45;margin:0;color:#74806d;min-height:28px}.upgrade-card button{grid-column:1/-1;background:#dfecac;color:#26432d;border:0;border-radius:9px;min-height:38px;font-size:10px;font-weight:850;margin-top:9px}.upgrade-card button:disabled{background:#edf0e5;color:#929d85}.upgrade-level{font-weight:600;font-size:9px;color:#819173;margin-left:4px}.welcome-dialog{max-width:550px;text-align:center;padding:31px 38px}.welcome-mark{font-size:48px;margin:13px 0}.welcome-dialog h2{font-size:57px;letter-spacing:-3px;font-weight:900;line-height:.94;margin:12px 0 21px}.welcome-dialog em{font-style:normal;color:#7b994e}.welcome-dialog>p{max-width:385px;margin:0 auto 24px;line-height:1.65}.welcome-steps{display:grid;grid-template-columns:1fr 1fr;text-align:left;gap:15px 10px;margin:25px 0;font-size:10px;font-weight:750}.welcome-steps b{display:inline-block;color:#719355;margin-right:8px;border-bottom:1px solid #d5dfc1;padding-bottom:3px}.welcome-dialog>.primary-button{width:100%;margin:3px 0 18px}.welcome-dialog>small{font-size:9px;color:#859079}.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:23px 0}.menu-grid button:first-child{grid-column:1/-1}.help-box{background:#eaf0dc;padding:18px;border-radius:15px;font-size:12px}.help-box p{font-size:11px;line-height:1.55;color:#5f7056;margin-bottom:0}[hidden]{display:none!important}.fatal-error{position:absolute;inset:25%;background:#fff4e2;padding:30px;border-radius:20px;color:#5b4734;z-index:100}.saved-warn{color:#9c4d35!important}@media(min-width:1600px){.mission-card{width:285px;top:135px;padding:24px}.mission-card h2{font-size:26px}.stats-strip{top:130px}.topbar{top:28px}}@media(max-width:799px){.topbar{left:16px;right:16px;top:max(13px,env(safe-area-inset-top));gap:9px}.crest{width:37px;height:45px;font-size:20px}.crest span{font-size:7px}.brand{gap:8px}h1{font-size:19px}h1 span{font-size:10px;letter-spacing:1.2px}.brand p{display:none}.wallet{padding:8px 12px 8px 9px;gap:7px;min-width:90px;border-radius:13px}.wallet small{font-size:6px;letter-spacing:1.2px}.wallet strong{font-size:22px}.coin{font-size:27px}.icon-button{width:39px;height:39px;border-radius:11px;font-size:20px}.mission-card{left:16px;right:16px;top:82px;width:auto;padding:13px 15px;border-radius:14px}.mission-card h2{font-size:17px;margin:8px 0 5px}.mission-card p{font-size:10px;margin:0 0 9px;line-height:1.4;padding-right:13px}.eyebrow{font-size:7px}.text-button{font-size:8px;padding-top:5px;min-height:29px}.text-button span{font-size:17px}.stats-strip{right:16px;left:16px;top:259px;justify-content:center;border:0;background:#eaf0dca8;border-radius:9px;gap:20px;padding:6px 10px;pointer-events:none}.stats-strip span{font-size:7px;display:flex;align-items:center;gap:5px}.stats-strip strong{font-size:12px;display:inline;margin:0}.bottom-ui{left:16px;right:16px;bottom:max(15px,env(safe-area-inset-bottom));gap:8px}.control-hint{display:none}#joystick{width:105px;height:105px}.control-wrap>span{font-size:6px;letter-spacing:1px}.bottom-actions{min-width:144px;gap:8px}.bottom-actions>.primary-button{padding:13px 15px;font-size:11px}.bottom-actions>.secondary-button{padding:9px;font-size:8px;min-height:36px}.bottom-actions small{font-size:6px;max-width:150px}#toast{top:292px;padding:9px 14px;font-size:10px;min-width:220px}.welcome-dialog{padding:26px 23px}.welcome-dialog h2{font-size:48px}.welcome-dialog>p{font-size:11px}.welcome-steps{gap:13px 6px;font-size:9px}.dialog-heading h2{font-size:23px}dialog{padding:22px}#upgrade-grid{grid-template-columns:1fr}.upgrade-card p{min-height:0}.menu-grid{grid-template-columns:1fr;gap:9px}.menu-grid button{font-size:10px}}@media(max-height:600px){.mission-card{top:84px;padding:12px;width:245px;right:auto}.mission-card h2{font-size:16px}.mission-card p{font-size:9px;margin-bottom:6px}.stats-strip{top:90px;left:auto;right:20px;background:none}.bottom-ui{bottom:9px}#joystick{width:82px;height:82px}.control-wrap>span,.control-hint{display:none}.welcome-dialog{padding:20px 30px}.welcome-dialog h2{font-size:35px}.welcome-mark{display:none}.welcome-dialog>p{font-size:10px;margin-bottom:10px}.welcome-steps{margin:13px 0}.welcome-dialog>.primary-button{margin-bottom:9px}#toast{top:70px}.bottom-actions{gap:5px}}
+/* Gestão Esportiva, Campeonatos e Perfis */
+.league-pill{display:flex;align-items:center;gap:10px;background:var(--ink);color:var(--cream);padding:7px 16px;border-radius:16px;cursor:pointer;pointer-events:auto;box-shadow:0 4px 10px #0b2c2533;border:1px solid #7cb98c44}
+.league-pill small{font-size:8px;font-weight:800;letter-spacing:1.5px;display:block;opacity:.8}
+.league-pill strong{font-size:16px;line-height:1.1;letter-spacing:-.5px}
+.league-badge-icon{font-size:24px}
+.dock-sports{background:#23584855!important;border-color:#a5d89855!important;color:#ecf8db!important}
+.dock-sports:hover{background:#2f6e5a88!important}
+.sports-dialog{width:min(880px,calc(100vw - 20px));max-height:calc(100dvh - 30px);overflow-y:auto}
+.team-summary-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;background:#eef3e2;padding:12px 16px;border-radius:14px;margin:15px 0}
+.team-summary-bar small{font-size:8px;font-weight:800;letter-spacing:1px;color:#49614c;display:block}
+.team-summary-bar strong{font-size:18px;color:var(--ink);display:block;margin-top:2px}
+.team-summary-bar select{margin-top:4px;padding:6px;border-radius:8px;border:1px solid #b8cbaf;background:#fff;font-weight:700;color:var(--ink);width:100%}
+.section-title{font-size:14px;margin:14px 0 8px;color:#284f3c;font-weight:900;letter-spacing:-.3px}
+.players-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.player-card{border:1px solid #d4dfc7;border-radius:12px;background:#fffdf7;padding:12px;display:flex;flex-direction:column;gap:6px;position:relative}
+.player-card.is-captain{border-color:#e4ba43;box-shadow:0 0 0 1px #e4ba43;background:#fffef5}
+.player-card-header{display:flex;align-items:center;justify-content:space-between}
+.badge-pos{font-size:10px;font-weight:900;padding:2px 7px;border-radius:6px;color:#fff}
+.pos-GOL{background:#bd7818}.pos-DEF{background:#2979ad}.pos-MEI{background:#299a5c}.pos-ATA{background:#c0392b}
+.player-name{font-size:13px;font-weight:850;color:var(--ink);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-stats{font-size:10px;color:#5a6d59;display:flex;gap:10px}
+.player-stats strong{color:#153d35;font-size:13px}
+.player-actions{display:flex;gap:6px;margin-top:4px}
+.player-actions button{flex:1;padding:7px;border-radius:8px;font-size:9px;font-weight:800;border:0}
+.btn-train{background:#38855a;color:#fff}
+.btn-train:disabled{background:#e2e6d8;color:#9aa594}
+.btn-sub{background:#e7ede0;color:#244c35;border:1px solid #b9ccb3!important}
+.btn-cap{background:#f9ecbc;color:#856209}
+.league-action-strip{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:#eef3e2;padding:14px 18px;border-radius:14px;margin:15px 0}
+.league-action-strip small{font-size:8px;font-weight:800;letter-spacing:1px;color:#49614c;display:block}
+.league-action-strip strong{font-size:17px;color:var(--ink)}
+.table-container{overflow-x:auto;border-radius:14px;border:1px solid #d4dfc7;margin-top:12px}
+.league-table{width:100%;border-collapse:collapse;text-align:center;font-size:12px;background:#fffdf7}
+.league-table th{background:#e8eee0;color:#35533c;padding:10px 8px;font-size:10px;font-weight:900;letter-spacing:.5px}
+.league-table td{padding:10px 8px;border-top:1px solid #ebf0e4}
+.league-table td:nth-child(2){text-align:left;font-weight:800}
+.league-table tr.is-player{background:#ecf8e5;font-weight:900}
+.league-table tr.g2 td:first-child{border-left:4px solid #27ae60}
+.league-table tr.z2 td:first-child{border-left:4px solid #e74c3c}
+.league-legend{display:flex;gap:18px;margin-top:10px;font-size:10px;color:#556956;font-weight:700}
+.legend-box{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:middle;margin-right:4px}
+.legend-box.g2{background:#27ae60}.legend-box.z2{background:#e74c3c}
+.results-banner{background:#f3f7ea;border:1px solid #c9d8bd;border-radius:12px;padding:12px 16px;margin-top:15px}
+.results-banner h4{margin:0 0 8px;font-size:12px;color:#28523c}
+.round-result-item{font-size:11px;padding:4px 0;display:flex;justify-content:space-between;border-bottom:1px dashed #d5e0cb}
+.youth-action-bar,.market-action-bar{display:flex;align-items:center;justify-content:space-between;background:#eef3e2;padding:14px 18px;border-radius:14px;margin:15px 0}
+.youth-action-bar small,.market-action-bar small{font-size:8px;font-weight:800;letter-spacing:1px;color:#49614c;display:block}
+.youth-action-bar strong,.market-action-bar strong{font-size:18px;color:var(--ink)}
+.youth-grid,.market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.youth-card,.market-card{border:1px solid #d4dfc7;border-radius:12px;background:#fffdf7;padding:14px;display:flex;flex-direction:column;gap:7px}
+.profile-card{background:#e8f0dc;border:1px solid #bdd0b1;padding:12px 16px;border-radius:14px;margin:14px 0}
+.profile-card small{font-size:8px;font-weight:850;letter-spacing:1px;color:#4c674b}
+.profile-row{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.profile-row strong{font-size:16px;color:#123f36}
 
 </style>
   <style>
@@ -83,6 +137,10 @@ h1{font-size:29px;letter-spacing:-1px;font-weight:950;line-height:.9}h1 span{fon
   <div id="ui">
     <header class="topbar">
       <div class="brand"><span class="crest" aria-hidden="true">A<span>FC</span></span><div><h1>ARENA <span>DE BAIRRO</span></h1><p>DO CAMPO AO SONHO</p></div></div>
+      <div class="league-pill" id="header-league-pill" role="button" tabindex="0" title="Ver Campeonato e Classificação">
+        <span class="league-badge-icon" id="header-div-badge">🥉</span>
+        <div><small id="header-div-name">SÉRIE D</small><strong id="header-team-strength">FORÇA 46</strong></div>
+      </div>
       <div class="wallet"><span class="coin" aria-hidden="true">●</span><div><small>CARTEIRA</small><strong id="wallet">0</strong></div><button id="wallet-upgrades" class="wallet-add" aria-label="Abrir melhorias">+</button></div>
       <button class="icon-button" id="menu-button" aria-label="Abrir menu e pausar">☰</button>
     </header>
@@ -100,7 +158,17 @@ h1{font-size:29px;letter-spacing:-1px;font-weight:950;line-height:.9}h1 span{fon
       <div class="control-hint"><kbd>W</kbd><span><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span><p>ou toque no destino</p></div>
       <div class="bottom-actions"><button id="view-button" class="secondary-button">VISÃO GERAL</button><button id="upgrade-button" class="primary-button"><span>↗</span> EVOLUIR</button><small id="save-status">SAVE LOCAL · SEM NUVEM</small></div>
     </div>
-    <nav class="travel-dock" aria-label="Destinos rápidos"><button data-travel="supply"><span aria-hidden="true">▣</span>Depósito</button><button data-travel="field0"><span aria-hidden="true">⚽</span>Campo 1</button><button data-travel="gate"><span aria-hidden="true">▤</span>Ingressos</button><button data-travel="cash"><span aria-hidden="true">◉</span>Caixa</button><button data-travel="field1" id="travel-field2"><span aria-hidden="true">⚑</span>Campo 2</button></nav>
+    <nav class="travel-dock" aria-label="Destinos rápidos">
+      <button data-travel="supply"><span aria-hidden="true">▣</span>Depósito</button>
+      <button data-travel="field0"><span aria-hidden="true">⚽</span>Campo 1</button>
+      <button data-travel="gate"><span aria-hidden="true">▤</span>Ingressos</button>
+      <button data-travel="cash"><span aria-hidden="true">◉</span>Caixa</button>
+      <button data-travel="field1" id="travel-field2"><span aria-hidden="true">⚑</span>Campo 2</button>
+      <button id="btn-dock-team" class="dock-sports"><span aria-hidden="true">👥</span>Elenco</button>
+      <button id="btn-dock-league" class="dock-sports"><span aria-hidden="true">🏆</span>Tabela</button>
+      <button id="btn-dock-youth" class="dock-sports"><span aria-hidden="true">🌟</span>Base</button>
+      <button id="btn-dock-market" class="dock-sports"><span aria-hidden="true">🤝</span>Mercado</button>
+    </nav>
   </div>
   <dialog id="welcome-dialog" class="welcome-dialog">
     <div class="dialog-eyebrow">EDIÇÃO VISUAL 0.3 · ARENA DE BAIRRO</div>
@@ -117,9 +185,121 @@ h1{font-size:29px;letter-spacing:-1px;font-weight:950;line-height:.9}h1 span{fon
     <div id="upgrade-grid"></div>
     <p class="dialog-footnote">Funcionários trabalham enquanto o jogo está aberto e não está pausado.</p>
   </dialog>
+  <dialog id="team-dialog" class="sports-dialog">
+    <div class="dialog-heading">
+      <div>
+        <div class="dialog-eyebrow">GESTÃO ESPORTIVA · PLANTEL</div>
+        <h2 id="team-club-title">Bernardo FC</h2>
+      </div>
+      <button class="close-button" data-close aria-label="Fechar elenco">×</button>
+    </div>
+    <div class="team-summary-bar">
+      <div><small>FORÇA TITULAR</small><strong id="team-strength-val">46</strong></div>
+      <div>
+        <small>FORMAÇÃO</small>
+        <select id="tactic-formation">
+          <option value="4-4-2">4-4-2</option>
+          <option value="4-3-3">4-3-3</option>
+          <option value="3-5-2">3-5-2</option>
+          <option value="5-3-2">5-3-2</option>
+        </select>
+      </div>
+      <div>
+        <small>POSTURA</small>
+        <select id="tactic-posture">
+          <option value="equilibrada">Equilibrada</option>
+          <option value="ofensiva">Ofensiva (+2)</option>
+          <option value="defensiva">Defensiva (-1)</option>
+        </select>
+      </div>
+      <div><small>CAPITÃO</small><strong id="team-captain-name">Nenhum</strong></div>
+    </div>
+    <h3 class="section-title">Titulares em Campo (11)</h3>
+    <div class="players-grid" id="starters-grid"></div>
+    <h3 class="section-title" style="margin-top:18px;">Reservas Disponíveis</h3>
+    <div class="players-grid" id="reserves-grid"></div>
+  </dialog>
+  <dialog id="league-dialog" class="sports-dialog">
+    <div class="dialog-heading">
+      <div>
+        <div class="dialog-eyebrow">CAMPEONATO NACIONAL</div>
+        <h2 id="league-title">Série D</h2>
+      </div>
+      <button class="close-button" data-close aria-label="Fechar tabela">×</button>
+    </div>
+    <div class="league-action-strip">
+      <div><small>CALENDÁRIO</small><strong id="league-round-info">Rodada 1 de 10</strong></div>
+      <div id="league-next-match-wrap"><small>SEU CONFRONTO</small><strong id="league-next-match">Bernardo FC vs Rival</strong></div>
+      <button id="btn-play-round" class="primary-button">JOGAR RODADA →</button>
+      <button id="btn-next-season" class="primary-button" style="display:none;">NOVA TEMPORADA 🏆</button>
+    </div>
+    <div class="table-container">
+      <table class="league-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Clube</th>
+            <th>J</th>
+            <th>V</th>
+            <th>E</th>
+            <th>D</th>
+            <th>SG</th>
+            <th>PTS</th>
+          </tr>
+        </thead>
+        <tbody id="league-table-body"></tbody>
+      </table>
+    </div>
+    <div class="league-legend">
+      <span><span class="legend-box g2"></span> G-2 Zona de Acesso / Título</span>
+      <span><span class="legend-box z2"></span> Z-2 Zona de Rebaixamento</span>
+    </div>
+    <div id="round-results-banner" class="results-banner" style="display:none;">
+      <h4>Resultados da Rodada:</h4>
+      <div id="round-results-list"></div>
+    </div>
+  </dialog>
+  <dialog id="youth-dialog" class="sports-dialog">
+    <div class="dialog-heading">
+      <div>
+        <div class="dialog-eyebrow">DEPARTAMENTO DE FORMAÇÃO</div>
+        <h2>Categoria de Base & Peneiras</h2>
+      </div>
+      <button class="close-button" data-close aria-label="Fechar base">×</button>
+    </div>
+    <p class="dialog-subtitle">Descubra novos talentos para o clube através de peneiras na comunidade. Promova promessas para a reserva ou venda seus direitos para injetar moedas no clube.</p>
+    <div class="youth-action-bar">
+      <div><small>NÍVEL DA BASE</small><strong id="youth-facility-lvl">Nível 0</strong></div>
+      <button id="btn-scout-youth" class="primary-button">ORGANIZAR PENEIRA (60 Moedas)</button>
+    </div>
+    <h3 class="section-title" style="margin-top:16px;">Promessas Observadas</h3>
+    <div id="youth-prospects-list" class="youth-grid"></div>
+  </dialog>
+  <dialog id="market-dialog" class="sports-dialog">
+    <div class="dialog-heading">
+      <div>
+        <div class="dialog-eyebrow">JANELA DE TRANSFERÊNCIAS</div>
+        <h2>Mercado de Jogadores</h2>
+      </div>
+      <button class="close-button" data-close aria-label="Fechar mercado">×</button>
+    </div>
+    <p class="dialog-subtitle">Atletas disponíveis para contratação imediata, com nível calibrado para a divisão do seu clube.</p>
+    <div class="market-action-bar">
+      <div><small>SUA CARTEIRA</small><strong id="market-wallet-val">0</strong> Moedas</div>
+      <button id="btn-refresh-market" class="secondary-button">↻ Renovar Lista</button>
+    </div>
+    <div id="market-players-list" class="market-grid" style="margin-top:15px;"></div>
+  </dialog>
   <dialog id="menu-dialog">
     <div class="dialog-heading"><div><div class="dialog-eyebrow">INTERVALO</div><h2>Jogo pausado.</h2></div><button class="close-button" data-close aria-label="Continuar o jogo">×</button></div>
     <p>O progresso é local a este navegador. Exporte um backup para guardar fora dele.</p>
+    <div class="profile-card">
+      <small>PERFIL ATIVO</small>
+      <div class="profile-row">
+        <strong id="active-profile-name">Bernardo (Principal)</strong>
+        <button id="profile-switch-btn" class="secondary-button">Trocar de Perfil ⇄</button>
+      </div>
+    </div>
     <div class="menu-grid">
       <button id="resume-button" class="primary-button">CONTINUAR</button>
       <button id="quality-button" class="secondary-button">MODO ECONÔMICO: NÃO</button>
@@ -183,6 +363,658 @@ const MISSIONS = Object.freeze([
   { title: 'Delegue uma tarefa', text: 'Junte 90 moedas. Abra EVOLUIR e contrate o bilheteiro.', key: 'staff', target: 1, zone: 'office' },
   { title: 'Faça a arena crescer', text: 'Abasteça, faça partidas e junte 600 moedas para o segundo campo.', key: 'field2', target: 1, zone: 'field1' },
 ]);
+
+
+// src/competition.js
+/** Módulo de Competições, Divisões e Tabela da Arena de Bairro */
+
+const DIVISIONS = Object.freeze([
+  { index: 0, name: 'Série D', minStrength: 40, targetStrength: 45, reward: 250, badge: '🥉' },
+  { index: 1, name: 'Série C', minStrength: 55, targetStrength: 60, reward: 600, badge: '🥈' },
+  { index: 2, name: 'Série B', minStrength: 70, targetStrength: 75, reward: 1500, badge: '🥇' },
+  { index: 3, name: 'Série A', minStrength: 85, targetStrength: 90, reward: 4000, badge: '🏆' },
+  { index: 4, name: 'Continental', minStrength: 98, targetStrength: 105, reward: 10000, badge: '🌎' },
+  { index: 5, name: 'Mundial', minStrength: 112, targetStrength: 120, reward: 30000, badge: '👑' },
+]);
+
+const RIVALS = Object.freeze({
+  0: [
+    { id: 'avv', name: 'Atlético Vale Verde', sigla: 'AVV' },
+    { id: 'use', name: 'União Serrana', sigla: 'USE' },
+    { id: 'rpi', name: 'Real Pioneiro', sigla: 'RPI' },
+    { id: 'ind', name: 'Independente FC', sigla: 'IND' },
+    { id: 'vns', name: 'Vila Nova do Sul', sigla: 'VNS' },
+    { id: 'opl', name: 'Operário Leste', sigla: 'OPL' },
+    { id: 'eno', name: 'Estrela do Norte', sigla: 'ENO' },
+  ],
+  1: [
+    { id: 'epc', name: 'EC Paulista Central', sigla: 'EPC' },
+    { id: 'frs', name: 'Ferroviário da Serra', sigla: 'FRS' },
+    { id: 'gdv', name: 'Guarani do Vale', sigla: 'GDV' },
+    { id: 'noa', name: 'Noroeste Atlético', sigla: 'NOA' },
+    { id: 'juv', name: 'Juventus Litorâneo', sigla: 'JUV' },
+    { id: 'cmc', name: 'Comercial da Capital', sigla: 'CMC' },
+    { id: 'bti', name: 'Botafogo do Interior', sigla: 'BTI' },
+  ],
+  2: [
+    { id: 'ppg', name: 'Ponte Preta Gaúcha', sigla: 'PPG' },
+    { id: 'lec', name: 'Londrina EC', sigla: 'LEC' },
+    { id: 'cdf', name: 'Criciúma da Fronteira', sigla: 'CDF' },
+    { id: 'amr', name: 'América Real', sigla: 'AMR' },
+    { id: 'vtb', name: 'Vitória Baiano', sigla: 'VTB' },
+    { id: 'srd', name: 'Sport Dourado', sigla: 'SRD' },
+    { id: 'crp', name: 'Ceará Praiano', sigla: 'CRP' },
+  ],
+  3: [
+    { id: 'fla', name: 'Flamengo Carioca', sigla: 'FLA' },
+    { id: 'pal', name: 'Palmeiras Alviverde', sigla: 'PAL' },
+    { id: 'sao', name: 'São Paulo Tricolor', sigla: 'SAO' },
+    { id: 'cor', name: 'Corinthians Mosqueteiro', sigla: 'COR' },
+    { id: 'cam', name: 'Atlético Mineiro Galo', sigla: 'CAM' },
+    { id: 'int', name: 'Internacional Colorado', sigla: 'INT' },
+    { id: 'gre', name: 'Grêmio Imortal', sigla: 'GRE' },
+  ],
+  4: [
+    { id: 'boc', name: 'Boca Juniors de La Boca', sigla: 'BOC' },
+    { id: 'riv', name: 'River Plate Monumental', sigla: 'RIV' },
+    { id: 'pen', name: 'Peñarol Carbonero', sigla: 'PEN' },
+    { id: 'nac', name: 'Nacional do Uruguai', sigla: 'NAC' },
+    { id: 'oli', name: 'Olimpia de Asunción', sigla: 'OLI' },
+    { id: 'atn', name: 'Atlético Nacional Medellin', sigla: 'ATN' },
+    { id: 'col', name: 'Colo-Colo Eterno', sigla: 'COL' },
+  ],
+  5: [
+    { id: 'rma', name: 'Real Madrid Galáctico', sigla: 'RMA' },
+    { id: 'mci', name: 'Manchester City Imperial', sigla: 'MCI' },
+    { id: 'bay', name: 'Bayern de Munique', sigla: 'BAY' },
+    { id: 'psg', name: 'Paris Saint-Germain', sigla: 'PSG' },
+    { id: 'liv', name: 'Liverpool dos Campeões', sigla: 'LIV' },
+    { id: 'inm', name: 'Inter de Milão', sigla: 'INM' },
+    { id: 'bar', name: 'Barcelona Blaugrana', sigla: 'BAR' },
+  ],
+});
+
+function getDivision(index) {
+  const safe = Math.max(0, Math.min(DIVISIONS.length - 1, Math.floor(index || 0)));
+  return DIVISIONS[safe];
+}
+
+function createSeason(divisionIndex = 0, clubName = 'Bernardo FC', clubAcronym = 'BFC') {
+  const div = getDivision(divisionIndex);
+  const rivalsDef = RIVALS[div.index] || RIVALS[0];
+
+  const clubs = [
+    {
+      id: 'player',
+      name: clubName,
+      sigla: clubAcronym,
+      isPlayer: true,
+      strength: div.minStrength,
+      played: 0,
+      won: 0,
+      drawn: 0,
+      lost: 0,
+      goalsFor: 0,
+      goalsAgainst: 0,
+      goalDiff: 0,
+      points: 0,
+    },
+    ...rivalsDef.map((r, i) => {
+      const variation = 0.88 + (i / Math.max(1, rivalsDef.length - 1)) * 0.24;
+      const strength = Math.max(10, Math.floor(div.targetStrength * variation));
+      return {
+        id: r.id,
+        name: r.name,
+        sigla: r.sigla,
+        isPlayer: false,
+        strength,
+        played: 0,
+        won: 0,
+        drawn: 0,
+        lost: 0,
+        goalsFor: 0,
+        goalsAgainst: 0,
+        goalDiff: 0,
+        points: 0,
+      };
+    }),
+  ];
+
+  // Gera 10 rodadas de confrontos reais entre os 8 clubes
+  const rounds = [];
+  const rivalIds = rivalsDef.map(r => r.id);
+
+  for (let r = 0; r < 10; r++) {
+    const oppIndex = r % rivalIds.length;
+    const playerOppId = rivalIds[oppIndex];
+
+    const freeRivals = rivalIds.filter(id => id !== playerOppId);
+    const matches = [
+      { homeId: r % 2 === 0 ? 'player' : playerOppId, awayId: r % 2 === 0 ? playerOppId : 'player', played: false, homeScore: 0, awayScore: 0 },
+    ];
+
+    // Pareia os outros 6 rivais em 3 jogos
+    for (let p = 0; p < freeRivals.length; p += 2) {
+      if (freeRivals[p] && freeRivals[p + 1]) {
+        matches.push({
+          homeId: freeRivals[p],
+          awayId: freeRivals[p + 1],
+          played: false,
+          homeScore: 0,
+          awayScore: 0,
+        });
+      }
+    }
+
+    rounds.push({
+      roundNumber: r + 1,
+      played: false,
+      matches,
+    });
+  }
+
+  return {
+    divisionIndex: div.index,
+    currentRound: 1,
+    totalRounds: 10,
+    finished: false,
+    clubs,
+    rounds,
+    history: [],
+  };
+}
+
+function sortTable(clubs) {
+  return [...clubs].sort((a, b) => {
+    if (b.points !== a.points) return b.points - a.points;
+    if (b.won !== a.won) return b.won - a.won;
+    if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
+    if (b.goalsFor !== a.goalsFor) return b.goalsFor - a.goalsFor;
+    return a.name.localeCompare(b.name);
+  });
+}
+
+function simulateRound(season, playerStrength, rngFn = Math.random) {
+  if (!season || season.finished) return null;
+  const roundIdx = season.currentRound - 1;
+  const round = season.rounds[roundIdx];
+  if (!round || round.played) return null;
+
+  const clubMap = new Map(season.clubs.map(c => [c.id, c]));
+  const roundResults = [];
+
+  for (const match of round.matches) {
+    const home = clubMap.get(match.homeId);
+    const away = clubMap.get(match.awayId);
+    if (!home || !away) continue;
+
+    const homeStrength = home.isPlayer ? playerStrength : home.strength;
+    const awayStrength = away.isPlayer ? playerStrength : away.strength;
+
+    const ratio = homeStrength / Math.max(1, homeStrength + awayStrength);
+    const roll = rngFn();
+
+    let homeScore = 0;
+    let awayScore = 0;
+
+    if (Math.abs(ratio - 0.5) < 0.1 && roll < 0.35) {
+      const g = Math.floor(rngFn() * 3);
+      homeScore = g;
+      awayScore = g;
+    } else if (roll < ratio) {
+      homeScore = 1 + Math.floor(rngFn() * 3);
+      awayScore = Math.floor(rngFn() * homeScore);
+    } else {
+      awayScore = 1 + Math.floor(rngFn() * 3);
+      homeScore = Math.floor(rngFn() * awayScore);
+    }
+
+    match.homeScore = homeScore;
+    match.awayScore = awayScore;
+    match.played = true;
+
+    // Atualiza estatísticas do mandante
+    home.played += 1;
+    home.goalsFor += homeScore;
+    home.goalsAgainst += awayScore;
+    home.goalDiff = home.goalsFor - home.goalsAgainst;
+
+    // Atualiza estatísticas do visitante
+    away.played += 1;
+    away.goalsFor += awayScore;
+    away.goalsAgainst += homeScore;
+    away.goalDiff = away.goalsFor - away.goalsAgainst;
+
+    if (homeScore > awayScore) {
+      home.won += 1;
+      home.points += 3;
+      away.lost += 1;
+    } else if (homeScore < awayScore) {
+      away.won += 1;
+      away.points += 3;
+      home.lost += 1;
+    } else {
+      home.drawn += 1;
+      home.points += 1;
+      away.drawn += 1;
+      away.points += 1;
+    }
+
+    roundResults.push({
+      roundNumber: round.roundNumber,
+      homeName: home.name,
+      awayName: away.name,
+      homeSigla: home.sigla,
+      awaySigla: away.sigla,
+      homeScore,
+      awayScore,
+      isPlayerMatch: home.isPlayer || away.isPlayer,
+    });
+  }
+
+  round.played = true;
+  season.history.unshift(...roundResults.filter(r => r.isPlayerMatch));
+
+  if (season.currentRound >= season.totalRounds) {
+    season.finished = true;
+  } else {
+    season.currentRound += 1;
+  }
+
+  return {
+    roundNumber: round.roundNumber,
+    results: roundResults,
+    playerMatch: roundResults.find(r => r.isPlayerMatch),
+    finished: season.finished,
+  };
+}
+
+function evaluateSeasonEnd(season) {
+  if (!season || !season.finished) return null;
+  const sorted = sortTable(season.clubs);
+  const playerPos = sorted.findIndex(c => c.isPlayer) + 1;
+  const currentDiv = getDivision(season.divisionIndex);
+
+  let status = 'stay';
+  let nextDivisionIndex = season.divisionIndex;
+  let reward = 100;
+
+  if (playerPos <= 2) {
+    // Acesso
+    if (season.divisionIndex < DIVISIONS.length - 1) {
+      status = 'promoted';
+      nextDivisionIndex += 1;
+      reward = currentDiv.reward;
+    } else {
+      status = 'champion';
+      reward = currentDiv.reward * 1.5;
+    }
+  } else if (playerPos >= 7) {
+    // Rebaixamento
+    if (season.divisionIndex > 0) {
+      status = 'relegated';
+      nextDivisionIndex -= 1;
+      reward = Math.floor(currentDiv.reward * 0.25);
+    } else {
+      status = 'stay';
+      reward = Math.floor(currentDiv.reward * 0.4);
+    }
+  } else {
+    // Permanência
+    status = 'stay';
+    reward = Math.floor(currentDiv.reward * 0.6);
+  }
+
+  return {
+    playerPos,
+    status,
+    nextDivisionIndex,
+    reward,
+    champion: sorted[0].name,
+    table: sorted,
+  };
+}
+
+
+// src/roster.js
+/** Módulo de Elenco, Mercado, Treinamento e Tática da Arena de Bairro */
+
+const POSITIONS = Object.freeze(['GOL', 'DEF', 'MEI', 'ATA']);
+
+const FORMATIONS = Object.freeze({
+  '4-4-2': { GOL: 1, DEF: 4, MEI: 4, ATA: 2 },
+  '4-3-3': { GOL: 1, DEF: 4, MEI: 3, ATA: 3 },
+  '3-5-2': { GOL: 1, DEF: 3, MEI: 5, ATA: 2 },
+  '5-3-2': { GOL: 1, DEF: 5, MEI: 3, ATA: 2 },
+});
+
+const POSTURES = Object.freeze(['ofensiva', 'equilibrada', 'defensiva']);
+
+const FIRST_NAMES = ['Bernardo', 'Lucas', 'Gabriel', 'Mateus', 'Felipe', 'Rafael', 'Diego', 'Thiago', 'Rodrigo', 'Bruno', 'Gustavo', 'Caio', 'Danilo', 'Vitor', 'Igor', 'Enzo', 'Luan'];
+const LAST_NAMES = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Pereira', 'Lima', 'Carvalho', 'Ferreira', 'Ribeiro', 'Costa', 'Gomes', 'Martins', 'Araújo', 'Barbosa', 'Rocha'];
+
+function pick(arr, rngFn = Math.random) {
+  return arr[Math.floor(rngFn() * arr.length)];
+}
+
+function generateInitialRoster(baseStrength = 46, rngFn = Math.random) {
+  const roster = [];
+  const counts = { GOL: 2, DEF: 5, MEI: 5, ATA: 3 }; // 15 jogadores (11 titulares + 4 reservas)
+  let idCounter = 1;
+
+  for (const pos of POSITIONS) {
+    const total = counts[pos];
+    for (let i = 0; i < total; i++) {
+      const isStarter = i < FORMATIONS['4-4-2'][pos];
+      const variance = Math.floor(rngFn() * 5) - 2;
+      const overall = Math.max(38, Math.min(65, baseStrength + variance));
+      const potential = overall + Math.floor(rngFn() * 12) + 6;
+
+      roster.push({
+        id: `jog_${idCounter++}`,
+        name: `${pick(FIRST_NAMES, rngFn)} ${pick(LAST_NAMES, rngFn)}`,
+        pos,
+        overall,
+        potential,
+        age: 18 + Math.floor(rngFn() * 10),
+        starter: isStarter,
+        trainings: 0,
+      });
+    }
+  }
+
+  return roster;
+}
+
+function getStarters(roster) {
+  return roster.filter(j => j.starter);
+}
+
+function getReserves(roster) {
+  return roster.filter(j => !j.starter);
+}
+
+function calculateTeamStrength(roster, formation = '4-4-2', posture = 'equilibrada', captainId = null, coachingLevel = 0) {
+  const starters = getStarters(roster);
+  if (starters.length === 0) return 30;
+
+  // Média de força dos titulares
+  const baseAvg = starters.reduce((acc, j) => acc + j.overall, 0) / starters.length;
+
+  // Bônus tático
+  let tacticalMod = 0;
+  if (posture === 'ofensiva') tacticalMod = 2;
+  else if (posture === 'defensiva') tacticalMod = -1;
+  else tacticalMod = 0;
+
+  // Bônus do capitão
+  let captainMod = 0;
+  if (captainId) {
+    const captain = starters.find(j => j.id === captainId);
+    if (captain) captainMod = Math.min(5, Math.floor(captain.overall * 0.05));
+  }
+
+  // Multiplicador da comissão técnica (+4% por nível)
+  const staffMultiplier = 1 + (coachingLevel * 0.04);
+
+  return Math.max(10, Math.floor((baseAvg + tacticalMod + captainMod) * staffMultiplier));
+}
+
+function calculateTrainingCost(player) {
+  const count = player.trainings || 0;
+  return Math.floor(40 * Math.pow(1.35, count));
+}
+
+function trainPlayer(player, wallet) {
+  if (!player) return { ok: false, reason: 'Jogador inválido.' };
+  if (player.overall >= player.potential) {
+    return { ok: false, reason: `${player.name} já atingiu o potencial máximo (${player.potential}).` };
+  }
+
+  const cost = calculateTrainingCost(player);
+  if (wallet < cost) {
+    return { ok: false, cost, reason: `Moedas insuficientes. Custo: ${cost}.` };
+  }
+
+  player.overall += 1;
+  player.trainings = (player.trainings || 0) + 1;
+
+  return { ok: true, cost, newOverall: player.overall };
+}
+
+function generateMarket(divisionIndex = 0, rngFn = Math.random) {
+  const baseTarget = 44 + divisionIndex * 15;
+  const items = [];
+
+  for (let i = 0; i < 3; i++) {
+    const pos = pick(POSITIONS, rngFn);
+    const overall = baseTarget + Math.floor(rngFn() * 7) - 2;
+    const potential = overall + Math.floor(rngFn() * 10) + 5;
+    const age = 19 + Math.floor(rngFn() * 9);
+    const cost = Math.max(50, Math.floor(Math.pow(overall / 10, 2.7) * (15 + divisionIndex * 10)));
+
+    items.push({
+      id: `mkt_${Date.now()}_${i}`,
+      name: `${pick(FIRST_NAMES, rngFn)} ${pick(LAST_NAMES, rngFn)}`,
+      pos,
+      overall,
+      potential,
+      age,
+      cost,
+    });
+  }
+
+  return items;
+}
+
+function hirePlayer(roster, marketPlayer, wallet) {
+  if (!marketPlayer || wallet < marketPlayer.cost) {
+    return { ok: false, reason: 'Moedas insuficientes para contratar.' };
+  }
+
+  const newPlayer = {
+    id: `jog_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+    name: marketPlayer.name,
+    pos: marketPlayer.pos,
+    overall: marketPlayer.overall,
+    potential: marketPlayer.potential,
+    age: marketPlayer.age,
+    starter: false, // Entra na reserva, preservando os titulares!
+    trainings: 0,
+  };
+
+  roster.push(newPlayer);
+  return { ok: true, cost: marketPlayer.cost, player: newPlayer };
+}
+
+function swapRosterPlayers(roster, idA, idB) {
+  const idxA = roster.findIndex(j => j.id === idA);
+  const idxB = roster.findIndex(j => j.id === idB);
+  if (idxA === -1 || idxB === -1) return false;
+
+  const tempStarter = roster[idxA].starter;
+  roster[idxA].starter = roster[idxB].starter;
+  roster[idxB].starter = tempStarter;
+  return true;
+}
+
+
+// src/facilities.js
+/** Módulo de Instalações, Expansão do Clube, Base e Marketing da Arena de Bairro */
+
+const FACILITIES = Object.freeze({
+  stands: {
+    id: 'stands',
+    name: 'Arquibancada',
+    desc: 'Amplia a capacidade de torcedores e a receita dos jogos.',
+    icon: '📣',
+    baseCost: 120,
+    growth: 1.6,
+    maxLevel: 5,
+    minDivision: 0,
+    zone: { x: -6, z: -10, name: 'Setor Norte' },
+  },
+  gate: {
+    id: 'gate',
+    name: 'Bilheteria & Catracas',
+    desc: 'Aumenta a velocidade de atendimento e o fluxo de torcida.',
+    icon: '🎟️',
+    baseCost: 90,
+    growth: 1.5,
+    maxLevel: 4,
+    minDivision: 0,
+    zone: { x: -3.1, z: 7, name: 'Entrada Sul' },
+  },
+  youth: {
+    id: 'youth',
+    name: 'Categoria de Base',
+    desc: 'Revela jovens talentos para promover ao elenco ou vender.',
+    icon: '🌟',
+    baseCost: 350,
+    growth: 1.7,
+    maxLevel: 5,
+    minDivision: 0,
+    zone: { x: 10, z: -7, name: 'Campo da Base' },
+  },
+  training: {
+    id: 'training',
+    name: 'Centro de Treinamento',
+    desc: 'Campo e academia para evoluir os atributos dos atletas.',
+    icon: '⚡',
+    baseCost: 500,
+    growth: 1.75,
+    maxLevel: 5,
+    minDivision: 0,
+    zone: { x: -11, z: -1, name: 'Espaço CT' },
+  },
+  marketing: {
+    id: 'marketing',
+    name: 'Marketing & Patrocínios',
+    desc: 'Placas de publicidade e parceiros do bairro aumentam o caixa.',
+    icon: '📢',
+    baseCost: 300,
+    growth: 1.65,
+    maxLevel: 4,
+    minDivision: 0,
+    zone: { x: 10, z: 2, name: 'Mural de Patrocínio' },
+  },
+  coaching: {
+    id: 'coaching',
+    name: 'Comissão Técnica',
+    desc: 'Treinador e preparadores multiplicam a força do time.',
+    icon: '📋',
+    baseCost: 800,
+    growth: 1.8,
+    maxLevel: 4,
+    minDivision: 1, // Desbloqueia na Série C
+    zone: { x: -10, z: 6.5, name: 'Sala Técnica' },
+  },
+  board: {
+    id: 'board',
+    name: 'Diretoria & Sede',
+    desc: 'Sede administrativa para gestão, identidade e contratos.',
+    icon: '🏛️',
+    baseCost: 200,
+    growth: 1.5,
+    maxLevel: 3,
+    minDivision: 0,
+    zone: { x: 10, z: 6.5, name: 'Sede Administrativa' },
+  },
+});
+
+function getFacilityCost(facilityId, currentLevel) {
+  const fac = FACILITIES[facilityId];
+  if (!fac) return 999999;
+  return Math.floor(fac.baseCost * Math.pow(fac.growth, currentLevel));
+}
+
+function canUpgradeFacility(facilityId, currentLevel, divisionIndex, wallet) {
+  const fac = FACILITIES[facilityId];
+  if (!fac) return { ok: false, reason: 'Instalação inexistente.' };
+  if (currentLevel >= fac.maxLevel) return { ok: false, reason: 'Nível máximo atingido.' };
+  if (divisionIndex < fac.minDivision) return { ok: false, reason: `Exige Série ${String.fromCharCode(68 - fac.minDivision)}.` };
+
+  const cost = getFacilityCost(facilityId, currentLevel);
+  if (wallet < cost) return { ok: false, cost, reason: `Moedas insuficientes. Custo: ${cost}.` };
+
+  return { ok: true, cost };
+}
+
+const YOUTH_NAMES = ['Pedrinho', 'Juninho', 'Kaká', 'Zico', 'Nelsinho', 'Paulinho', 'Carlinhos', 'Renatinho', 'Marcelinho', 'Leo', 'Binho'];
+const YOUTH_POSITIONS = ['GOL', 'DEF', 'MEI', 'ATA'];
+
+function scoutYouthProspect(youthLevel = 1, divisionIndex = 0, rngFn = Math.random) {
+  const baseRating = 36 + youthLevel * 4 + divisionIndex * 5;
+  const overall = baseRating + Math.floor(rngFn() * 6);
+  const potential = overall + 10 + Math.floor(rngFn() * 15);
+  const pos = YOUTH_POSITIONS[Math.floor(rngFn() * YOUTH_POSITIONS.length)];
+  const name = YOUTH_NAMES[Math.floor(rngFn() * YOUTH_NAMES.length)];
+  const age = 15 + Math.floor(rngFn() * 4); // 15 a 18 anos
+  const marketValue = Math.floor(overall * 12 + potential * 10);
+
+  return {
+    id: `base_${Date.now()}_${Math.floor(rngFn() * 1000)}`,
+    name: `${name} da Vila`,
+    pos,
+    overall,
+    potential,
+    age,
+    marketValue,
+    trainings: 0,
+  };
+}
+
+function promoteProspect(roster, prospect) {
+  if (!prospect) return { ok: false, reason: 'Atleta inválido.' };
+
+  const promoted = {
+    id: `jog_prom_${Date.now()}`,
+    name: prospect.name,
+    pos: prospect.pos,
+    overall: prospect.overall,
+    potential: prospect.potential,
+    age: prospect.age,
+    starter: false, // Entra na reserva, sem apagar nenhum jogador!
+    trainings: prospect.trainings || 0,
+  };
+
+  roster.push(promoted);
+  return { ok: true, player: promoted };
+}
+
+
+// src/profile.js
+/** Módulo de Perfis de Jogador (Acesso Bernardo & Afilhado/Convidado) */
+
+const PROFILES = Object.freeze([
+  { id: 'bernardo', name: 'Bernardo', desc: 'Perfil Principal', saveKey: 'arena-de-bairro.profile.bernardo', backupKey: 'arena-de-bairro.backup.bernardo' },
+  { id: 'convidado', name: 'Convidado (Afilhado)', desc: 'Segundo Perfil Independente', saveKey: 'arena-de-bairro.profile.convidado', backupKey: 'arena-de-bairro.backup.convidado' },
+]);
+
+const ACTIVE_PROFILE_KEY = 'arena-de-bairro.active-profile';
+
+function getActiveProfileId() {
+  if (typeof localStorage === 'undefined') return 'bernardo';
+  try {
+    return localStorage.getItem(ACTIVE_PROFILE_KEY) || 'bernardo';
+  } catch {
+    return 'bernardo';
+  }
+}
+
+function setActiveProfileId(id) {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.setItem(ACTIVE_PROFILE_KEY, id);
+  } catch {
+    // Silently continue
+  }
+}
+
+function getProfileConfig(id = null) {
+  const targetId = id || getActiveProfileId();
+  return PROFILES.find(p => p.id === targetId) || PROFILES[0];
+}
 
 
 // src/navigation.js
@@ -304,6 +1136,9 @@ function findPath(start, requested) {
 // src/simulation.js
 
 
+
+
+
 /** @typedef {{x:number,z:number}} Point */
 
 function newGame() {
@@ -318,6 +1153,14 @@ function newGame() {
     fields: CFG.fields.map(f => ({ id: f.id, unlocked: f.id === 0, stock: 0, remaining: 0, score: [0, 0], goalClock: 0, lastGoal: -100, played: 0 })),
     fans: [], timers: { supply: 0, spawn: 0, gate: 0, cashier: 0 },
     stats: { walked: 0, picked: 0, delivered: 0, admitted: 0, collected: 0, matches: 0, upgrades: 0, departed: 0 },
+    roster: generateInitialRoster(46),
+    season: createSeason(0, 'Bernardo FC', 'BFC'),
+    facilities: { stands: 0, gate: 0, youth: 0, training: 0, marketing: 0, coaching: 0, board: 0 },
+    youthList: [],
+    market: generateMarket(0),
+    tactics: { formation: '4-4-2', posture: 'equilibrada', captainId: null },
+    club: { name: 'Bernardo FC', sigla: 'BFC', colorId: 'azul', crest: 'bola' },
+    career: { seasonsPlayed: 0, trophies: 0, totalMatches: 0, totalWins: 0 },
   };
 }
 
@@ -389,6 +1232,104 @@ class Simulation {
     return amount;
   }
   addRevenue(amount) { this.state.cashDesk = Math.min(CFG.maxMoney, this.state.cashDesk + amount); }
+  trainPlayer(playerId) {
+    const s = this.state;
+    const player = s.roster.find(j => j.id === playerId);
+    if (!player) return { ok: false, reason: 'Jogador não encontrado.' };
+    const res = trainPlayer(player, s.wallet);
+    if (!res.ok) return res;
+    s.wallet -= res.cost;
+    this.emit('training', `Treino concluído: ${player.name} (Força ${player.overall})!`, CFG.office);
+    return res;
+  }
+  hireMarket(marketId) {
+    const s = this.state;
+    const item = s.market.find(m => m.id === marketId);
+    if (!item) return { ok: false, reason: 'Oferta expirada.' };
+    const res = hirePlayer(s.roster, item, s.wallet);
+    if (!res.ok) return res;
+    s.wallet -= res.cost;
+    s.market = s.market.filter(m => m.id !== marketId);
+    this.emit('hire', `Contratado: ${item.name}!`, CFG.office);
+    return res;
+  }
+  refreshMarket() {
+    const s = this.state;
+    s.market = generateMarket(s.season?.divisionIndex || 0, () => this.random());
+    return s.market;
+  }
+  scoutYouth() {
+    const s = this.state;
+    if (s.youthList.length >= 6) return { ok: false, reason: 'Base lotada (máx 6 promessas). Promova ou venda uma promessa.' };
+    const cost = 80 + (s.facilities.youth || 0) * 40;
+    if (s.wallet < cost) return { ok: false, cost, reason: `Moedas insuficientes. Custo: ${cost}.` };
+    s.wallet -= cost;
+    const prospect = scoutYouthProspect(s.facilities.youth || 1, s.season?.divisionIndex || 0, () => this.random());
+    s.youthList.push(prospect);
+    this.emit('scout', `Talento revelado: ${prospect.name} (${prospect.pos}, Pot ${prospect.potential})!`, CFG.office);
+    return { ok: true, cost, prospect };
+  }
+  promoteYouth(prospectId) {
+    const s = this.state;
+    const prospect = s.youthList.find(p => p.id === prospectId);
+    if (!prospect) return { ok: false, reason: 'Promessa não encontrada.' };
+    const res = promoteProspect(s.roster, prospect);
+    if (!res.ok) return res;
+    s.youthList = s.youthList.filter(p => p.id !== prospectId);
+    this.emit('promotion', `${prospect.name} promovido aos profissionais!`, CFG.office);
+    return res;
+  }
+  sellYouth(prospectId) {
+    const s = this.state;
+    const prospect = s.youthList.find(p => p.id === prospectId);
+    if (!prospect) return { ok: false, reason: 'Promessa não encontrada.' };
+    const value = prospect.marketValue || 100;
+    s.wallet += value;
+    s.youthList = s.youthList.filter(p => p.id !== prospectId);
+    this.emit('sale', `Venda da base: +${value} moedas por ${prospect.name}!`, CFG.cash);
+    return { ok: true, value };
+  }
+  upgradeFacility(facId) {
+    const s = this.state;
+    const current = s.facilities[facId] || 0;
+    const check = canUpgradeFacility(facId, current, s.season?.divisionIndex || 0, s.wallet);
+    if (!check.ok) return check;
+    s.wallet -= check.cost;
+    s.facilities[facId] = current + 1;
+    this.emit('facility', `${FACILITIES[facId]?.name || facId}: Nível ${current + 1}!`, CFG.office);
+    return { ok: true, cost: check.cost, newLevel: current + 1 };
+  }
+  playLeagueRound() {
+    const s = this.state;
+    if (!s.season || s.season.finished) return { ok: false, reason: 'Temporada já finalizada. Inicie a próxima.' };
+    const teamStrength = calculateTeamStrength(s.roster, s.tactics.formation, s.tactics.posture, s.tactics.captainId, s.facilities.coaching || 0);
+    const roundRes = simulateRound(s.season, teamStrength, () => this.random());
+    if (!roundRes) return { ok: false, reason: 'Não foi possível simular a rodada.' };
+
+    const pMatch = roundRes.playerMatch;
+    if (pMatch) {
+      const won = pMatch.homeScore > pMatch.awayScore;
+      const drawn = pMatch.homeScore === pMatch.awayScore;
+      const reward = won ? 150 + s.season.divisionIndex * 80 : drawn ? 60 + s.season.divisionIndex * 30 : 20;
+      s.wallet += reward;
+      s.stats.matches += 1;
+      this.emit('match', `Rodada ${roundRes.roundNumber}: ${pMatch.homeName} ${pMatch.homeScore}x${pMatch.awayScore} ${pMatch.awayName} (+${reward} moedas)`, CFG.fields[0]);
+    }
+    return { ok: true, roundResult: roundRes };
+  }
+  nextSeason() {
+    const s = this.state;
+    if (!s.season || !s.season.finished) return { ok: false, reason: 'A temporada ainda está em andamento.' };
+    const evaluation = evaluateSeasonEnd(s.season);
+    s.career.seasonsPlayed += 1;
+    if (evaluation.status === 'champion' || evaluation.status === 'promoted') {
+      s.career.trophies += 1;
+    }
+    s.wallet += evaluation.reward;
+    s.season = createSeason(evaluation.nextDivisionIndex, s.club.name, s.club.sigla);
+    this.emit('season', `Nova temporada iniciada na ${getDivision(evaluation.nextDivisionIndex).name}! (+${evaluation.reward} moedas)`, CFG.office);
+    return { ok: true, evaluation };
+  }
   tick(delta, input = { x: 0, z: 0 }) {
     if (!Number.isFinite(delta) || delta <= 0) return;
     // Cortar deltas enormes impede um salto da economia após suspensão do navegador.
@@ -614,6 +1555,156 @@ function validateState(raw) {
   for (const k of Object.keys(s.timers)) s.timers[k] = num(raw.timers[k], `relógio ${k}`, 1000);
   obj(raw.stats, 'estatísticas');
   for (const k of Object.keys(s.stats)) s.stats[k] = num(raw.stats[k], k, 1_000_000_000_000_000);
+
+  // Roster
+  if (Array.isArray(raw.roster)) {
+    s.roster = raw.roster.map(j => {
+      obj(j, 'jogador');
+      if (typeof j.id !== 'string' || !j.id) fail('id do jogador');
+      if (typeof j.name !== 'string' || !j.name) fail('nome do jogador');
+      if (!['GOL', 'DEF', 'MEI', 'ATA'].includes(j.pos)) fail('posição do jogador');
+      return {
+        id: j.id,
+        name: j.name,
+        pos: j.pos,
+        overall: int(j.overall, 'overall', 100, 1),
+        potential: int(j.potential, 'potencial', 100, 1),
+        age: int(j.age, 'idade', 60, 14),
+        starter: bool(j.starter, 'titular'),
+        trainings: int(j.trainings, 'treinos', 1000, 0),
+      };
+    });
+  }
+
+  // Season
+  if (raw.season) {
+    obj(raw.season, 'temporada');
+    if (!Array.isArray(raw.season.clubs) || !Array.isArray(raw.season.rounds) || !Array.isArray(raw.season.history)) fail('clubes/rodadas');
+    s.season = {
+      divisionIndex: int(raw.season.divisionIndex, 'índice divisão', 10, 0),
+      currentRound: int(raw.season.currentRound, 'rodada atual', 50, 1),
+      totalRounds: int(raw.season.totalRounds, 'total rodadas', 50, 1),
+      finished: bool(raw.season.finished, 'temporada finalizada'),
+      clubs: raw.season.clubs.map(c => {
+        obj(c, 'clube');
+        return {
+          id: String(c.id),
+          name: String(c.name),
+          sigla: String(c.sigla),
+          isPlayer: bool(c.isPlayer, 'isPlayer clube'),
+          strength: int(c.strength, 'força clube', 200, 1),
+          played: int(c.played, 'jogos clube', 100, 0),
+          won: int(c.won, 'vitórias clube', 100, 0),
+          drawn: int(c.drawn, 'empates clube', 100, 0),
+          lost: int(c.lost, 'derrotas clube', 100, 0),
+          goalsFor: int(c.goalsFor, 'gols pró', 1000, 0),
+          goalsAgainst: int(c.goalsAgainst, 'gols contra', 1000, 0),
+          goalDiff: num(c.goalDiff, 'saldo gols', 1000, -1000, true),
+          points: int(c.points, 'pontos clube', 1000, 0),
+        };
+      }),
+      rounds: raw.season.rounds.map(r => {
+        obj(r, 'rodada');
+        return {
+          roundNumber: int(r.roundNumber, 'número rodada', 50, 1),
+          played: bool(r.played, 'rodada jogada'),
+          matches: (r.matches || []).map(m => ({
+            homeId: String(m.homeId),
+            awayId: String(m.awayId),
+            played: bool(m.played, 'partida jogada'),
+            homeScore: int(m.homeScore, 'placar mandante', 100, 0),
+            awayScore: int(m.awayScore, 'placar visitante', 100, 0),
+          })),
+        };
+      }),
+      history: raw.season.history.map(r => ({
+        roundNumber: int(r.roundNumber, 'número rodada histórico', 50, 1),
+        played: bool(r.played, 'rodada histórico jogada'),
+        matches: (r.matches || []).map(m => ({
+          homeId: String(m.homeId),
+          awayId: String(m.awayId),
+          played: bool(m.played, 'partida jogada histórico'),
+          homeScore: int(m.homeScore, 'placar mandante histórico', 100, 0),
+          awayScore: int(m.awayScore, 'placar visitante histórico', 100, 0),
+        })),
+      })),
+    };
+  }
+
+  // Facilities
+  if (raw.facilities) {
+    obj(raw.facilities, 'instalações');
+    s.facilities = {};
+    for (const k of ['stands', 'gate', 'youth', 'training', 'marketing', 'coaching', 'board']) {
+      s.facilities[k] = int(raw.facilities[k] ?? 0, `instalação ${k}`, 20, 0);
+    }
+  }
+
+  // YouthList
+  if (Array.isArray(raw.youthList)) {
+    s.youthList = raw.youthList.map(y => {
+      obj(y, 'atleta base');
+      return {
+        id: String(y.id),
+        name: String(y.name),
+        pos: ['GOL', 'DEF', 'MEI', 'ATA'].includes(y.pos) ? y.pos : 'MEI',
+        overall: int(y.overall, 'overall base', 100, 1),
+        potential: int(y.potential, 'potencial base', 100, 1),
+        age: int(y.age, 'idade base', 30, 14),
+        marketValue: int(y.marketValue ?? y.estimatedValue ?? 0, 'valor base', CFG.maxMoney, 0),
+        trainings: int(y.trainings ?? 0, 'treinos base', 1000, 0),
+      };
+    });
+  }
+
+  // Market
+  if (Array.isArray(raw.market)) {
+    s.market = raw.market.map(m => {
+      obj(m, 'jogador mercado');
+      return {
+        id: String(m.id),
+        name: String(m.name),
+        pos: ['GOL', 'DEF', 'MEI', 'ATA'].includes(m.pos) ? m.pos : 'MEI',
+        overall: int(m.overall, 'overall mercado', 100, 1),
+        potential: int(m.potential, 'potencial mercado', 100, 1),
+        age: int(m.age, 'idade mercado', 50, 16),
+        cost: int(m.cost ?? m.price ?? 50, 'custo mercado', CFG.maxMoney, 0),
+      };
+    });
+  }
+
+  // Tactics
+  if (raw.tactics) {
+    obj(raw.tactics, 'tática');
+    s.tactics = {
+      formation: typeof raw.tactics.formation === 'string' ? raw.tactics.formation : '4-4-2',
+      posture: typeof raw.tactics.posture === 'string' ? raw.tactics.posture : 'equilibrada',
+      captainId: raw.tactics.captainId ? String(raw.tactics.captainId) : null,
+    };
+  }
+
+  // Club
+  if (raw.club) {
+    obj(raw.club, 'clube');
+    s.club = {
+      name: String(raw.club.name || 'Bernardo FC'),
+      sigla: String(raw.club.sigla || 'BFC'),
+      colorId: String(raw.club.colorId || 'azul'),
+      crest: String(raw.club.crest || 'bola'),
+    };
+  }
+
+  // Career
+  if (raw.career) {
+    obj(raw.career, 'carreira');
+    s.career = {
+      seasonsPlayed: int(raw.career.seasonsPlayed ?? 0, 'temporadas jogadas', 10000, 0),
+      trophies: int(raw.career.trophies ?? 0, 'troféus', 10000, 0),
+      totalMatches: int(raw.career.totalMatches ?? 0, 'jogos totais carreira', 100000, 0),
+      totalWins: int(raw.career.totalWins ?? 0, 'vitórias totais carreira', 100000, 0),
+    };
+  }
+
   return s;
 }
 
@@ -632,17 +1723,21 @@ function decodeSave(text) {
 
 /** localStorage é uma conveniência local, não autenticação, nuvem ou proteção contra trapaça. */
 class SaveStore {
-  constructor(storage) {
-    this.storage = storage; this.writable = true; this.lastRaw = null;
+  constructor(storage, saveKey = null, backupKey = null) {
+    this.storage = storage;
+    this.writable = true;
+    this.lastRaw = null;
+    this.saveKey = saveKey || CFG.saveKey;
+    this.backupKey = backupKey || CFG.backupKey;
     this.writer = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
   }
   load() {
     try {
-      this.lastRaw = this.storage.getItem(CFG.saveKey);
+      this.lastRaw = this.storage.getItem(this.saveKey);
       if (!this.lastRaw) return { state: newGame(), message: '', status: 'new' };
       try { return { state: decodeSave(this.lastRaw), message: 'Progresso recuperado. Sem ganhos offline nesta versão.', status: 'loaded' }; }
       catch {
-        const backup = this.storage.getItem(CFG.backupKey);
+        const backup = this.storage.getItem(this.backupKey);
         if (backup) {
           try { return { state: decodeSave(backup), message: 'Save principal inválido. Backup anterior recuperado.', status: 'recovered' }; }
           catch { /* Não substituir um save que não sabemos ler. */ }
@@ -658,23 +1753,23 @@ class SaveStore {
   save(state, force = false) {
     if (!this.writable && !force) return { ok: false, reason: 'Armazenamento indisponível. Exporte o save para guardar o progresso.' };
     try {
-      const current = this.storage.getItem(CFG.saveKey);
+      const current = this.storage.getItem(this.saveKey);
       if (!force && current !== this.lastRaw) {
         this.writable = false;
         return { ok: false, conflict: true, reason: 'Outra aba alterou o progresso. Esta sessão foi pausada. Feche a outra aba e recarregue esta página.' };
       }
       const encoded = encodeSave(state, this.writer);
       if (current) {
-        try { decodeSave(current); this.storage.setItem(CFG.backupKey, current); }
+        try { decodeSave(current); this.storage.setItem(this.backupKey, current); }
         catch { /* Backup bom nunca é substituído por dados inválidos. */ }
       }
-      this.storage.setItem(CFG.saveKey, encoded);
+      this.storage.setItem(this.saveKey, encoded);
       this.lastRaw = encoded; this.writable = true;
       return { ok: true };
     } catch { return { ok: false, reason: 'Não foi possível salvar. Exporte um backup antes de fechar.' }; }
   }
   reset() {
-    try { this.storage.removeItem(CFG.saveKey); this.storage.removeItem(CFG.backupKey); this.lastRaw = null; this.writable = true; return true; }
+    try { this.storage.removeItem(this.saveKey); this.storage.removeItem(this.backupKey); this.lastRaw = null; this.writable = true; return true; }
     catch { return false; }
   }
 }
@@ -920,82 +2015,354 @@ class InputController {
 // src/ui.js
 
 
+
+
+
 const formatNumber = n => new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 }).format(n);
 
 class UI {
   constructor(actions) {
-    this.actions=actions;this.lastMission=null;this.toastUntil=0;this.soundEnabled=false;this.audio=null;
-    this.dialogs=[...document.querySelectorAll('dialog')];
-    this.nodes=Object.fromEntries(['wallet','carry','cash','matches','mission-title','mission-text','mission-progress','mission-count','navigate-button','save-status'].map(id=>[id,document.getElementById(id)]));
-    const click=(id,fn)=>document.getElementById(id).addEventListener('click',fn);
-    click('start-button',()=>{document.getElementById('welcome-dialog').close();actions.start();});
-    click('upgrade-button',()=>this.open('upgrade-dialog'));
-    click('wallet-upgrades',()=>this.open('upgrade-dialog'));
-    document.querySelector('.travel-dock').addEventListener('click',e=>{const b=e.target.closest('[data-travel]');if(b&&!b.disabled)actions.travel(b.dataset.travel);});
-    click('menu-button',()=>this.open('menu-dialog'));
-    click('resume-button',()=>document.getElementById('menu-dialog').close());
-    click('navigate-button',()=>actions.navigate());
-    click('view-button',()=>{const overview=actions.toggleView();document.getElementById('view-button').textContent=overview?'SEGUIR GERENTE':'VISÃO GERAL';});
-    click('quality-button',()=>{const low=actions.toggleQuality();document.getElementById('quality-button').textContent=`MODO ECONÔMICO: ${low?'SIM':'NÃO'}`;});
-    click('sound-button',()=>{
-      this.soundEnabled=!this.soundEnabled;
-      document.getElementById('sound-button').textContent=`SOM: ${this.soundEnabled?'LIGADO':'DESLIGADO'}`;
-      if(this.soundEnabled)this.play('cash');
+    this.actions = actions;
+    this.lastMission = null;
+    this.toastUntil = 0;
+    this.soundEnabled = false;
+    this.audio = null;
+    this.dialogs = [...document.querySelectorAll('dialog')];
+    this.nodes = Object.fromEntries([
+      'wallet', 'carry', 'cash', 'matches', 'mission-title', 'mission-text',
+      'mission-progress', 'mission-count', 'navigate-button', 'save-status',
+      'header-div-badge', 'header-div-name', 'header-team-strength',
+      'team-strength-val', 'team-captain-name', 'tactic-formation', 'tactic-posture',
+      'starters-grid', 'reserves-grid', 'league-title', 'league-round-info',
+      'league-next-match', 'league-table-body', 'youth-facility-lvl', 'youth-prospects-list',
+      'market-wallet-val', 'market-players-list', 'active-profile-name'
+    ].map(id => [id, document.getElementById(id)]));
+
+    const click = (id, fn) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', fn);
+    };
+
+    click('start-button', () => { document.getElementById('welcome-dialog').close(); actions.start(); });
+    click('upgrade-button', () => this.open('upgrade-dialog'));
+    click('wallet-upgrades', () => this.open('upgrade-dialog'));
+    click('header-league-pill', () => this.open('league-dialog'));
+
+    // Dock esportiva
+    click('btn-dock-team', () => this.open('team-dialog'));
+    click('btn-dock-league', () => this.open('league-dialog'));
+    click('btn-dock-youth', () => this.open('youth-dialog'));
+    click('btn-dock-market', () => this.open('market-dialog'));
+
+    document.querySelector('.travel-dock')?.addEventListener('click', e => {
+      const b = e.target.closest('[data-travel]');
+      if (b && !b.disabled) actions.travel(b.dataset.travel);
     });
-    click('export-button',()=>actions.export());
-    click('import-button',()=>document.getElementById('import-file').click());
-    click('reset-button',()=>{if(confirm('Apagar o progresso local e começar de novo? Exporte um backup antes de confirmar.'))actions.reset();});
-    document.getElementById('import-file').addEventListener('change',async e=>{
-      const file=e.target.files?.[0];e.target.value='';
-      if(!file)return;
-      if(file.size>CFG.maxSaveBytes){this.toast('Arquivo grande demais. Limite: 180 KB.',8);return;}
-      if(!confirm('Substituir a sessão atual pelo save selecionado?'))return;
-      try{await actions.import(await file.text());}catch(error){this.toast(error instanceof Error?error.message:'Não foi possível ler o save.',8);}
+
+    click('menu-button', () => this.open('menu-dialog'));
+    click('resume-button', () => document.getElementById('menu-dialog').close());
+    click('navigate-button', () => actions.navigate());
+    click('view-button', () => {
+      const overview = actions.toggleView();
+      document.getElementById('view-button').textContent = overview ? 'SEGUIR GERENTE' : 'VISÃO GERAL';
     });
-    for(const button of document.querySelectorAll('[data-close]'))button.addEventListener('click',()=>button.closest('dialog').close());
-    for(const dialog of this.dialogs){
-      dialog.addEventListener('close',()=>actions.onPauseChange());
-      dialog.addEventListener('cancel',e=>{if(dialog.id==='welcome-dialog'){e.preventDefault();return;}actions.onPauseChange();});
+    click('quality-button', () => {
+      const low = actions.toggleQuality();
+      document.getElementById('quality-button').textContent = `MODO ECONÔMICO: ${low ? 'SIM' : 'NÃO'}`;
+    });
+    click('sound-button', () => {
+      this.soundEnabled = !this.soundEnabled;
+      document.getElementById('sound-button').textContent = `SOM: ${this.soundEnabled ? 'LIGADO' : 'DESLIGADO'}`;
+      if (this.soundEnabled) this.play('cash');
+    });
+    click('export-button', () => actions.export());
+    click('import-button', () => document.getElementById('import-file').click());
+    click('reset-button', () => {
+      if (confirm('Apagar o progresso local e começar de novo? Exporte um backup antes de confirmar.')) actions.reset();
+    });
+
+    // Troca de Perfil
+    click('profile-switch-btn', () => actions.switchProfile());
+
+    // Ações da Liga
+    click('btn-play-round', () => actions.playRound());
+    click('btn-next-season', () => actions.nextSeason());
+
+    // Ações de Base e Mercado
+    click('btn-scout-youth', () => actions.scoutYouth());
+    click('btn-refresh-market', () => actions.refreshMarket());
+
+    // Táticas
+    this.nodes['tactic-formation']?.addEventListener('change', e => actions.changeFormation(e.target.value));
+    this.nodes['tactic-posture']?.addEventListener('change', e => actions.changePosture(e.target.value));
+
+    // Ações dentro do grid de elenco (Treinar, Capitão, Substituir)
+    const handleRosterClick = e => {
+      const trainBtn = e.target.closest('[data-train-id]');
+      if (trainBtn) { actions.trainPlayer(trainBtn.dataset.trainId); return; }
+      const capBtn = e.target.closest('[data-captain-id]');
+      if (capBtn) { actions.setCaptain(capBtn.dataset.captainId); return; }
+      const subBtn = e.target.closest('[data-sub-id]');
+      if (subBtn) { actions.swapPlayers(subBtn.dataset.subId); return; }
+    };
+    this.nodes['starters-grid']?.addEventListener('click', handleRosterClick);
+    this.nodes['reserves-grid']?.addEventListener('click', handleRosterClick);
+
+    // Ações da Base (Promover, Vender)
+    this.nodes['youth-prospects-list']?.addEventListener('click', e => {
+      const promBtn = e.target.closest('[data-promote-youth]');
+      if (promBtn) { actions.promoteYouth(promBtn.dataset.promoteYouth); return; }
+      const sellBtn = e.target.closest('[data-sell-youth]');
+      if (sellBtn) { actions.sellYouth(sellBtn.dataset.sellYouth); return; }
+    });
+
+    // Ações do Mercado (Contratar)
+    this.nodes['market-players-list']?.addEventListener('click', e => {
+      const hireBtn = e.target.closest('[data-hire-market]');
+      if (hireBtn) { actions.hireMarket(hireBtn.dataset.hireMarket); return; }
+    });
+
+    document.getElementById('import-file')?.addEventListener('change', async e => {
+      const file = e.target.files?.[0]; e.target.value = '';
+      if (!file) return;
+      if (file.size > CFG.maxSaveBytes) { this.toast('Arquivo grande demais. Limite: 180 KB.', 8); return; }
+      if (!confirm('Substituir a sessão atual pelo save selecionado?')) return;
+      try { await actions.import(await file.text()); } catch (error) { this.toast(error instanceof Error ? error.message : 'Não foi possível ler o save.', 8); }
+    });
+
+    for (const button of document.querySelectorAll('[data-close]')) button.addEventListener('click', () => button.closest('dialog').close());
+    for (const dialog of this.dialogs) {
+      dialog.addEventListener('close', () => actions.onPauseChange());
+      dialog.addEventListener('cancel', e => { if (dialog.id === 'welcome-dialog') { e.preventDefault(); return; } actions.onPauseChange(); });
     }
-    document.getElementById('upgrade-grid').innerHTML=UPGRADE_DEFS.map(d=>`<article class="upgrade-card"><div class="upgrade-icon" aria-hidden="true">${d.icon}</div><h3>${d.name}<span class="upgrade-level" id="level-${d.id}"></span></h3><p>${d.desc}</p><button id="buy-${d.id}" data-upgrade="${d.id}"></button></article>`).join('');
-    document.getElementById('upgrade-grid').addEventListener('click',e=>{const button=e.target.closest('[data-upgrade]');if(button&&!button.disabled)actions.purchase(button.dataset.upgrade);});
+
+    document.getElementById('upgrade-grid').innerHTML = UPGRADE_DEFS.map(d => `<article class="upgrade-card"><div class="upgrade-icon" aria-hidden="true">${d.icon}</div><h3>${d.name}<span class="upgrade-level" id="level-${d.id}"></span></h3><p>${d.desc}</p><button id="buy-${d.id}" data-upgrade="${d.id}"></button></article>`).join('');
+    document.getElementById('upgrade-grid').addEventListener('click', e => { const button = e.target.closest('[data-upgrade]'); if (button && !button.disabled) actions.purchase(button.dataset.upgrade); });
   }
-  get paused(){return this.dialogs.some(d=>d.open);}
-  open(id){for(const d of this.dialogs)if(d.open)d.close();document.getElementById(id).showModal();this.actions.onPauseChange();}
-  toast(message,seconds=4){const node=document.getElementById('toast');node.textContent=message;node.hidden=false;this.toastUntil=performance.now()+seconds*1000;}
-  update(s){
-    document.getElementById('travel-field2').disabled=!s.fields[1].unlocked;
-    this.nodes.wallet.textContent=formatNumber(s.wallet);this.nodes.carry.textContent=`${s.player.carry}/${carryCapacity(s)}`;
-    this.nodes.cash.textContent=formatNumber(s.cashDesk);this.nodes.matches.textContent=formatNumber(s.stats.matches);
-    document.getElementById('shop-wallet').textContent=formatNumber(s.wallet);
-    const mission=currentMission(s),index=mission?MISSIONS.indexOf(mission):MISSIONS.length;
-    this.nodes['mission-title'].textContent=mission?.title||'O bairro ganhou uma arena!';
-    this.nodes['mission-text'].textContent=mission?.text||'Sua equipe cuida da operação. Melhore as arquibancadas e continue fazendo a arena crescer.';
-    this.nodes['mission-count'].textContent=`${Math.min(index+1,MISSIONS.length)}/${MISSIONS.length}`;
-    this.nodes['mission-progress'].style.width=`${mission?Math.min(100,missionValue(s,mission.key)/mission.target*100):100}%`;
-    this.nodes['navigate-button'].disabled=!mission?.zone;
-    for(const def of UPGRADE_DEFS){
-      const cost=upgradeCost(s,def.id),level=upgradeLevel(s,def.id),button=document.getElementById(`buy-${def.id}`);
-      document.getElementById(`level-${def.id}`).textContent=def.max>1?` ${level}/${def.max}`:'';
-      button.disabled=cost===null||s.wallet<cost;
-      button.textContent=cost===null?'CONCLUÍDO':`${formatNumber(cost)} MOEDAS${s.wallet<cost?' · FALTAM '+formatNumber(cost-s.wallet):' · COMPRAR'}`;
+
+  get paused() { return this.dialogs.some(d => d.open); }
+  open(id) { for (const d of this.dialogs) if (d.open) d.close(); document.getElementById(id).showModal(); this.actions.onPauseChange(); }
+  toast(message, seconds = 4) { const node = document.getElementById('toast'); node.textContent = message; node.hidden = false; this.toastUntil = performance.now() + seconds * 1000; }
+
+  update(s) {
+    document.getElementById('travel-field2').disabled = !s.fields[1].unlocked;
+    this.nodes.wallet.textContent = formatNumber(s.wallet);
+    this.nodes.carry.textContent = `${s.player.carry}/${carryCapacity(s)}`;
+    this.nodes.cash.textContent = formatNumber(s.cashDesk);
+    this.nodes.matches.textContent = formatNumber(s.stats.matches);
+    document.getElementById('shop-wallet').textContent = formatNumber(s.wallet);
+
+    // Divisão e força no cabeçalho
+    const div = getDivision(s.season?.divisionIndex || 0);
+    const strength = calculateTeamStrength(s.roster, s.tactics?.formation, s.tactics?.posture, s.tactics?.captainId, s.facilities?.coaching || 0);
+    if (this.nodes['header-div-badge']) this.nodes['header-div-badge'].textContent = div.badge;
+    if (this.nodes['header-div-name']) this.nodes['header-div-name'].textContent = div.name.toUpperCase();
+    if (this.nodes['header-team-strength']) this.nodes['header-team-strength'].textContent = `FORÇA ${strength}`;
+
+    // Perfil ativo
+    const prof = getProfileConfig();
+    if (this.nodes['active-profile-name']) this.nodes['active-profile-name'].textContent = `${prof.name} (${prof.desc})`;
+
+    // Missões
+    const mission = currentMission(s), index = mission ? MISSIONS.indexOf(mission) : MISSIONS.length;
+    this.nodes['mission-title'].textContent = mission?.title || 'O bairro ganhou uma arena!';
+    this.nodes['mission-text'].textContent = mission?.text || 'Sua equipe cuida da operação. Melhore as arquibancadas e continue fazendo a arena crescer.';
+    this.nodes['mission-count'].textContent = `${Math.min(index + 1, MISSIONS.length)}/${MISSIONS.length}`;
+    this.nodes['mission-progress'].style.width = `${mission ? Math.min(100, missionValue(s, mission.key) / mission.target * 100) : 100}%`;
+    this.nodes['navigate-button'].disabled = !mission?.zone;
+
+    for (const def of UPGRADE_DEFS) {
+      const cost = upgradeCost(s, def.id), level = upgradeLevel(s, def.id), button = document.getElementById(`buy-${def.id}`);
+      document.getElementById(`level-${def.id}`).textContent = def.max > 1 ? ` ${level}/${def.max}` : '';
+      button.disabled = cost === null || s.wallet < cost;
+      button.textContent = cost === null ? 'CONCLUÍDO' : `${formatNumber(cost)} MOEDAS${s.wallet < cost ? ' · FALTAM ' + formatNumber(cost - s.wallet) : ' · COMPRAR'}`;
     }
-    if(this.lastMission!==null&&index>this.lastMission)this.toast('Etapa concluída. Vamos para a próxima!',3);
-    this.lastMission=index;
-    if(performance.now()>this.toastUntil)document.getElementById('toast').hidden=true;
+
+    if (this.lastMission !== null && index > this.lastMission) this.toast('Etapa concluída. Vamos para a próxima!', 3);
+    this.lastMission = index;
+    if (performance.now() > this.toastUntil) document.getElementById('toast').hidden = true;
+
+    // Atualização de diálogos ativos
+    if (document.getElementById('team-dialog')?.open) this.renderTeam(s, strength);
+    if (document.getElementById('league-dialog')?.open) this.renderLeague(s, div);
+    if (document.getElementById('youth-dialog')?.open) this.renderYouth(s);
+    if (document.getElementById('market-dialog')?.open) this.renderMarket(s);
   }
-  saveStatus(ok,text=''){const node=this.nodes['save-status'];node.textContent=text||(ok?'SALVO NESTE NAVEGADOR':'SAVE INDISPONÍVEL · EXPORTE BACKUP');node.classList.toggle('saved-warn',!ok);}
-  play(type){
-    if(!this.soundEnabled||!['cash','purchase','goal','start'].includes(type))return;
-    try{
-      this.audio??=new AudioContext();if(this.audio.state==='suspended')void this.audio.resume();
-      const osc=this.audio.createOscillator(),gain=this.audio.createGain(),now=this.audio.currentTime;
-      const base={cash:700,purchase:980,goal:540,start:850}[type];
-      osc.type='sine';osc.frequency.setValueAtTime(base,now);osc.frequency.exponentialRampToValueAtTime(base*1.4,now+.12);
-      gain.gain.setValueAtTime(.045,now);gain.gain.exponentialRampToValueAtTime(.001,now+.2);osc.connect(gain);gain.connect(this.audio.destination);osc.start(now);osc.stop(now+.21);
-    }catch{this.soundEnabled=false;this.toast('Áudio indisponível neste navegador.');}
+
+  renderTeam(s, strength) {
+    if (this.nodes['team-strength-val']) this.nodes['team-strength-val'].textContent = strength;
+    if (this.nodes['tactic-formation']) this.nodes['tactic-formation'].value = s.tactics.formation;
+    if (this.nodes['tactic-posture']) this.nodes['tactic-posture'].value = s.tactics.posture;
+
+    const captain = s.roster.find(j => j.id === s.tactics.captainId);
+    if (this.nodes['team-captain-name']) this.nodes['team-captain-name'].textContent = captain ? `${captain.name} (+cap)` : 'Nenhum';
+
+    const starters = getStarters(s.roster);
+    const reserves = getReserves(s.roster);
+
+    const renderCard = (p, isStarter) => {
+      const cost = calculateTrainingCost(p);
+      const isCap = s.tactics.captainId === p.id;
+      const canTrain = p.overall < p.potential && s.wallet >= cost;
+      return `
+        <div class="player-card ${isCap ? 'is-captain' : ''}">
+          <div class="player-card-header">
+            <span class="badge-pos pos-${p.pos}">${p.pos}</span>
+            <small style="font-weight:700;">${p.age} anos</small>
+          </div>
+          <h4 class="player-name">${p.name} ${isCap ? '👑' : ''}</h4>
+          <div class="player-stats">
+            <span>FORÇA: <strong>${p.overall}</strong></span>
+            <span>POTENCIAL: <strong>${p.potential}</strong></span>
+          </div>
+          <div class="player-actions">
+            <button class="btn-train" data-train-id="${p.id}" ${canTrain ? '' : 'disabled'}>
+              ${p.overall >= p.potential ? 'MAX' : `TREINAR (${cost}m)`}
+            </button>
+            ${isStarter ? `
+              <button class="btn-cap" data-captain-id="${p.id}">${isCap ? 'CAPITÃO' : 'DAR FAIXA'}</button>
+            ` : `
+              <button class="btn-sub" data-sub-id="${p.id}">ESCALAR ⇄</button>
+            `}
+          </div>
+        </div>
+      `;
+    };
+
+    if (this.nodes['starters-grid']) this.nodes['starters-grid'].innerHTML = starters.map(p => renderCard(p, true)).join('');
+    if (this.nodes['reserves-grid']) this.nodes['reserves-grid'].innerHTML = reserves.length ? reserves.map(p => renderCard(p, false)).join('') : '<p style="color:#667b66;font-size:12px;">Nenhum reserva no momento. Contrate no Mercado ou promova da Base!</p>';
+  }
+
+  renderLeague(s, div) {
+    if (this.nodes['league-title']) this.nodes['league-title'].textContent = `${div.name} ${div.badge}`;
+    if (this.nodes['league-round-info']) this.nodes['league-round-info'].textContent = `Rodada ${s.season.currentRound} de ${s.season.totalRounds}`;
+
+    const btnPlay = document.getElementById('btn-play-round');
+    const btnNext = document.getElementById('btn-next-season');
+    if (s.season.finished) {
+      if (btnPlay) btnPlay.style.display = 'none';
+      if (btnNext) {
+        btnNext.style.display = 'block';
+        btnNext.textContent = `FINALIZAR TEMPORADA E AVANÇAR 🏆`;
+      }
+    } else {
+      if (btnPlay) {
+        btnPlay.style.display = 'block';
+        btnPlay.textContent = `JOGAR RODADA ${s.season.currentRound} →`;
+      }
+      if (btnNext) btnNext.style.display = 'none';
+    }
+
+    // Próximo confronto
+    const currentRoundObj = s.season.rounds.find(r => r.roundNumber === s.season.currentRound);
+    if (currentRoundObj) {
+      const pMatch = currentRoundObj.matches.find(m => m.homeId === 'player' || m.awayId === 'player');
+      if (pMatch) {
+        const home = s.season.clubs.find(c => c.id === pMatch.homeId)?.name || 'Mandante';
+        const away = s.season.clubs.find(c => c.id === pMatch.awayId)?.name || 'Visitante';
+        if (this.nodes['league-next-match']) this.nodes['league-next-match'].textContent = `${home} vs ${away}`;
+      }
+    }
+
+    // Tabela
+    const sorted = sortTable(s.season.clubs);
+    if (this.nodes['league-table-body']) {
+      this.nodes['league-table-body'].innerHTML = sorted.map((c, i) => {
+        const isG2 = i < 2;
+        const isZ2 = i >= sorted.length - 2;
+        const cls = [c.isPlayer ? 'is-player' : '', isG2 ? 'g2' : '', isZ2 ? 'z2' : ''].filter(Boolean).join(' ');
+        return `
+          <tr class="${cls}">
+            <td><b>${i + 1}º</b></td>
+            <td>${c.name} (${c.sigla})</td>
+            <td>${c.played}</td>
+            <td>${c.won}</td>
+            <td>${c.drawn}</td>
+            <td>${c.lost}</td>
+            <td>${c.goalDiff > 0 ? '+' + c.goalDiff : c.goalDiff}</td>
+            <td><b>${c.points}</b></td>
+          </tr>
+        `;
+      }).join('');
+    }
+  }
+
+  renderYouth(s) {
+    if (this.nodes['youth-facility-lvl']) this.nodes['youth-facility-lvl'].textContent = `Nível ${s.facilities.youth || 0}`;
+    const cost = 80 + (s.facilities.youth || 0) * 40;
+    const scoutBtn = document.getElementById('btn-scout-youth');
+    if (scoutBtn) {
+      scoutBtn.textContent = `ORGANIZAR PENEIRA (${cost} Moedas)`;
+      scoutBtn.disabled = s.wallet < cost || s.youthList.length >= 6;
+    }
+
+    if (this.nodes['youth-prospects-list']) {
+      if (!s.youthList.length) {
+        this.nodes['youth-prospects-list'].innerHTML = '<p style="color:#667b66;font-size:12px;">Nenhuma promessa sendo observada. Clique em Organizar Peneira para descobrir novos talentos locais!</p>';
+      } else {
+        this.nodes['youth-prospects-list'].innerHTML = s.youthList.map(y => `
+          <div class="youth-card">
+            <div class="player-card-header">
+              <span class="badge-pos pos-${y.pos}">${y.pos}</span>
+              <small style="font-weight:700;">${y.age} anos</small>
+            </div>
+            <h4 class="player-name">${y.name}</h4>
+            <div class="player-stats">
+              <span>FORÇA: <strong>${y.overall}</strong></span>
+              <span>POTENCIAL: <strong>${y.potential}</strong></span>
+            </div>
+            <div class="player-actions">
+              <button class="btn-train" data-promote-youth="${y.id}">PROMOVER AO ELENCO</button>
+              <button class="btn-cap" data-sell-youth="${y.id}">VENDER (+${y.marketValue || 100}m)</button>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+  }
+
+  renderMarket(s) {
+    if (this.nodes['market-wallet-val']) this.nodes['market-wallet-val'].textContent = formatNumber(s.wallet);
+
+    if (this.nodes['market-players-list']) {
+      if (!s.market || !s.market.length) {
+        this.nodes['market-players-list'].innerHTML = '<p style="color:#667b66;font-size:12px;">Lista de transferências vazia. Clique em Renovar Lista para buscar novos atletas!</p>';
+      } else {
+        this.nodes['market-players-list'].innerHTML = s.market.map(m => `
+          <div class="market-card">
+            <div class="player-card-header">
+              <span class="badge-pos pos-${m.pos}">${m.pos}</span>
+              <small style="font-weight:700;">${m.age} anos</small>
+            </div>
+            <h4 class="player-name">${m.name}</h4>
+            <div class="player-stats">
+              <span>FORÇA: <strong>${m.overall}</strong></span>
+              <span>POTENCIAL: <strong>${m.potential}</strong></span>
+            </div>
+            <div class="player-actions">
+              <button class="btn-train" data-hire-market="${m.id}" ${s.wallet < m.cost ? 'disabled' : ''}>
+                CONTRATAR (${formatNumber(m.cost)} MOEDAS)
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+  }
+
+  saveStatus(ok, text = '') { const node = this.nodes['save-status']; node.textContent = text || (ok ? 'SALVO NESTE NAVEGADOR' : 'SAVE INDISPONÍVEL · EXPORTE BACKUP'); node.classList.toggle('saved-warn', !ok); }
+  play(type) {
+    if (!this.soundEnabled || !['cash', 'purchase', 'goal', 'start', 'hire', 'training', 'promotion'].includes(type)) return;
+    try {
+      this.audio ??= new AudioContext(); if (this.audio.state === 'suspended') void this.audio.resume();
+      const osc = this.audio.createOscillator(), gain = this.audio.createGain(), now = this.audio.currentTime;
+      const base = { cash: 700, purchase: 980, goal: 540, start: 850, hire: 880, training: 740, promotion: 920 }[type] || 700;
+      osc.type = 'sine'; osc.frequency.setValueAtTime(base, now); osc.frequency.exponentialRampToValueAtTime(base * 1.4, now + .12);
+      gain.gain.setValueAtTime(.045, now); gain.gain.exponentialRampToValueAtTime(.001, now + .2); osc.connect(gain); gain.connect(this.audio.destination); osc.start(now); osc.stop(now + .21);
+    } catch { this.soundEnabled = false; this.toast('Áudio indisponível neste navegador.'); }
   }
 }
+
 
 
 // src/main.js
@@ -1005,42 +2372,152 @@ class UI {
 
 
 
+
+
 async function boot() {
-  const storage={getItem:k=>localStorage.getItem(k),setItem:(k,v)=>localStorage.setItem(k,v),removeItem:k=>localStorage.removeItem(k)};
-  const store=new SaveStore(storage),loaded=store.load();
-  const sim=new Simulation(loaded.state),renderer=new Renderer(document.getElementById('game'));
+  const storage = { getItem: k => localStorage.getItem(k), setItem: (k, v) => localStorage.setItem(k, v), removeItem: k => localStorage.removeItem(k) };
+  let prof = getProfileConfig();
+  let store = new SaveStore(storage, prof.saveKey, prof.backupKey);
+  let loaded = store.load();
+  const sim = new Simulation(loaded.state), renderer = new Renderer(document.getElementById('game'));
   await renderer.ready;
-  document.getElementById('asset-loading').hidden=true;
-  let input,lastTime=performance.now(),accumulator=0,lastSaved=sim.state.t,conflict=false,lastUI=0,lastDraw=0;
-  const persist=(force=false)=>{
-    const result=store.save(sim.state,force);
+  document.getElementById('asset-loading').hidden = true;
+  let input, lastTime = performance.now(), accumulator = 0, lastSaved = sim.state.t, conflict = false, lastUI = 0, lastDraw = 0;
+  const persist = (force = false) => {
+    const result = store.save(sim.state, force);
     ui.saveStatus(result.ok);
-    if(result.conflict){conflict=true;ui.open('menu-dialog');ui.toast(result.reason,30);}
-    else if(!result.ok&&force)ui.toast(result.reason,8);
+    if (result.conflict) { conflict = true; ui.open('menu-dialog'); ui.toast(result.reason, 30); }
+    else if (!result.ok && force) ui.toast(result.reason, 8);
     return result;
   };
-  const ui=new UI({
-    start:()=>{input.reset();lastTime=performance.now();if(loaded.message)ui.toast(loaded.message,9);},
-    onPauseChange:()=>{input?.reset();accumulator=0;lastTime=performance.now();},
-    travel:zone=>{const point=zonePosition(zone);if(point)sim.goTo(point);},
-    navigate:()=>{const m=currentMission(sim.state),target=m?.zone?zonePosition(m.zone):null;if(target)sim.goTo(target);},
-    toggleView:()=>{renderer.overview=!renderer.overview;return renderer.overview;},
-    toggleQuality:()=>{renderer.lowQuality=!renderer.lowQuality;renderer.resize();return renderer.lowQuality;},
-    purchase:id=>{
-      const result=sim.purchase(id);if(!result.ok)ui.toast(result.reason,6);else{ui.update(sim.state);persist();ui.play('purchase');}
+  const ui = new UI({
+    start: () => { input.reset(); lastTime = performance.now(); if (loaded.message) ui.toast(loaded.message, 9); },
+    onPauseChange: () => { input?.reset(); accumulator = 0; lastTime = performance.now(); },
+    travel: zone => { const point = zonePosition(zone); if (point) sim.goTo(point); },
+    navigate: () => { const m = currentMission(sim.state), target = m?.zone ? zonePosition(m.zone) : null; if (target) sim.goTo(target); },
+    toggleView: () => { renderer.overview = !renderer.overview; return renderer.overview; },
+    toggleQuality: () => { renderer.lowQuality = !renderer.lowQuality; renderer.resize(); return renderer.lowQuality; },
+    purchase: id => {
+      const result = sim.purchase(id); if (!result.ok) ui.toast(result.reason, 6); else { ui.update(sim.state); persist(); ui.play('purchase'); }
     },
-    export:()=>{
-      const blob=new Blob([encodeSave(sim.state)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
-      a.href=url;a.download=`arena-save-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);ui.toast('Backup exportado. Guarde o arquivo JSON.',5);
+    export: () => {
+      const blob = new Blob([encodeSave(sim.state)], { type: 'application/json' }), url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = `arena-save-${new Date().toISOString().slice(0, 10)}.json`; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); ui.toast('Backup exportado. Guarde o arquivo JSON.', 5);
     },
-    import:async text=>{
-      const next=decodeSave(text);sim.state=next;sim.events=[];renderer.particles=[];ui.lastMission=null;conflict=false;
-      lastSaved=sim.state.t;input.reset();const result=persist(true);ui.update(sim.state);
-      ui.toast(result.ok?'Save importado com sucesso.':'Save importado na sessão. Exporte antes de fechar: o armazenamento falhou.',8);
+    import: async text => {
+      const next = decodeSave(text); sim.state = next; sim.events = []; renderer.particles = []; ui.lastMission = null; conflict = false;
+      lastSaved = sim.state.t; input.reset(); const result = persist(true); ui.update(sim.state);
+      ui.toast(result.ok ? 'Save importado com sucesso.' : 'Save importado na sessão. Exporte antes de fechar: o armazenamento falhou.', 8);
     },
-    reset:()=>{
-      store.reset();sim.state=newGame();sim.events=[];renderer.particles=[];renderer.initialized=false;ui.lastMission=null;
-      conflict=false;lastSaved=0;input.reset();persist(true);ui.update(sim.state);ui.open('welcome-dialog');
+    reset: () => {
+      store.reset(); sim.state = newGame(); sim.events = []; renderer.particles = []; renderer.initialized = false; ui.lastMission = null;
+      conflict = false; lastSaved = 0; input.reset(); persist(true); ui.update(sim.state); ui.open('welcome-dialog');
+    },
+    // Gestão Esportiva
+    playRound: () => {
+      const res = sim.playLeagueRound();
+      if (!res.ok) { ui.toast(res.reason, 5); return; }
+      ui.update(sim.state);
+      persist();
+      const pm = res.playerMatch;
+      if (pm) {
+        const won = pm.homeScore > pm.awayScore;
+        const drawn = pm.homeScore === pm.awayScore;
+        ui.toast(`Placar: ${pm.homeScore} x ${pm.awayScore} (${won ? 'Vitória! 🎉' : drawn ? 'Empate' : 'Derrota'})`, 6);
+        ui.play(won ? 'goal' : 'match');
+      }
+    },
+    nextSeason: () => {
+      const res = sim.nextSeason();
+      if (!res.ok) { ui.toast(res.reason, 5); return; }
+      ui.update(sim.state);
+      persist();
+      ui.toast(res.reason, 8);
+      ui.play('promotion');
+    },
+    trainPlayer: playerId => {
+      const res = sim.trainPlayer(playerId);
+      if (!res.ok) ui.toast(res.reason, 4);
+      else { ui.update(sim.state); persist(); ui.play('training'); }
+    },
+    setCaptain: playerId => {
+      sim.state.tactics.captainId = playerId;
+      const player = sim.state.roster.find(j => j.id === playerId);
+      ui.toast(`${player?.name || 'Jogador'} agora é o capitão do time! 👑`, 4);
+      ui.update(sim.state);
+      persist();
+    },
+    swapPlayers: playerId => {
+      const player = sim.state.roster.find(j => j.id === playerId);
+      if (!player) return;
+      if (!player.starter) {
+        const starters = getStarters(sim.state.roster);
+        const samePos = starters.filter(j => j.pos === player.pos).sort((a, b) => a.overall - b.overall);
+        const target = samePos[0] || starters.sort((a, b) => a.overall - b.overall)[0];
+        if (target) {
+          swapRosterPlayers(sim.state.roster, player.id, target.id);
+          ui.toast(`${player.name} assumiu a titularidade (saiu ${target.name})!`, 4);
+        }
+      } else {
+        ui.toast(`${player.name} já é titular.`, 3);
+      }
+      ui.update(sim.state);
+      persist();
+    },
+    changeFormation: f => {
+      sim.state.tactics.formation = f;
+      ui.toast(`Formação alterada para ${f}.`, 3);
+      ui.update(sim.state);
+      persist();
+    },
+    changePosture: p => {
+      sim.state.tactics.posture = p;
+      ui.toast(`Postura alterada para ${p}.`, 3);
+      ui.update(sim.state);
+      persist();
+    },
+    scoutYouth: () => {
+      const res = sim.scoutYouth();
+      if (!res.ok) ui.toast(res.reason, 5);
+      else { ui.update(sim.state); persist(); ui.play('promotion'); }
+    },
+    promoteYouth: id => {
+      const res = sim.promoteYouth(id);
+      if (!res.ok) ui.toast(res.reason, 5);
+      else { ui.update(sim.state); persist(); ui.play('hire'); }
+    },
+    sellYouth: id => {
+      const res = sim.sellYouth(id);
+      if (!res.ok) ui.toast(res.reason, 5);
+      else { ui.update(sim.state); persist(); ui.play('cash'); }
+    },
+    hireMarket: id => {
+      const res = sim.hireMarket(id);
+      if (!res.ok) ui.toast(res.reason, 5);
+      else { ui.update(sim.state); persist(); ui.play('hire'); }
+    },
+    refreshMarket: () => {
+      sim.refreshMarket();
+      ui.toast('Mercado renovado com novas opções!', 4);
+      ui.update(sim.state);
+    },
+    switchProfile: () => {
+      persist(true);
+      const currentId = getActiveProfileId();
+      const nextId = currentId === 'bernardo' ? 'convidado' : 'bernardo';
+      setActiveProfileId(nextId);
+      prof = getProfileConfig(nextId);
+      store = new SaveStore(storage, prof.saveKey, prof.backupKey);
+      loaded = store.load();
+      sim.state = loaded.state;
+      sim.events = [];
+      renderer.particles = [];
+      ui.lastMission = null;
+      conflict = false;
+      lastSaved = sim.state.t;
+      input.reset();
+      ui.update(sim.state);
+      ui.toast(`Perfil alterado para ${prof.name}!`, 6);
     },
   });
   document.getElementById('view-button').textContent=renderer.overview?'SEGUIR GERENTE':'VISÃO GERAL';

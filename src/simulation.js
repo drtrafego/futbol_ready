@@ -1,5 +1,8 @@
 import { CFG, UPGRADE_DEFS, MISSIONS } from './config.js';
 import { clamp, distance, near, moveActor, followRoute, findPath } from './navigation.js';
+import { createSeason, simulateRound, evaluateSeasonEnd, getDivision } from './competition.js';
+import { generateInitialRoster, calculateTeamStrength, trainPlayer, generateMarket, hirePlayer } from './roster.js';
+import { FACILITIES, canUpgradeFacility, scoutYouthProspect, promoteProspect } from './facilities.js';
 
 /** @typedef {{x:number,z:number}} Point */
 
@@ -15,6 +18,14 @@ export function newGame() {
     fields: CFG.fields.map(f => ({ id: f.id, unlocked: f.id === 0, stock: 0, remaining: 0, score: [0, 0], goalClock: 0, lastGoal: -100, played: 0 })),
     fans: [], timers: { supply: 0, spawn: 0, gate: 0, cashier: 0 },
     stats: { walked: 0, picked: 0, delivered: 0, admitted: 0, collected: 0, matches: 0, upgrades: 0, departed: 0 },
+    roster: generateInitialRoster(46),
+    season: createSeason(0, 'Bernardo FC', 'BFC'),
+    facilities: { stands: 0, gate: 0, youth: 0, training: 0, marketing: 0, coaching: 0, board: 0 },
+    youthList: [],
+    market: generateMarket(0),
+    tactics: { formation: '4-4-2', posture: 'equilibrada', captainId: null },
+    club: { name: 'Bernardo FC', sigla: 'BFC', colorId: 'azul', crest: 'bola' },
+    career: { seasonsPlayed: 0, trophies: 0, totalMatches: 0, totalWins: 0 },
   };
 }
 
@@ -86,6 +97,104 @@ export class Simulation {
     return amount;
   }
   addRevenue(amount) { this.state.cashDesk = Math.min(CFG.maxMoney, this.state.cashDesk + amount); }
+  trainPlayer(playerId) {
+    const s = this.state;
+    const player = s.roster.find(j => j.id === playerId);
+    if (!player) return { ok: false, reason: 'Jogador não encontrado.' };
+    const res = trainPlayer(player, s.wallet);
+    if (!res.ok) return res;
+    s.wallet -= res.cost;
+    this.emit('training', `Treino concluído: ${player.name} (Força ${player.overall})!`, CFG.office);
+    return res;
+  }
+  hireMarket(marketId) {
+    const s = this.state;
+    const item = s.market.find(m => m.id === marketId);
+    if (!item) return { ok: false, reason: 'Oferta expirada.' };
+    const res = hirePlayer(s.roster, item, s.wallet);
+    if (!res.ok) return res;
+    s.wallet -= res.cost;
+    s.market = s.market.filter(m => m.id !== marketId);
+    this.emit('hire', `Contratado: ${item.name}!`, CFG.office);
+    return res;
+  }
+  refreshMarket() {
+    const s = this.state;
+    s.market = generateMarket(s.season?.divisionIndex || 0, () => this.random());
+    return s.market;
+  }
+  scoutYouth() {
+    const s = this.state;
+    if (s.youthList.length >= 6) return { ok: false, reason: 'Base lotada (máx 6 promessas). Promova ou venda uma promessa.' };
+    const cost = 80 + (s.facilities.youth || 0) * 40;
+    if (s.wallet < cost) return { ok: false, cost, reason: `Moedas insuficientes. Custo: ${cost}.` };
+    s.wallet -= cost;
+    const prospect = scoutYouthProspect(s.facilities.youth || 1, s.season?.divisionIndex || 0, () => this.random());
+    s.youthList.push(prospect);
+    this.emit('scout', `Talento revelado: ${prospect.name} (${prospect.pos}, Pot ${prospect.potential})!`, CFG.office);
+    return { ok: true, cost, prospect };
+  }
+  promoteYouth(prospectId) {
+    const s = this.state;
+    const prospect = s.youthList.find(p => p.id === prospectId);
+    if (!prospect) return { ok: false, reason: 'Promessa não encontrada.' };
+    const res = promoteProspect(s.roster, prospect);
+    if (!res.ok) return res;
+    s.youthList = s.youthList.filter(p => p.id !== prospectId);
+    this.emit('promotion', `${prospect.name} promovido aos profissionais!`, CFG.office);
+    return res;
+  }
+  sellYouth(prospectId) {
+    const s = this.state;
+    const prospect = s.youthList.find(p => p.id === prospectId);
+    if (!prospect) return { ok: false, reason: 'Promessa não encontrada.' };
+    const value = prospect.marketValue || 100;
+    s.wallet += value;
+    s.youthList = s.youthList.filter(p => p.id !== prospectId);
+    this.emit('sale', `Venda da base: +${value} moedas por ${prospect.name}!`, CFG.cash);
+    return { ok: true, value };
+  }
+  upgradeFacility(facId) {
+    const s = this.state;
+    const current = s.facilities[facId] || 0;
+    const check = canUpgradeFacility(facId, current, s.season?.divisionIndex || 0, s.wallet);
+    if (!check.ok) return check;
+    s.wallet -= check.cost;
+    s.facilities[facId] = current + 1;
+    this.emit('facility', `${FACILITIES[facId]?.name || facId}: Nível ${current + 1}!`, CFG.office);
+    return { ok: true, cost: check.cost, newLevel: current + 1 };
+  }
+  playLeagueRound() {
+    const s = this.state;
+    if (!s.season || s.season.finished) return { ok: false, reason: 'Temporada já finalizada. Inicie a próxima.' };
+    const teamStrength = calculateTeamStrength(s.roster, s.tactics.formation, s.tactics.posture, s.tactics.captainId, s.facilities.coaching || 0);
+    const roundRes = simulateRound(s.season, teamStrength, () => this.random());
+    if (!roundRes) return { ok: false, reason: 'Não foi possível simular a rodada.' };
+
+    const pMatch = roundRes.playerMatch;
+    if (pMatch) {
+      const won = pMatch.homeScore > pMatch.awayScore;
+      const drawn = pMatch.homeScore === pMatch.awayScore;
+      const reward = won ? 150 + s.season.divisionIndex * 80 : drawn ? 60 + s.season.divisionIndex * 30 : 20;
+      s.wallet += reward;
+      s.stats.matches += 1;
+      this.emit('match', `Rodada ${roundRes.roundNumber}: ${pMatch.homeName} ${pMatch.homeScore}x${pMatch.awayScore} ${pMatch.awayName} (+${reward} moedas)`, CFG.fields[0]);
+    }
+    return { ok: true, roundResult: roundRes };
+  }
+  nextSeason() {
+    const s = this.state;
+    if (!s.season || !s.season.finished) return { ok: false, reason: 'A temporada ainda está em andamento.' };
+    const evaluation = evaluateSeasonEnd(s.season);
+    s.career.seasonsPlayed += 1;
+    if (evaluation.status === 'champion' || evaluation.status === 'promoted') {
+      s.career.trophies += 1;
+    }
+    s.wallet += evaluation.reward;
+    s.season = createSeason(evaluation.nextDivisionIndex, s.club.name, s.club.sigla);
+    this.emit('season', `Nova temporada iniciada na ${getDivision(evaluation.nextDivisionIndex).name}! (+${evaluation.reward} moedas)`, CFG.office);
+    return { ok: true, evaluation };
+  }
   tick(delta, input = { x: 0, z: 0 }) {
     if (!Number.isFinite(delta) || delta <= 0) return;
     // Cortar deltas enormes impede um salto da economia após suspensão do navegador.
