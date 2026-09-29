@@ -1,0 +1,316 @@
+
+> arena-de-bairro@0.3.0 verify
+> npm run check && npm test && npm run build
+
+
+> arena-de-bairro@0.3.0 check
+> node tools/check.mjs
+
+15 arquivos JavaScript passaram na verificação de sintaxe.
+
+> arena-de-bairro@0.3.0 test
+> node --test
+
+TAP version 13
+# Subtest: exportar e importar preserva o estado de jogo
+ok 1 - exportar e importar preserva o estado de jogo
+  ---
+  duration_ms: 57.687666
+  type: 'test'
+  ...
+# Subtest: save rejeita JSON corrompido
+ok 2 - save rejeita JSON corrompido
+  ---
+  duration_ms: 0.275367
+  type: 'test'
+  ...
+# Subtest: save rejeita versão futura sem tentar convertê-la
+ok 3 - save rejeita versão futura sem tentar convertê-la
+  ---
+  duration_ms: 0.35944
+  type: 'test'
+  ...
+# Subtest: save rejeita saldo negativo e número não finito
+ok 4 - save rejeita saldo negativo e número não finito
+  ---
+  duration_ms: 0.201417
+  type: 'test'
+  ...
+# Subtest: save rejeita kits e upgrades acima dos limites
+ok 5 - save rejeita kits e upgrades acima dos limites
+  ---
+  duration_ms: 0.237961
+  type: 'test'
+  ...
+# Subtest: save rejeita arquivo muito grande
+ok 6 - save rejeita arquivo muito grande
+  ---
+  duration_ms: 0.09466
+  type: 'test'
+  ...
+# Subtest: save rejeita posição dentro de obstáculo
+ok 7 - save rejeita posição dentro de obstáculo
+  ---
+  duration_ms: 0.164613
+  type: 'test'
+  ...
+# Subtest: save rejeita tipo incorreto em funcionário
+ok 8 - save rejeita tipo incorreto em funcionário
+  ---
+  duration_ms: 0.136912
+  type: 'test'
+  ...
+# Subtest: campos desconhecidos são descartados na desserialização
+ok 9 - campos desconhecidos são descartados na desserialização
+  ---
+  duration_ms: 0.373572
+  type: 'test'
+  ...
+# Subtest: autosave e backup retêm versões anteriores válidas
+ok 10 - autosave e backup retêm versões anteriores válidas
+  ---
+  duration_ms: 0.771649
+  type: 'test'
+  ...
+# Subtest: backup é recuperado quando o save principal está corrompido
+ok 11 - backup é recuperado quando o save principal está corrompido
+  ---
+  duration_ms: 0.298451
+  type: 'test'
+  ...
+# Subtest: save inválido sem backup é preservado e não recebe autosave
+ok 12 - save inválido sem backup é preservado e não recebe autosave
+  ---
+  duration_ms: 0.130263
+  type: 'test'
+  ...
+# Subtest: falha de armazenamento não impede iniciar partida nova
+ok 13 - falha de armazenamento não impede iniciar partida nova
+  ---
+  duration_ms: 0.107889
+  type: 'test'
+  ...
+# Subtest: conflito entre duas sessões não sobrescreve a mais recente
+ok 14 - conflito entre duas sessões não sobrescreve a mais recente
+  ---
+  duration_ms: 0.176401
+  type: 'test'
+  ...
+# Subtest: reiniciar apaga apenas as chaves do jogo
+ok 15 - reiniciar apaga apenas as chaves do jogo
+  ---
+  duration_ms: 0.146286
+  type: 'test'
+  ...
+# Subtest: estado inicial: zero moedas, um campo, suprimentos gratuitos
+ok 16 - estado inicial: zero moedas, um campo, suprimentos gratuitos
+  ---
+  duration_ms: 1.766257
+  type: 'test'
+  ...
+# Subtest: produção para no limite de 12 kits
+ok 17 - produção para no limite de 12 kits
+  ---
+  duration_ms: 25.020929
+  type: 'test'
+  ...
+# Subtest: pega até o limite da bolsa e deposita em proximidade
+ok 18 - pega até o limite da bolsa e deposita em proximidade
+  ---
+  duration_ms: 16.104529
+  type: 'test'
+  ...
+# Subtest: não entrega no campo bloqueado
+ok 19 - não entrega no campo bloqueado
+  ---
+  duration_ms: 0.369875
+  type: 'test'
+  ...
+# Subtest: sem equipamentos a bilheteria não cobra ingresso
+ok 20 - sem equipamentos a bilheteria não cobra ingresso
+  ---
+  duration_ms: 9.234139
+  type: 'test'
+  ...
+# Subtest: bilheteria paga uma única vez por torcedor e usa assentos distintos
+ok 21 - bilheteria paga uma única vez por torcedor e usa assentos distintos
+  ---
+  duration_ms: 2.999727
+  type: 'test'
+  ...
+# Subtest: partida precisa de dois torcedores sentados
+ok 22 - partida precisa de dois torcedores sentados
+  ---
+  duration_ms: 0.341684
+  type: 'test'
+  ...
+# Subtest: encerrar partida gera bônus uma vez e libera os assentos
+ok 23 - encerrar partida gera bônus uma vez e libera os assentos
+  ---
+  duration_ms: 0.700785
+  type: 'test'
+  ...
+# Subtest: coleta transfere, não duplica, o caixa
+ok 24 - coleta transfere, não duplica, o caixa
+  ---
+  duration_ms: 0.303248
+  type: 'test'
+  ...
+# Subtest: compra sem saldo não muda o estado financeiro
+ok 25 - compra sem saldo não muda o estado financeiro
+  ---
+  duration_ms: 0.429584
+  type: 'test'
+  ...
+# Subtest: funcionário é comprado uma única vez e nunca debita duas vezes
+ok 26 - funcionário é comprado uma única vez e nunca debita duas vezes
+  ---
+  duration_ms: 0.173416
+  type: 'test'
+  ...
+# Subtest: upgrade desconhecido é rejeitado
+ok 27 - upgrade desconhecido é rejeitado
+  ---
+  duration_ms: 0.0808
+  type: 'test'
+  ...
+# Subtest: melhorias seguem fórmula e limites
+ok 28 - melhorias seguem fórmula e limites
+  ---
+  duration_ms: 0.118806
+  type: 'test'
+  ...
+# Subtest: segundo campo desbloqueia com 600 moedas
+ok 29 - segundo campo desbloqueia com 600 moedas
+  ---
+  duration_ms: 0.077354
+  type: 'test'
+  ...
+# Subtest: A* encontra caminhos transitáveis entre todas as áreas de trabalho
+ok 30 - A* encontra caminhos transitáveis entre todas as áreas de trabalho
+  ---
+  duration_ms: 40.445613
+  type: 'test'
+  ...
+# Subtest: seguir rota chega ao depósito sem atravessar bloqueios
+ok 31 - seguir rota chega ao depósito sem atravessar bloqueios
+  ---
+  duration_ms: 1.048217
+  type: 'test'
+  ...
+# Subtest: colisão impede entrar no gramado
+ok 32 - colisão impede entrar no gramado
+  ---
+  duration_ms: 2.318703
+  type: 'test'
+  ...
+# Subtest: entrada diagonal não aumenta velocidade
+ok 33 - entrada diagonal não aumenta velocidade
+  ---
+  duration_ms: 0.139436
+  type: 'test'
+  ...
+# Subtest: delta enorme, negativo ou NaN não acelera economia
+ok 34 - delta enorme, negativo ou NaN não acelera economia
+  ---
+  duration_ms: 0.091284
+  type: 'test'
+  ...
+# Subtest: fila e número total de visitantes têm limites
+ok 35 - fila e número total de visitantes têm limites
+  ---
+  duration_ms: 53.308387
+  type: 'test'
+  ...
+# Subtest: automação completa funciona sem o gerente executar as tarefas
+ok 36 - automação completa funciona sem o gerente executar as tarefas
+  ---
+  duration_ms: 46.671342
+  type: 'test'
+  ...
+# Subtest: roupeiro abastece os dois campos e ambos realizam partidas
+ok 37 - roupeiro abastece os dois campos e ambos realizam partidas
+  ---
+  duration_ms: 111.488696
+  type: 'test'
+  ...
+# Subtest: sessão longa de 30 minutos mantém invariantes de economia e visitantes
+ok 38 - sessão longa de 30 minutos mantém invariantes de economia e visitantes
+  ---
+  duration_ms: 543.70241
+  type: 'test'
+  ...
+# Subtest: missão avança por progresso real e não apenas por tempo
+ok 39 - missão avança por progresso real e não apenas por tempo
+  ---
+  duration_ms: 0.194186
+  type: 'test'
+  ...
+# Subtest: rota não é cancelada por resíduo de ponto flutuante ao chegar a um nó
+ok 40 - rota não é cancelada por resíduo de ponto flutuante ao chegar a um nó
+  ---
+  duration_ms: 90.834412
+  type: 'test'
+  ...
+# Subtest: projection is reversible across the original simulation bounds
+ok 41 - projection is reversible across the original simulation bounds
+  ---
+  duration_ms: 7.033201
+  type: 'test'
+  ...
+# Subtest: all service zones retain invertible art coordinates
+ok 42 - all service zones retain invertible art coordinates
+  ---
+  duration_ms: 0.252854
+  type: 'test'
+  ...
+# Subtest: calibration rows never fold the image vertically
+ok 43 - calibration rows never fold the image vertically
+  ---
+  duration_ms: 0.202809
+  type: 'test'
+  ...
+# Subtest: portrait and landscape layouts reserve space for controls
+ok 44 - portrait and landscape layouts reserve space for controls
+  ---
+  duration_ms: 0.189429
+  type: 'test'
+  ...
+# Subtest: master artwork assets have expected PNG signature and size
+ok 45 - master artwork assets have expected PNG signature and size
+  ---
+  duration_ms: 20.034238
+  type: 'test'
+  ...
+# Subtest: all moving character sprites are present with RGBA pixels
+ok 46 - all moving character sprites are present with RGBA pixels
+  ---
+  duration_ms: 6.759016
+  type: 'test'
+  ...
+# Subtest: Vercel configuration builds the same static project without APIs
+ok 47 - Vercel configuration builds the same static project without APIs
+  ---
+  duration_ms: 7.395145
+  type: 'test'
+  ...
+# Subtest: HTML references new visual stylesheet and live controls
+ok 48 - HTML references new visual stylesheet and live controls
+  ---
+  duration_ms: 0.905917
+  type: 'test'
+  ...
+1..48
+# tests 48
+# suites 0
+# pass 48
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1017.136801
+
+> arena-de-bairro@0.3.0 build
+> node tools/build.mjs
+
+Production: dist/index.html + 8 image assets. Standalone: JOGAR.html (6463 KiB).

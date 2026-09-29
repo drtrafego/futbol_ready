@@ -1,0 +1,42 @@
+{
+  "repository": "drtrafego/futbol_ready",
+  "commit": "0279da1a936982094e018ca70385ebe6db0a7c9e",
+  "branch_observed": "main",
+  "copy_scope": "Five complete source files only. Not an integrated or complete donor project.",
+  "access": "Read through the GitHub connector; no remote write in this handoff.",
+  "files": [
+    {
+      "path": "src/config/construcoes.ts",
+      "git_blob_sha1": "c2fe79a8229c2a56f01c68d28a5786972e6acf80",
+      "url": "https://github.com/drtrafego/futbol_ready/blob/0279da1a936982094e018ca70385ebe6db0a7c9e/src/config/construcoes.ts"
+    },
+    {
+      "path": "src/config/divisoes.ts",
+      "git_blob_sha1": "e02d3a803f0c7e21c2b78efa9214e078b2f2539e",
+      "url": "https://github.com/drtrafego/futbol_ready/blob/0279da1a936982094e018ca70385ebe6db0a7c9e/src/config/divisoes.ts"
+    },
+    {
+      "path": "src/types/game.ts",
+      "git_blob_sha1": "69c346fae1ed50ab97782bf70769c7f35e6e4936",
+      "url": "https://github.com/drtrafego/futbol_ready/blob/0279da1a936982094e018ca70385ebe6db0a7c9e/src/types/game.ts"
+    },
+    {
+      "path": "src/lib/elenco.ts",
+      "git_blob_sha1": "91137b3017d1a94cddf945eccfc0c4c5b37978a6",
+      "url": "https://github.com/drtrafego/futbol_ready/blob/0279da1a936982094e018ca70385ebe6db0a7c9e/src/lib/elenco.ts"
+    },
+    {
+      "path": "src/lib/economia.ts",
+      "git_blob_sha1": "7a388397f89aa75c59a2e2a1036d36433029c39c",
+      "url": "https://github.com/drtrafego/futbol_ready/blob/0279da1a936982094e018ca70385ebe6db0a7c9e/src/lib/economia.ts"
+    }
+  ],
+  "additional_paths_inspected": [
+    "src/lib/partidas.ts",
+    "src/store/useGameStore.ts",
+    "src/components/JogoBernardo.tsx"
+  ],
+  "additional_reads_scope": "Partidas/store inspected in returned excerpts; root component read. Agent must inspect full local sources before integration.",
+  "base_archive": "Arena-de-Bairro-Visual-Corrigido-Vercel.zip",
+  "base_archive_sha256": "a825a2c694c543724ecc0f5c28d4389cda265cb5ef0823b35571bd9931d98f44"
+}

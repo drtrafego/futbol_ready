@@ -1,0 +1,199 @@
+{
+  "environment": "Linux / Chromium. Navigation blocked by browser policy: standalone HTML mounted using set_content; localStorage replaced by in-memory adapter; optional QA hook enabled. HTTP checks done separately via Python. Emulated viewports, not physical devices.",
+  "checks": [
+    {
+      "name": "Production HTML served via HTTP (separate Python check)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "HTTP asset: arena-cenario.png",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "HTTP asset: gerente.png",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "HTTP asset: roupeiro.png",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "HTTP asset: icon.svg",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Artwork and sprite resources loaded",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Depot navigation collects actual kits",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Pitch navigation delivers actual kits",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Paid attendance and matches occur",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cash revenue reaches wallet",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Real purchases unlock staff and second pitch",
+      "pass": true,
+      "detail": "['gate', 'runner', 'cashier', 'field2']"
+    },
+    {
+      "name": "Live HUD equals simulation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Save is written to test storage adapter",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Menu pauses simulated clock",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "390x844: no document horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "390x844: primary controls visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "390x844: shop is interactive",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "360x800: no document horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "360x800: primary controls visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "360x800: shop is interactive",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "320x568: no document horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "320x568: primary controls visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "320x568: shop is interactive",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "768x1024: no document horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "768x1024: primary controls visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "768x1024: shop is interactive",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "844x390: no document horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "844x390: primary controls visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "844x390: shop is interactive",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "1024x768: no document horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "1024x768: primary controls visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "1024x768: shop is interactive",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "1920x1080: no document horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "1920x1080: primary controls visible",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "1920x1080: shop is interactive",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Joystick moves manager in mobile viewport",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "No uncaught browser JS errors",
+      "pass": true,
+      "detail": "[]"
+    }
+  ],
+  "passed": 37,
+  "total": 37,
+  "errors": [],
+  "purchases_without_wallet_injection": [
+    "gate",
+    "runner",
+    "cashier",
+    "field2"
+  ]
+}

@@ -1,0 +1,32 @@
+ARENA DE BAIRRO — PACOTE PARA O GEMINI
+====================================
+
+O pedido é continuar A VERSÃO ILUSTRADA DESTA PASTA, aproveitar as mecânicas
+esportivas do repositório drtrafego/futbol_ready e enviar o resultado ao GitHub.
+O usuário fará a publicação na Vercel.
+
+1. Extraia este ZIP em uma pasta separada do repositório atual.
+2. Abra essa pasta no Gemini do seu editor/terminal e peça para ler GEMINI.md.
+3. Informe ao agente onde está a pasta local de drtrafego/futbol_ready, caso
+   ele não consiga localizá-la. A autenticação Git ocorre no seu computador.
+4. Não é necessário enviar tokens, senhas ou credenciais em mensagens.
+
+JOGO ATUAL: jogo_base/JOGAR.html
+CÓDIGO ATUAL: jogo_base/src/ e jogo_base/assets/
+INSTRUÇÕES COMPLETAS: GEMINI.md
+REQUISITOS: docs/01_CLUBE_QUE_CRESCE.md
+INVENTÁRIO DAS MECÂNICAS DO GITHUB: docs/02_INVENTARIO_JOGABILIDADE.md
+PLANO TÉCNICO, TESTES E ENVIO: docs/03_EXECUCAO_E_GITHUB.md
+LOGIN PARA DUAS PESSOAS (PENDENTE): docs/04_ACESSO_DOIS_JOGADORES.md
+
+STATUS REAL DO PACOTE
+A versão 0.3 ilustrada está incluída com fonte, imagens, HTML e testes.
+Os módulos esportivos e a evolução física completa descritos nos documentos
+são tarefas de integração para o Gemini, NÃO funcionalidades já adicionadas
+à base neste pacote. Cinco arquivos originais de mecânicas do outro projeto
+foram incluídos como referência, com seus hashes de Git conferidos.
+A raiz deste pacote é de entrega, não a raiz a selecionar para build na Vercel.
+
+A imagem aprovada define a QUALIDADE VISUAL. A nova partida deve começar
+pequena. O clube, as cadeiras, a base, o treino, o marketing e a diretoria
+crescem de verdade no mapa com os investimentos.

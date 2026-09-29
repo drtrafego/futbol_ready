@@ -1,0 +1,19 @@
+{
+  "name": "arena-de-bairro",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "Arena de Bairro: visual ilustrado aprovado integrado ao prototipo 2.5D jogavel.",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "scripts": {
+    "dev": "node tools/server.mjs",
+    "dev:lan": "node tools/server.mjs --host=0.0.0.0",
+    "build": "node tools/build.mjs",
+    "preview": "node tools/server.mjs --dir=dist --port=4173",
+    "test": "node --test",
+    "check": "node tools/check.mjs",
+    "verify": "npm run check && npm test && npm run build"
+  }
+}

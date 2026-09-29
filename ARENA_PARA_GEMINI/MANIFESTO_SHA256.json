@@ -1,0 +1,406 @@
+{
+  "format": 1,
+  "purpose": "Transferência para Gemini: base ilustrada pronta + requisitos de integração. Não é integração concluída.",
+  "files": [
+    {
+      "path": "GEMINI.md",
+      "bytes": 10835,
+      "sha256": "e71538c61e86da7464a8beb945885c128b41c862071fe4a65b34d3f7a789fe8a"
+    },
+    {
+      "path": "LEIA_PRIMEIRO.txt",
+      "bytes": 1712,
+      "sha256": "198960d8657c45a2865c94ebcc1cec7e93459a8156539204dbef4a1ce1b91678"
+    },
+    {
+      "path": "PROMPT_PARA_COLAR.txt",
+      "bytes": 1128,
+      "sha256": "2f6976ac0c6c38d935dd12abd8c2ab463c9ffe8beff5809677b354995641168b"
+    },
+    {
+      "path": "docs/01_CLUBE_QUE_CRESCE.md",
+      "bytes": 10128,
+      "sha256": "0620085461cdc07034cd3a5353897696838cfb29ad4a0de6d7710dfd9c35f3d4"
+    },
+    {
+      "path": "docs/02_INVENTARIO_JOGABILIDADE.md",
+      "bytes": 9104,
+      "sha256": "e26d0534105294860fb4baa9f9053e35c4dc0f79a3f225f982a502456b3ce058"
+    },
+    {
+      "path": "docs/03_EXECUCAO_E_GITHUB.md",
+      "bytes": 9776,
+      "sha256": "5c56a6945fee8e77bb9d95a835f3d085af420e1207d37a535d76cd6eb9852b30"
+    },
+    {
+      "path": "docs/04_ACESSO_DOIS_JOGADORES.md",
+      "bytes": 3197,
+      "sha256": "4639c62a21b351d24e89f1d72c132baba08379fe54163abe8c92aa9a191eb9f1"
+    },
+    {
+      "path": "docs/05_VALIDACAO_PACOTE.md",
+      "bytes": 2694,
+      "sha256": "27ae9abc104516d6f65626a90cbb8ab83cdf0e9a9fa18fea589583de765c6add"
+    },
+    {
+      "path": "ferramentas/COMO_USAR.md",
+      "bytes": 1402,
+      "sha256": "8b7d64844d05fb109d75dfbf63668516b602f9e74473123aef6694a04742f2ba"
+    },
+    {
+      "path": "ferramentas/exportar-referencia-git.mjs",
+      "bytes": 3318,
+      "sha256": "80167de39fa9a69f6d86cbab39878441b207e21a6bebaf6454a71472eb9c8703"
+    },
+    {
+      "path": "ferramentas/verificar-pacote.mjs",
+      "bytes": 1493,
+      "sha256": "49bd76b2b37fc9feef75ce199f3d5a3fe1ef77352692cc1cd48428e3231d4ce0"
+    },
+    {
+      "path": "jogo_base/.gitignore",
+      "bytes": 76,
+      "sha256": "fcafa5b6d8544293c2833e12f31f05ac4331d81b9c468965872b12b31bd24bf1"
+    },
+    {
+      "path": "jogo_base/.vercelignore",
+      "bytes": 103,
+      "sha256": "7451dbc175e245906dabd3d78709fa2b04fbac00bffc04ff2aa368e6fa2a4f17"
+    },
+    {
+      "path": "jogo_base/AGENTS.md",
+      "bytes": 3521,
+      "sha256": "9c26600bde0885f359f2bbd9241685a17794976ac3578223d577e798cc2c6863"
+    },
+    {
+      "path": "jogo_base/INICIAR-WINDOWS.cmd",
+      "bytes": 281,
+      "sha256": "7f7d2f200e1d8c8120feb693bc1c8eb36e9b0c81f2bf131b01b4bea592c73bdf"
+    },
+    {
+      "path": "jogo_base/JOGAR.html",
+      "bytes": 6618612,
+      "sha256": "f0590de8e59745d0c6c02c01a11b4a201d44e574879885d3bbb1ed4746e6df3f"
+    },
+    {
+      "path": "jogo_base/README.md",
+      "bytes": 5889,
+      "sha256": "52a77fcdccc5bb7de169ff6276740af62d6e14a690e737668abb66c8e1771a41"
+    },
+    {
+      "path": "jogo_base/assets/arena-cenario.png",
+      "bytes": 2482525,
+      "sha256": "e2830cfad0fc7db0193eaf3059674b66b7874aa5ac9cfb8c51a3a32f13539b4f"
+    },
+    {
+      "path": "jogo_base/assets/arena-mapa.png",
+      "bytes": 2393028,
+      "sha256": "ad1a99c046fd3e447be002ff3582fe56c1f85bd16d83b711d64220082b2c5b07"
+    },
+    {
+      "path": "jogo_base/assets/atleta-azul.png",
+      "bytes": 4548,
+      "sha256": "8f27daeabc0f0fe95ebb44430e5c9a1508d16df03fd2e1fb97ac82075382e362"
+    },
+    {
+      "path": "jogo_base/assets/atleta-laranja.png",
+      "bytes": 4556,
+      "sha256": "44a16dd8b409ecc3231dec933233c45498f870446dae91d7ba426235f7195704"
+    },
+    {
+      "path": "jogo_base/assets/gerente.png",
+      "bytes": 4621,
+      "sha256": "c8b6c9764a2a73a60c6e64da056988f1e5cc1b76c9efb5ad3dfdb1010d166dc0"
+    },
+    {
+      "path": "jogo_base/assets/icon.svg",
+      "bytes": 373,
+      "sha256": "959e5e96286dd1775a12a7a0f83863dec860f2cd02b7077150c186ca08c6a905"
+    },
+    {
+      "path": "jogo_base/assets/referencia-aprovada.png",
+      "bytes": 2518677,
+      "sha256": "c5c2ea52c51a7d83a396c376074f38d6a2a1d3a63b7f8d21e63dba7d6ff682da"
+    },
+    {
+      "path": "jogo_base/assets/roupeiro.png",
+      "bytes": 4554,
+      "sha256": "779a27f28e2140d01e109eed23248c8a6aac0be0fb9b2be67739a2a0f27b25fd"
+    },
+    {
+      "path": "jogo_base/assets/torcedor-dourado.png",
+      "bytes": 4539,
+      "sha256": "92d58e7eba7a80e53a7140c0f9410ef1913bd8f5e73cf28a3fa0ffd21807a6b3"
+    },
+    {
+      "path": "jogo_base/assets/torcedor-roxo.png",
+      "bytes": 4563,
+      "sha256": "688e45dd7a05d52f8b04e68894340d6d2f8fb5472d5b1d52ac2318fa077e2bec"
+    },
+    {
+      "path": "jogo_base/assets/torcedor-verde.png",
+      "bytes": 4559,
+      "sha256": "e3e6e40cfb5dbe024af771e74a9c475989a916aa9f08d4d14a4770b43b26bcc8"
+    },
+    {
+      "path": "jogo_base/dist/assets/arena-cenario.png",
+      "bytes": 2482525,
+      "sha256": "e2830cfad0fc7db0193eaf3059674b66b7874aa5ac9cfb8c51a3a32f13539b4f"
+    },
+    {
+      "path": "jogo_base/dist/assets/arena-mapa.png",
+      "bytes": 2393028,
+      "sha256": "ad1a99c046fd3e447be002ff3582fe56c1f85bd16d83b711d64220082b2c5b07"
+    },
+    {
+      "path": "jogo_base/dist/assets/gerente.png",
+      "bytes": 4621,
+      "sha256": "c8b6c9764a2a73a60c6e64da056988f1e5cc1b76c9efb5ad3dfdb1010d166dc0"
+    },
+    {
+      "path": "jogo_base/dist/assets/icon.svg",
+      "bytes": 373,
+      "sha256": "959e5e96286dd1775a12a7a0f83863dec860f2cd02b7077150c186ca08c6a905"
+    },
+    {
+      "path": "jogo_base/dist/assets/roupeiro.png",
+      "bytes": 4554,
+      "sha256": "779a27f28e2140d01e109eed23248c8a6aac0be0fb9b2be67739a2a0f27b25fd"
+    },
+    {
+      "path": "jogo_base/dist/assets/torcedor-dourado.png",
+      "bytes": 4539,
+      "sha256": "92d58e7eba7a80e53a7140c0f9410ef1913bd8f5e73cf28a3fa0ffd21807a6b3"
+    },
+    {
+      "path": "jogo_base/dist/assets/torcedor-roxo.png",
+      "bytes": 4563,
+      "sha256": "688e45dd7a05d52f8b04e68894340d6d2f8fb5472d5b1d52ac2318fa077e2bec"
+    },
+    {
+      "path": "jogo_base/dist/assets/torcedor-verde.png",
+      "bytes": 4559,
+      "sha256": "e3e6e40cfb5dbe024af771e74a9c475989a916aa9f08d4d14a4770b43b26bcc8"
+    },
+    {
+      "path": "jogo_base/dist/index.html",
+      "bytes": 86038,
+      "sha256": "9f0a68a0b5eaa605e3c6bd5448fc918f9bfa3af56f3b08b6cf8d08ec424a67c4"
+    },
+    {
+      "path": "jogo_base/docs/INTEGRACAO.md",
+      "bytes": 1419,
+      "sha256": "a7ebf1d4087abd954a824af7e7db65f186a2ad04efbd056085ed575801a6e81e"
+    },
+    {
+      "path": "jogo_base/docs/VALIDACAO.md",
+      "bytes": 2398,
+      "sha256": "8791ecc7ca50f204edf4bdceb318b318ed8753b15e3da5668334a788789ecb6e"
+    },
+    {
+      "path": "jogo_base/index.html",
+      "bytes": 6250,
+      "sha256": "d45ea2dba7869bbcad1ade7fed2daa3360f708a8ec6dcd744efca7d63524e7d9"
+    },
+    {
+      "path": "jogo_base/package-lock.json",
+      "bytes": 249,
+      "sha256": "5d59a989e47e45c384a57578ed08734a90c26e8dabbe3a28b9f6196ae913aca3"
+    },
+    {
+      "path": "jogo_base/package.json",
+      "bytes": 571,
+      "sha256": "39f092c83642b2da1cde48cc255c58495c068b7e7bba721e7d18a9115ccf4ca1"
+    },
+    {
+      "path": "jogo_base/qa/browser-report.json",
+      "bytes": 4315,
+      "sha256": "47d0e8cc497a2966bf97cd47c1715bdb163b76004e6966eeb5fc6ca4c24d7dd1"
+    },
+    {
+      "path": "jogo_base/qa/browser-run.log",
+      "bytes": 4316,
+      "sha256": "44286fa0e85cbd51a178a07d834b683e108a493e3aab3a63fea4266459017dea"
+    },
+    {
+      "path": "jogo_base/qa/check_browser.py",
+      "bytes": 6292,
+      "sha256": "2f9769152999e49a84747dff1871a77aaf42649bd1e9e40e80cfcf3242526abe"
+    },
+    {
+      "path": "jogo_base/qa/desktop-inicio.png",
+      "bytes": 2335790,
+      "sha256": "921dfbb72402feda371f21519f107913a19ca3afd1dd26270ff246927eedca97"
+    },
+    {
+      "path": "jogo_base/qa/desktop-jogo.png",
+      "bytes": 2418439,
+      "sha256": "f5a32ffb12aa32601521d5f6c9ec9ef561ac3ee3cff99f83a691ec7442f872f9"
+    },
+    {
+      "path": "jogo_base/qa/sprite-preview.png",
+      "bytes": 7784,
+      "sha256": "1d6426dbe7583ff0858361b2b079b1d6520ed562fbe149c7b3fb607d4eb93886"
+    },
+    {
+      "path": "jogo_base/qa/tela-390x844.png",
+      "bytes": 405713,
+      "sha256": "f3e67eafde9e30aff69341cd07d47263881083fb42397a76a57ac7f4228d900e"
+    },
+    {
+      "path": "jogo_base/qa/tela-768x1024.png",
+      "bytes": 914119,
+      "sha256": "e02e966c455f29df3d67aab38654e8debd9f3e54a1e3d88b5b36e0a10ddb753c"
+    },
+    {
+      "path": "jogo_base/qa/tela-844x390.png",
+      "bytes": 315002,
+      "sha256": "79468445a0cf108c15f4416605bf2ec71e9cc50839772b25e30f8fc9d057f5cc"
+    },
+    {
+      "path": "jogo_base/qa/verify.log",
+      "bytes": 8856,
+      "sha256": "9f19aa5dd8aa978bd27bb30ac3f7a4b7f8fe028481b9bac82a7f153886edbd67"
+    },
+    {
+      "path": "jogo_base/src/config.js",
+      "bytes": 3311,
+      "sha256": "fa59a115b9e33bb749adc529ec6fd909b4a2af20af98899006cb3248498181ed"
+    },
+    {
+      "path": "jogo_base/src/input.js",
+      "bytes": 2739,
+      "sha256": "74ee3d8e0517852e008e98bfa5976d9f61ec2e0229163f17530e16c03068a571"
+    },
+    {
+      "path": "jogo_base/src/main.js",
+      "bytes": 6454,
+      "sha256": "91bdedab1b8dc70ae3fd607818fae2f96a225d3bba8566de52a51362b9cc5ff0"
+    },
+    {
+      "path": "jogo_base/src/navigation.js",
+      "bytes": 4942,
+      "sha256": "eb97834bb97f50def53dcc1f9f3238492d74166e23bea1de44d78d51c343ec2c"
+    },
+    {
+      "path": "jogo_base/src/render.js",
+      "bytes": 11931,
+      "sha256": "c351b6559b916ee273c851daefcb6f2bdb3a18d294495b231a1bcc714f4563f1"
+    },
+    {
+      "path": "jogo_base/src/save.js",
+      "bytes": 8272,
+      "sha256": "b1ba2ed262824f0ea1e16375931848dfd9044edf91888471f2c186a66f3fe7cf"
+    },
+    {
+      "path": "jogo_base/src/scene.js",
+      "bytes": 1434,
+      "sha256": "39dfcf96bbbb2d23d1cdf2dd2ac6b4afc4fa1c256174c5727d6b70e63f58df28"
+    },
+    {
+      "path": "jogo_base/src/simulation.js",
+      "bytes": 11011,
+      "sha256": "c6ff58b3d400e17bd05e19cab9c24f3d25eb6ab2e9359143f9574f35ebb05e20"
+    },
+    {
+      "path": "jogo_base/src/style.css",
+      "bytes": 10954,
+      "sha256": "b906d15d3ce209a5d8f11b95426427d649d7f7321d3e394207919ee26ac37cb3"
+    },
+    {
+      "path": "jogo_base/src/ui.js",
+      "bytes": 6651,
+      "sha256": "29a659a5f8348a9f012daa572533b5295f653badf0679bc53070fd28f43d4539"
+    },
+    {
+      "path": "jogo_base/src/visual.css",
+      "bytes": 13284,
+      "sha256": "8734e2ad5eb32651ad9422ad8a521c5e02b724448ae82773bd3a250e1ace0341"
+    },
+    {
+      "path": "jogo_base/tests/save.test.mjs",
+      "bytes": 3901,
+      "sha256": "a9636b613959a49aaed4ab260f1ce60a5b57e3577cc421ca934dbfb1bedbe4f4"
+    },
+    {
+      "path": "jogo_base/tests/simulation.test.mjs",
+      "bytes": 8061,
+      "sha256": "5320474bc115410a2afd9c2001bc50efb93f91aebb14f633bfc17f29b8279985"
+    },
+    {
+      "path": "jogo_base/tests/visual.test.mjs",
+      "bytes": 2551,
+      "sha256": "842fad0148ea451aaf7a93ed13c2b7c1ec0d8b78232e05e200c1a6c4e4577103"
+    },
+    {
+      "path": "jogo_base/tools/build.mjs",
+      "bytes": 2233,
+      "sha256": "e73356f9fa066ee47f5992b2102e1ad23aeff51a2ce6a7a220b1c32189e966b0"
+    },
+    {
+      "path": "jogo_base/tools/check.mjs",
+      "bytes": 660,
+      "sha256": "df23d265550c63e3e6d7caa12276b0c8c563dad5aa4a0e3005ea02dbb5e9d92a"
+    },
+    {
+      "path": "jogo_base/tools/prepare-assets.py",
+      "bytes": 3019,
+      "sha256": "a467248a519b6066aef8626b7202ab7bb7fab06b6080ee29d2eb51a4320220e4"
+    },
+    {
+      "path": "jogo_base/tools/server.mjs",
+      "bytes": 3368,
+      "sha256": "94bb762549a9758b197a659f77e704f2bd4fb28ca3f611b2c44b1a1445b12de5"
+    },
+    {
+      "path": "jogo_base/vercel.json",
+      "bytes": 763,
+      "sha256": "2aa42066438d5f72f97dac7e6e2d54313690ee4b4c439f9f321923603e7a0f57"
+    },
+    {
+      "path": "referencia_jogabilidade/LEIA_ANTES_DE_COPIAR.md",
+      "bytes": 890,
+      "sha256": "8b5861002077e45ccff0b65f4735e77a0a5192502ead90ecbd36e2b1ddac2e07"
+    },
+    {
+      "path": "referencia_jogabilidade/ORIGEM.json",
+      "bytes": 1989,
+      "sha256": "9a994cfcd4e8e11a1820e92b4f4eb2b94a40c67de6caff70f0b22327c009a247"
+    },
+    {
+      "path": "referencia_jogabilidade/trechos_originais/src/config/construcoes.ts",
+      "bytes": 2609,
+      "sha256": "3cb831f0d6604f1a9d71ed51fffebdbb0466640ad21cb00013e05ae12cad2682"
+    },
+    {
+      "path": "referencia_jogabilidade/trechos_originais/src/config/divisoes.ts",
+      "bytes": 2054,
+      "sha256": "c8fe1c640ed6db6a0abb21d0c145a76237eb1db885127c7c7b09829907c1d697"
+    },
+    {
+      "path": "referencia_jogabilidade/trechos_originais/src/lib/economia.ts",
+      "bytes": 7034,
+      "sha256": "ec9f1eb66812c4b92b38a16a417f4db9078f41c943b0787f1760bf86fb8f2fb2"
+    },
+    {
+      "path": "referencia_jogabilidade/trechos_originais/src/lib/elenco.ts",
+      "bytes": 7356,
+      "sha256": "7f62fa22462a77abc70f771d1ac3e10595274fd39d41c848d6069626ada0bd23"
+    },
+    {
+      "path": "referencia_jogabilidade/trechos_originais/src/types/game.ts",
+      "bytes": 3291,
+      "sha256": "bc5d8ddd74552e6190943475a12a2cdd5ed4dd4172bd28121f095e1c134539e2"
+    },
+    {
+      "path": "validacao-handoff.json",
+      "bytes": 824,
+      "sha256": "13835c86fb00e8cf0a509140800414ffd29bc5ee6da6017f77794f1420cbd6c1"
+    },
+    {
+      "path": "verificacao-base-atual.log",
+      "bytes": 8856,
+      "sha256": "d4bcddd46a367ae232d38c6a70e7ec76c74dcbb7cef8df09e38377b053e0af08"
+    }
+  ]
+}

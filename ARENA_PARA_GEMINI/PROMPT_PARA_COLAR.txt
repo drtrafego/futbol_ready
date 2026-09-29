@@ -1,0 +1,18 @@
+Leia GEMINI.md na pasta ARENA_PARA_GEMINI e execute o trabalho descrito.
+
+Use jogo_base como base real do jogo; não recrie a versão antiga do repositório.
+Mantenha visual ilustrado, gerente, movimento, atendimento e controles.
+Adapte do drtrafego/futbol_ready as mecânicas de estádio, marketing, base,
+formação/venda/contratação de atletas, treino, comissão, tática, campeonato,
+tabela de classificação e resultados. A diretoria é um espaço expansível novo.
+
+Tudo começa pequeno no mapa, com poucas cadeiras, e cresce visualmente com as
+melhorias. Os departamentos não podem ser apenas botões ou mudanças de números.
+
+Faça backup do commit atual, trabalhe em branch, implemente em etapas, teste e
+mostre capturas reais. Preserve o histórico e não use force push. Depois envie
+código e assets ao GitHub e informe o SHA e a situação da main ou PR. Eu faço a
+Vercel. Não rode deploy. Leia também o requisito pendente de acesso para duas pessoas.
+
+Não diga que os recursos do briefing já existem no ZIP: eles precisam ser
+integrados. Não termine apenas com um novo planejamento; execute no código.

@@ -1,0 +1,34 @@
+{
+  "environment": "Linux; Node 22.16.0; git local de fixture; nenhuma rede ou escrita remota",
+  "checks": [
+    {
+      "test": "exportação copia fontes commitadas e exclui .env",
+      "passed": true
+    },
+    {
+      "test": "árvore Git permanece limpa",
+      "passed": true
+    },
+    {
+      "test": "recusa sobrescrever snapshot",
+      "passed": true
+    },
+    {
+      "test": "recusa gravar snapshot dentro do repo",
+      "passed": true
+    },
+    {
+      "test": "ref inexistente retorna erro sem fetch",
+      "passed": true
+    },
+    {
+      "test": "todos os 60 arquivos da base permanecem idênticos ao ZIP recebido",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "Não executado no Windows.",
+    "Nenhuma integração de gameplay executada neste pacote.",
+    "Nenhum push ou deploy."
+  ]
+}
