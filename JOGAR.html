@@ -143,6 +143,8 @@ body[data-district=world] .topbar,.topbar{position:absolute;top:max(12px,env(saf
 .control-wrap{transform:none!important}.control-wrap>span{visibility:visible!important}
 @media(max-width:1000px){.bottom-actions{width:142px!important}}
 @media(max-width:680px){.bottom-actions{width:105px!important;gap:4px!important}}
+.team-footer-actions{margin-top:20px;padding:12px;background:#e5ebd7;border:1px dashed #7a9c68;border-radius:12px;text-align:center}
+.team-footer-actions button{background:#8e3838!important;border-color:#b94a4a!important;color:#fff!important;display:inline-block!important;width:auto!important;margin:0 auto!important;padding:8px 16px!important;font-weight:700!important}
 
 </style>
   <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZD0iTTUgNVEzMi0zIDU5IDVWNDJMMzIgNjAgNSA0MloiIGZpbGw9IiMxMzQ5MzYiIHN0cm9rZT0iI2Y2ZTc4YyIgc3Ryb2tlLXdpZHRoPSI0Ii8+PHRleHQgeD0iMzIiIHk9IjM3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmMTkzIj5BPC90ZXh0Pjx0ZXh0IHg9IjMyIiB5PSI0OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjkiIGZpbGw9IiNmZmYxOTMiPkZDPC90ZXh0Pjwvc3ZnPg==" type="image/svg+xml">
@@ -204,7 +206,8 @@ body[data-district=world] .topbar,.topbar{position:absolute;top:max(12px,env(saf
       <button id="sound-button" class="secondary-button">SOM: DESLIGADO</button>
       <button id="export-button" class="secondary-button">EXPORTAR SAVE</button>
       <button id="import-button" class="secondary-button">IMPORTAR SAVE</button>
-      <button id="reset-button" class="danger-button">REINICIAR ARENA</button>
+      <button id="reset-team-button" class="secondary-button" style="border-color:#4a9a63;color:#e8ffd1;">RECOMEÇAR TIME E HISTÓRICO</button>
+      <button id="reset-button" class="danger-button">REINICIAR TUDO (SAVE DO ZERO)</button>
     </div>
     <input id="import-file" type="file" accept=".json,application/json" hidden>
     <div class="help-box"><b>Como jogar</b><p>Use WASD, setas, controle virtual ou toque no chão. Fique nos círculos para pegar, entregar, atender e recolher automaticamente. Dois torcedores sentados e um kit iniciam uma partida.</p><p>O protótipo não gera renda com a página fechada. Uma alteração de save em outra aba pausa esta sessão para evitar sobrescrita.</p></div><p class="art-note">O cenário preserva a ilustração aprovada. Árvores, prédios e parte da torcida e dos atletas são decorativos. Gerente, roupeiro, fila, placares e economia são controlados pelo jogo. O save do Arena de Craques usa outro formato; não o importe aqui.</p>
@@ -814,6 +817,38 @@ class Simulation {
     }
   }
   nextSeason(){const s=this.state;if(s.official||!s.season.finished)return{ok:false,reason:'A temporada ainda não terminou.'};const evaluation=evaluateSeasonEnd(s.season);s.career.history.unshift({number:s.career.seasonsPlayed+1,division:s.season.divisionIndex,...evaluation,results:structuredClone(s.season.history)});s.career.history=s.career.history.slice(0,10);s.career.seasonsPlayed++;if(evaluation.playerPos===1)s.career.trophies++;this.credit(evaluation.reward);s.season=createSeason(evaluation.nextDivisionIndex,s.club.name,s.club.sigla);s.market=generateMarket(s.season.divisionIndex,()=>this.random(),s.sequence++);this.emit('season',`${evaluation.status==='promoted'?'ACESSO! ':evaluation.status==='relegated'?'Rebaixamento. ':''}Nova temporada: ${getDivision(s.season.divisionIndex).name}.`);return{ok:true,evaluation,reason:'Nova temporada iniciada.'};}
+  resetTeam(profile = null) {
+    const s = this.state;
+    const clubName = profile?.clubName || s.club?.name || 'Clube da Vila';
+    const sigla = profile?.sigla || s.club?.sigla || 'VIL';
+    let seed = (Date.now() ^ (Math.random() * 0x7fffffff)) & 0xffffffff;
+    const initialRandom = () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; };
+    s.season = createSeason(0, clubName, sigla);
+    s.official = null;
+    s.career = { seasonsPlayed: 0, trophies: 0, totalMatches: 0, totalWins: 0, history: [] };
+    s.preparation = 0;
+    s.roster = generateInitialRoster(46, initialRandom);
+    s.market = generateMarket(0, initialRandom);
+    s.youthList = [];
+    s.tactics = { formation: '4-4-2', posture: 'equilibrada', captainId: null };
+    s.club.name = clubName;
+    s.club.sigla = sigla;
+    s.departmentTimers = { scout: 0, market: 0, campaign: 0 };
+    s.campaignUntil = 0;
+    s.stats.matches = 0;
+    for (const f of s.fields) {
+      f.score = [0, 0];
+      f.played = 0;
+      f.remaining = 0;
+      f.opponent = 'Visitantes';
+    }
+    if (s.map) {
+      s.map.training = null;
+    }
+    s.revision = (s.revision || 0) + 1;
+    this.emit('team', 'Novo time iniciado! Elenco renovado e histórico esportivo zerado.');
+    return { ok: true, reason: 'Time, elenco e histórico esportivo reiniciados com sucesso.' };
+  }
   releaseFans(id){for(const fan of fieldFans(this.state,id)){fan.phase='leaving';fan.route=[{x:fan.x,z:3.6},{x:12.7,z:3.6},{x:12.7,z:16.5}];}}
   tick(delta, input = { x: 0, z: 0 }) {
     if (!Number.isFinite(delta) || delta <= 0) return;
@@ -1964,6 +1999,7 @@ class UI{
   on('quality-button',()=>{const low=actions.toggleQuality();document.getElementById('quality-button').textContent=`MODO ECONÔMICO: ${low?'SIM':'NÃO'}`;});
   on('sound-button',()=>{this.soundEnabled=!this.soundEnabled;document.getElementById('sound-button').textContent=`SOM: ${this.soundEnabled?'LIGADO':'DESLIGADO'}`;if(this.soundEnabled)this.play('cash');});
   on('export-button',()=>actions.export());on('import-button',()=>document.getElementById('import-file').click());on('logout-button',()=>actions.logout());
+  on('reset-team-button',()=>{actions.command('resetTeam');});
   on('reset-button',()=>{if(confirm('Recomeçar somente este perfil? Exporte seu save antes.'))actions.reset();});
   for(const [id,tab]of [['btn-dock-team','team'],['btn-dock-league','league'],['btn-dock-youth','youth'],['btn-dock-market','market'],['header-league-pill','league']])on(id,()=>this.openSports(tab));
   document.addEventListener('click',e=>{
@@ -2026,7 +2062,7 @@ class UI{
  }
  athleteHeader(p){return `<div class="card-top"><span class="tag">${escapeText(p.pos)}</span><small>${p.age} anos</small></div><h3>${escapeText(p.name)}</h3><div class="rating"><b>${p.overall}</b><span>FORÇA<br>Potencial ${p.potential}</span></div>`;}
  teamHTML(s){const captain=s.roster.find(p=>p.id===s.tactics.captainId);const card=p=>`<article class="sports-card ${p.id===s.tactics.captainId?'captain':''}">${this.athleteHeader(p)}<div class="card-actions">${actionButton(`Treinar · ${calculateTrainingCost(p,s.facilities.training)}`,'train',p.id,p.overall>=p.potential||s.wallet<calculateTrainingCost(p,s.facilities.training))}${p.starter?actionButton(p.id===s.tactics.captainId?'Capitão ✓':'Dar faixa','captain',p.id):actionButton('Escalar ⇄','sub',p.id)}${!p.starter?actionButton(`Vender · +${playerSaleValue(p)}`,'sell',p.id):''}</div></article>`;
-  return `<div class="tactics"><label>Formação<select id="tactic-formation">${['4-4-2','4-3-3','3-5-2','5-3-2'].map(f=>`<option ${f===s.tactics.formation?'selected':''}>${f}</option>`).join('')}</select></label><label>Postura<select id="tactic-posture">${['equilibrada','ofensiva','defensiva'].map(f=>`<option ${f===s.tactics.posture?'selected':''}>${f}</option>`).join('')}</select></label><p>Capitão: <b>${escapeText(captain?.name||'Escolha um titular')}</b></p></div><p class="section-note">A formação reorganiza a escalação; a força dos titulares afeta os gols e os resultados. CT reduz custo de treino.</p><h3>11 titulares</h3><div class="sports-grid">${getStarters(s.roster).map(card).join('')}</div><h3>Reservas (${getReserves(s.roster).length})</h3><div class="sports-grid">${getReserves(s.roster).map(card).join('')}</div>`;
+  return `<div class="tactics"><label>Formação<select id="tactic-formation">${['4-4-2','4-3-3','3-5-2','5-3-2'].map(f=>`<option ${f===s.tactics.formation?'selected':''}>${f}</option>`).join('')}</select></label><label>Postura<select id="tactic-posture">${['equilibrada','ofensiva','defensiva'].map(f=>`<option ${f===s.tactics.posture?'selected':''}>${f}</option>`).join('')}</select></label><p>Capitão: <b>${escapeText(captain?.name||'Escolha um titular')}</b></p></div><p class="section-note">A formação reorganiza a escalação; a força dos titulares afeta os gols e os resultados. CT reduz custo de treino.</p><h3>11 titulares</h3><div class="sports-grid">${getStarters(s.roster).map(card).join('')}</div><h3>Reservas (${getReserves(s.roster).length})</h3><div class="sports-grid">${getReserves(s.roster).map(card).join('')}</div><div class="team-footer-actions">${actionButton('Começar de novo o time (Zerar elenco e histórico)','resetTeam')}</div>`;
  }
  youthHTML(s){return `<div class="section-note">O campo da base funciona no terreno da formação. Revele talentos, treine, promova ou venda. Cada promoção preserva o elenco existente.</div><div class="sports-grid">${this.facilityHTML(s,'youth')}${this.facilityHTML(s,'training')}</div><div class="inline-actions">${actionButton(s.departmentTimers.scout>0?`Nova peneira em ${Math.ceil(s.departmentTimers.scout)}s de jogo`:'Organizar peneira','scout','',!s.facilities.youth||s.departmentTimers.scout>0)}<button class="action-button" data-look="youth">VISITAR CAMPO DA BASE ↗</button></div><div class="sports-grid">${s.youthList.length?s.youthList.map(p=>`<article class="sports-card">${this.athleteHeader(p)}${actionButton(`Treinar · ${calculateTrainingCost(p,s.facilities.training+s.facilities.youth)}`,'trainYouth',p.id,p.overall>=p.potential||s.wallet<calculateTrainingCost(p,s.facilities.training+s.facilities.youth))}${actionButton('Promover ao profissional','promote',p.id,s.roster.length>=30)}${actionButton(`Vender · +${formatNumber(p.marketValue)}`,'sellYouth',p.id)}</article>`).join(''):'<p>Nenhuma promessa na base. Construa o campo e organize a primeira peneira.</p>'}</div>`;}
  facilityHTML(s,id){const f=FACILITIES[id],l=s.facilities[id],stage=facilityStage(l),cost=getFacilityCost(id,l,s.facilities.board),land=s.land[f.plot],locked=!land||(id==='pitch2'&&!s.fields[1].unlocked)||s.season.divisionIndex<f.minDivision;
@@ -2035,7 +2071,7 @@ class UI{
  leagueHTML(s){const div=getDivision(s.season.divisionIndex),sorted=sortTable(s.season.clubs),round=s.season.rounds[s.season.currentRound-1],pm=round?.matches.find(m=>m.homeId==='player'||m.awayId==='player'),h=s.season.clubs.find(c=>c.id===pm?.homeId),a=s.season.clubs.find(c=>c.id===pm?.awayId);
   const rows=sorted.map((c,i)=>`<tr class="${c.isPlayer?'our-row':''}"><td>${i+1}</td><td>${escapeText(c.name)}${c.isPlayer?' <b>VOCÊ</b>':''}</td><td>${c.played}</td><td>${c.won}</td><td>${c.drawn}</td><td>${c.lost}</td><td>${c.goalsFor}</td><td>${c.goalsAgainst}</td><td>${c.goalDiff}</td><td><b>${c.points}</b></td></tr>`).join('');
   const results=s.season.rounds.filter(r=>r.played).slice(-4).reverse().map(r=>`<details open><summary>Rodada ${r.roundNumber}</summary>${r.matches.map(m=>{const home=s.season.clubs.find(c=>c.id===m.homeId),away=s.season.clubs.find(c=>c.id===m.awayId),p=matchPerspective({...m,homeName:home.name,awayName:away.name});return `<div class="result-row"><span>${escapeText(home.name)}${m.homeId==='player'?' (VOCÊ)':''}</span><b>${m.homeScore} × ${m.awayScore}</b><span>${escapeText(away.name)}${m.awayId==='player'?' (VOCÊ)':''}</span>${m.homeId==='player'||m.awayId==='player'?`<small>${p.result==='win'?'VITÓRIA':p.result==='draw'?'EMPATE':'DERROTA'}</small>`:''}</div>`;}).join('')}</details>`).join('');
-  return `<div class="section-note"><b>${div.name} · Rodada ${s.season.currentRound}/${s.season.totalRounds}</b><p>${s.official?'Partida oficial em andamento. Volte ao campo para acompanhar.':s.season.finished?'Temporada concluída. Confira a posição final antes de avançar.':`${escapeText(h?.name)} ${pm?.homeId==='player'?'(VOCÊ)':''} × ${escapeText(a?.name)} ${pm?.awayId==='player'?'(VOCÊ)':''}`}</p>1 preparo por rodada oficial. Partidas locais geram preparo; só oficiais alteram a tabela. ${!s.official&&s.fields[0].remaining>0?'Feche este painel e aguarde a partida local acabar antes de iniciar a rodada.':''}</div><div class="inline-actions">${s.season.finished?actionButton('Concluir temporada e receber prêmio','season'):actionButton(s.official?'Partida em andamento':'Jogar rodada · 1 preparo','round','',s.preparation<1||!!s.official||s.fields[0].remaining>0)}<button class="action-button" data-look="${s.facilities.stadium?'stadium':'arena'}">VER CAMPO ↗</button></div><div class="table-scroll"><table><thead><tr><th>#</th><th>Clube</th><th>J</th><th>V</th><th>E</th><th>D</th><th>GP</th><th>GC</th><th>SG</th><th>PTS</th></tr></thead><tbody>${rows}</tbody></table></div><p class="section-note">Os dois primeiros sobem, exceto na divisão máxima. Os dois últimos descem, exceto na Série D. Campeão é somente o primeiro colocado.</p><h3>Resultados das rodadas</h3>${results||'<p>Nenhuma rodada oficial concluída.</p>'}<h3>Histórico de temporadas</h3>${s.career.history.length?s.career.history.map(h=>`<details><summary>Temporada ${h.number} · ${getDivision(h.division).name} · ${h.playerPos}º lugar</summary><p>Campeão: ${escapeText(h.champion)} · Prêmio: ${formatNumber(h.reward)}</p>${h.results.map(r=>`<p>${escapeText(r.homeName)} ${r.homeScore} × ${r.awayScore} ${escapeText(r.awayName)}</p>`).join('')}</details>`).join(''):'<p>Seu histórico aparecerá ao concluir a primeira temporada.</p>'}`;
+  return `<div class="section-note"><b>${div.name} · Rodada ${s.season.currentRound}/${s.season.totalRounds}</b><p>${s.official?'Partida oficial em andamento. Volte ao campo para acompanhar.':s.season.finished?'Temporada concluída. Confira a posição final antes de avançar.':`${escapeText(h?.name)} ${pm?.homeId==='player'?'(VOCÊ)':''} × ${escapeText(a?.name)} ${pm?.awayId==='player'?'(VOCÊ)':''}`}</p>1 preparo por rodada oficial. Partidas locais geram preparo; só oficiais alteram a tabela. ${!s.official&&s.fields[0].remaining>0?'Feche este painel e aguarde a partida local acabar antes de iniciar a rodada.':''}</div><div class="inline-actions">${s.season.finished?actionButton('Concluir temporada e receber prêmio','season'):actionButton(s.official?'Partida em andamento':'Jogar rodada · 1 preparo','round','',s.preparation<1||!!s.official||s.fields[0].remaining>0)}<button class="action-button" data-look="${s.facilities.stadium?'stadium':'arena'}">VER CAMPO ↗</button></div><div class="table-scroll"><table><thead><tr><th>#</th><th>Clube</th><th>J</th><th>V</th><th>E</th><th>D</th><th>GP</th><th>GC</th><th>SG</th><th>PTS</th></tr></thead><tbody>${rows}</tbody></table></div><p class="section-note">Os dois primeiros sobem, exceto na divisão máxima. Os dois últimos descem, exceto na Série D. Campeão é somente o primeiro colocado.</p><h3>Resultados das rodadas</h3>${results||'<p>Nenhuma rodada oficial concluída.</p>'}<h3>Histórico de temporadas</h3>${s.career.history.length?s.career.history.map(h=>`<details><summary>Temporada ${h.number} · ${getDivision(h.division).name} · ${h.playerPos}º lugar</summary><p>Campeão: ${escapeText(h.champion)} · Prêmio: ${formatNumber(h.reward)}</p>${h.results.map(r=>`<p>${escapeText(r.homeName)} ${r.homeScore} × ${r.awayScore} ${escapeText(r.awayName)}</p>`).join('')}</details>`).join(''):'<p>Seu histórico aparecerá ao concluir a primeira temporada.</p>'}<div class="team-footer-actions">${actionButton('Zerar histórico e recomeçar time','resetTeam')}</div>`;
  }
  saveStatus(ok,text=''){const n=this.nodes['save-status'];n.textContent=text||(ok?'PROGRESSO SALVO NESTE NAVEGADOR':'NÃO SALVOU · EXPORTE UM BACKUP');n.classList.toggle('saved-warn',!ok);}
  play(type){
@@ -2181,6 +2217,7 @@ async function boot(){
   command:(name,id)=>{
    let result;const functions={train:()=>sim.trainPlayer(id),trainYouth:()=>sim.trainYouth(id),hire:()=>sim.hireMarket(id),refresh:()=>sim.refreshMarket(),scout:()=>sim.scoutYouth(),promote:()=>sim.promoteYouth(id),sellYouth:()=>sim.sellYouth(id),captain:()=>sim.setTactic('captain',id),formation:()=>sim.setTactic('formation',id),posture:()=>sim.setTactic('posture',id),campaign:()=>sim.startCampaign(),club:()=>sim.editClub(id.name,id.sigla),season:()=>sim.nextSeason(),round:()=>sim.playLeagueRound()};
    if(name==='facility'){ui.close();focus(id);return;}if(name==='land'){ui.close();focus(id);return;}
+   if(name==='resetTeam'){if(!confirm('Deseja realmente começar um novo time e zerar todo o histórico esportivo (elenco, divisões e temporadas)?'))return;result=sim.resetTeam(profile);if(applyResult(result)){ui.toast('Novo time iniciado! Elenco renovado e histórico zerado.',6);focus('arena',false);}return;}
    if(name==='sell'){if(!confirm('Vender este reserva? Esta ação não pode ser desfeita.'))return;result=sim.sellPlayer(id);}
    else if(name==='sub'){const s=sim.state,p=s.roster.find(p=>p.id===id),target=getStarters(s.roster).filter(p2=>p2.pos===p?.pos).sort((a,b)=>a.overall-b.overall)[0];if(!p||!target)result={ok:false,reason:'Não há titular da mesma posição para trocar.'};else{swapRosterPlayers(s.roster,p.id,target.id);if(s.tactics.captainId===target.id)s.tactics.captainId=null;sim.emit('tactic',`${p.name} entrou no lugar de ${target.name}.`);result={ok:true};}}
    else if(functions[name])result=functions[name]();else result={ok:false,reason:'Ação não reconhecida.'};

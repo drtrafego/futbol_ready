@@ -171,6 +171,38 @@ export class Simulation {
     }
   }
   nextSeason(){const s=this.state;if(s.official||!s.season.finished)return{ok:false,reason:'A temporada ainda não terminou.'};const evaluation=evaluateSeasonEnd(s.season);s.career.history.unshift({number:s.career.seasonsPlayed+1,division:s.season.divisionIndex,...evaluation,results:structuredClone(s.season.history)});s.career.history=s.career.history.slice(0,10);s.career.seasonsPlayed++;if(evaluation.playerPos===1)s.career.trophies++;this.credit(evaluation.reward);s.season=createSeason(evaluation.nextDivisionIndex,s.club.name,s.club.sigla);s.market=generateMarket(s.season.divisionIndex,()=>this.random(),s.sequence++);this.emit('season',`${evaluation.status==='promoted'?'ACESSO! ':evaluation.status==='relegated'?'Rebaixamento. ':''}Nova temporada: ${getDivision(s.season.divisionIndex).name}.`);return{ok:true,evaluation,reason:'Nova temporada iniciada.'};}
+  resetTeam(profile = null) {
+    const s = this.state;
+    const clubName = profile?.clubName || s.club?.name || 'Clube da Vila';
+    const sigla = profile?.sigla || s.club?.sigla || 'VIL';
+    let seed = (Date.now() ^ (Math.random() * 0x7fffffff)) & 0xffffffff;
+    const initialRandom = () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; };
+    s.season = createSeason(0, clubName, sigla);
+    s.official = null;
+    s.career = { seasonsPlayed: 0, trophies: 0, totalMatches: 0, totalWins: 0, history: [] };
+    s.preparation = 0;
+    s.roster = generateInitialRoster(46, initialRandom);
+    s.market = generateMarket(0, initialRandom);
+    s.youthList = [];
+    s.tactics = { formation: '4-4-2', posture: 'equilibrada', captainId: null };
+    s.club.name = clubName;
+    s.club.sigla = sigla;
+    s.departmentTimers = { scout: 0, market: 0, campaign: 0 };
+    s.campaignUntil = 0;
+    s.stats.matches = 0;
+    for (const f of s.fields) {
+      f.score = [0, 0];
+      f.played = 0;
+      f.remaining = 0;
+      f.opponent = 'Visitantes';
+    }
+    if (s.map) {
+      s.map.training = null;
+    }
+    s.revision = (s.revision || 0) + 1;
+    this.emit('team', 'Novo time iniciado! Elenco renovado e histórico esportivo zerado.');
+    return { ok: true, reason: 'Time, elenco e histórico esportivo reiniciados com sucesso.' };
+  }
   releaseFans(id){for(const fan of fieldFans(this.state,id)){fan.phase='leaving';fan.route=[{x:fan.x,z:3.6},{x:12.7,z:3.6},{x:12.7,z:16.5}];}}
   tick(delta, input = { x: 0, z: 0 }) {
     if (!Number.isFinite(delta) || delta <= 0) return;

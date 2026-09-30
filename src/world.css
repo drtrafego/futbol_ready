@@ -29,3 +29,5 @@ body[data-district=world] .topbar,.topbar{position:absolute;top:max(12px,env(saf
 .control-wrap{transform:none!important}.control-wrap>span{visibility:visible!important}
 @media(max-width:1000px){.bottom-actions{width:142px!important}}
 @media(max-width:680px){.bottom-actions{width:105px!important;gap:4px!important}}
+.team-footer-actions{margin-top:20px;padding:12px;background:#e5ebd7;border:1px dashed #7a9c68;border-radius:12px;text-align:center}
+.team-footer-actions button{background:#8e3838!important;border-color:#b94a4a!important;color:#fff!important;display:inline-block!important;width:auto!important;margin:0 auto!important;padding:8px 16px!important;font-weight:700!important}
