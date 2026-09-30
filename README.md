@@ -1,44 +1,94 @@
-# Arena de Bairro 0.4 — expansão e integração jogáveis
+# Arena de Bairro 0.5 — Mapa Vivo
 
-## Jogar imediatamente
-Abra **JOGAR.html** como arquivo local no Chrome ou Edge, escolha Bernardo Cafure ou Miguel Matos e clique em entrar. O arquivo contém código e imagens. Esse modo é uma **demonstração local sem senha**. O modo online valida as senhas no servidor.
+Atualização implementada sobre a versão 0.4, correspondente ao commit remoto
+`af0a14e2f24e43cbc820e633eca2d7125b41031f` consultado em 30/09/2026.
 
-## Esta entrega contém código implementado
-- Arena ilustrada com gerente, kits, fila, renda, funcionários e dois campos.
-- Mapa do clube com três terrenos compráveis, em ordem: formação, estádio e sede.
-- Estádio, categoria de base, centro de treinamento, marketing, diretoria, comissão e lanchonete.
-- Até cinco fases e três melhorias por fase, com mudanças visuais mais perceptíveis na fase 3.
-- Elenco, treino, reservas, capitão, formação, contratação, venda de reservas, formação/promoção/venda de jovens.
-- Liga com 8 clubes e 14 rodadas para temporadas novas; saves antigos com 10 rodadas são preservados.
-- Partida oficial acompanhável: a tabela só recebe o resultado ao final. Seu time é azul; adversário, laranja. Avisos de gol nosso e gol sofrido diferentes, com som opcional.
-- Dois perfis e login online validado por uma pequena API, sem banco de dados.
+## O que mudou de verdade
 
-A arena original mantém a arte ilustrada. **As áreas novas do clube são cenários 2.5D desenhados por código, mais simples que a imagem conceitual.** São clicáveis e têm efeitos na simulação; não são uma cena 3D completa. No campus, selecionam-se instalações e painéis; o gerente controlável permanece na arena original. Não há construção livre em qualquer pixel do mapa nem multiplayer.
+A arena original e os terrenos da formação, do estádio e da sede aparecem no
+mesmo espaço. Arraste o chão para mover a câmera, use a roda do mouse/pinça ou
+os botões + e − para aproximar. WASD e joystick continuam movendo o gerente;
+um toque curto no chão manda o gerente caminhar até lá.
 
-## Execução local com login
-Node 22.16 ou superior, sem dependências externas do jogo.
+Comprar um terreno no mapa abre a fronteira e permite atravessá-la. Clique na
+placa do lote, confirme a compra e escolha uma instalação. Posicione a área
+verde sobre o chão e confirme. A prévia vermelha indica que não cabe, que o
+terreno não pertence ao clube ou que há outra construção próxima.
 
-Copie o arquivo .env.local do pacote de configuração privada para esta pasta. Não o envie ao GitHub.
+A equipe de obra percorre o mapa, aparece na fundação e trabalha. O custo é
+retirado uma vez no início; o benefício só entra em vigor quando a obra termina.
+Durante uma reforma, o prédio antigo continua no local, com andaimes. Há duas
+equipes de obra e cinco fases por instalação, com três melhorias em cada fase.
+
+Fase 1: estrutura simples. Fase 2: prédio maior e mais assentos. Fase 3: construção
+mais alta, piso, cobertura e iluminação conforme a instalação. Fases 4 e 5:
+novos detalhes, laterais e equipamentos. Essas partes são desenhadas por objeto,
+não são rótulos sobre uma imagem única.
+
+## Treinamento com recursos
+
+Moedas são ganhas na operação e nas partidas. Os kits são produzidos no depósito
+existente. O gerente pega kits e caminha até a entrada do CT para entregá-los.
+Também é possível contratar um auxiliar logístico por 240 moedas: ele busca
+kits reais no depósito e os transporta ao CT, priorizando não deixar os campos
+sem material. Não há criação de kits pelo desenho da animação.
+
+Treino individual: moedas + 1 kit no CT + tempo ativo de jogo.
+Treino coletivo: custo calculado sobre os titulares elegíveis + 1 kit por grupo
+de até 3 atletas + tempo ativo de jogo. O CT reduz custo/duração dentro dos limites.
+A força aumenta somente na conclusão. Um segundo clique não cobra de novo nem
+empilha treinos. Atletas em treino não podem ser vendidos/promovidos; partida
+oficial e treino não começam simultaneamente.
+
+## Executar
+
+Node 22.16 ou superior foi o ambiente utilizado. Não exige WSL ou Docker.
 
 ```powershell
 npm.cmd run verify
 npm.cmd run dev
 ```
 
-Abra http://127.0.0.1:5173. Para um preview do build:
+O site servido usa o login da 0.4. Preserve seu `.env.local` e as variáveis privadas
+`ARENA_USERS_JSON` e `ARENA_SESSION_SECRET`. Os perfis Bernardo Cafure e Miguel
+Matos e suas chaves de save não foram trocados. Nenhuma senha real está neste ZIP.
 
-```powershell
-npm.cmd run preview
-```
+`JOGAR.html` é a demonstração independente: salve e abra no computador. Esse
+arquivo permite escolher os perfis sem senha; não é autenticação de servidor.
 
-Abra http://127.0.0.1:4173. Sem as variáveis do login, o servidor recusa a autenticação; use o JOGAR.html local para experimentar sem configuração.
+## Interface
 
-## Progresso
-Cada perfil tem save e backup próprios, no navegador. O login **não sincroniza progresso entre aparelhos** e o servidor não armazena partidas. Antes de atualizar, exporte o JSON de cada jogador. A versão faz validação/migração dos dados de carreira e corrige o formato do histórico antigo. Um dado ilegível é preservado, não sobrescrito silenciosamente.
+- **Expandir mapa / Mapa completo:** afasta a câmera, sem sair do jogo.
+- **Formação, Estádio e Sede:** centralizam o local; não carregam outra cena.
+- **Placa do terreno:** comprar ou escolher uma construção no lote já adquirido.
+- **Prédio:** selecionar, reformar, levar o gerente ou abrir sua gestão.
+- **Equipe da operação:** antigos upgrades de funcionários/equipamento, separados
+  da progressão territorial. Completar essa lista não encerra o clube.
+- **Elenco/Tabela/Base/Mercado:** mantêm as operações esportivas da 0.4.
 
-## GitHub e Vercel
-A base remota conferida é `drtrafego/futbol_ready`, commit `36c491029ea3fcf898b3f656be12f84bd4271469`. Não houve push ou deploy desta entrega.
-Veja `docs/PUBLICAR.md`, `docs/ALTERACOES.md` e `docs/VALIDACAO.md`. No pacote de transferência há um aplicador com lista de arquivos e checagem do commit para não sobrescrever uma versão mais nova.
+## Compatibilidade e escopo
 
-## Validação
-73 testes de código; 48 verificações de interface; 17 verificações HTTP de login e recursos. Todos aprovados na última execução local. A interface foi exercitada em Chromium com HTML injetado e armazenamento em memória; HTTP e autenticação foram testados separadamente no servidor Node. Isso não substitui teste na URL da Vercel ou em celular físico.
+O save 0.4 é migrado adicionando a extensão `map`; moeda, jogadores, campeonato,
+terrenos e níveis existentes são preservados. Instalações já compradas são
+posicionadas automaticamente. Faça uma exportação JSON antes de atualizar.
+
+Há quatro parcelas definidas (arena e três expansões); não é geração infinita
+nem uma reprodução completa de SimCity/Age of Empires. Não há editor de estradas,
+realocação/demolição, multiplayer ou nuvem. Os caminhos são criados automaticamente
+para os acessos. A seleção de posição aplica-se às construções das expansões;
+os campos/bilheteria originais permanecem nas posições da arte aprovada.
+
+A arena original ainda utiliza ilustração pré-renderizada e sprites. As novas
+construções e árvores são procedurais 2.5D, com acabamento mais simples. Parte do
+entorno continua decorativa. Não é um motor 3D nem um jogo comercial certificado.
+
+## Arquitetura e verificação
+
+`world-model.js`: parcelas, implantação, caminhos e migração do mapa.
+`world-simulation.js`: extensão da simulação existente com obras, movimentação
+contínua, entregas e treino. `world-view.js`: câmera contínua e objetos por fase.
+`world-input.js`: toque/arraste/joystick/pinça. `world-ui.js`: seleção contextual.
+`server/auth.mjs` e `api/session.js`: preservados da 0.4.
+
+Veja `docs/VALIDACAO.md` para os testes executados e suas limitações. O build gera
+`dist/index.html`, `dist/assets/` e `JOGAR.html`. O usuário faz a publicação na Vercel.

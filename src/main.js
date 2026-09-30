@@ -1,49 +1,80 @@
 import { CFG } from './config.js';
-import { Simulation, newGame, currentMission, zonePosition } from './simulation.js';
+import { newGame, currentMission, zonePosition } from './simulation.js';
+import { WorldSimulation } from './world-simulation.js';
+import { ensureWorld, WORLD_STRUCTURES, WORLD_PLOTS } from './world-model.js';
 import { SaveStore, encodeSave, decodeSave } from './save.js';
-import { Renderer } from './render.js';
-import { InputController } from './input.js';
-import { UI } from './ui.js';
+import { WorldRenderer } from './world-view.js';
+import { WorldInput } from './world-input.js';
+import { WorldUI } from './world-ui.js';
 import { authenticate, logout } from './profile.js';
 import { swapRosterPlayers, getStarters } from './roster.js';
+import { worldToArt } from './scene.js';
+
 async function boot(){
  const profile=await authenticate();
  const storage={getItem:k=>localStorage.getItem(k),setItem:(k,v)=>localStorage.setItem(k,v),removeItem:k=>localStorage.removeItem(k)};
- const store=new SaveStore(storage,profile.saveKey,profile.backupKey),loaded=store.load();
- if(loaded.status==='new')loaded.state=newGame(profile);
- const sim=new Simulation(loaded.state),renderer=new Renderer(document.getElementById('game'));await renderer.ready;
+ const store=new SaveStore(storage,profile.saveKey,profile.backupKey),loaded=store.load();if(loaded.status==='new')loaded.state=newGame(profile);
+ const sim=new WorldSimulation(loaded.state),renderer=new WorldRenderer(document.getElementById('game'));await renderer.ready;
  document.getElementById('asset-loading').hidden=true;
  let input,lastTime=performance.now(),accumulator=0,lastSaved=sim.state.t,conflict=false,lastUI=0,lastDraw=0;
  const persist=(force=false)=>{const result=store.save(sim.state,force);ui.saveStatus(result.ok);if(result.conflict){conflict=true;ui.open('menu-dialog');ui.toast(result.reason,30);}else if(!result.ok&&force)ui.toast(result.reason,8);return result;};
- const district=area=>{renderer.district=['pitch1','pitch2','stands','gate','canteen','arena'].includes(area)?'arena':area;renderer.initialized=false;input?.reset();document.body.dataset.district=renderer.district;};
+ const focus=(id,select=true)=>{renderer.focus(id,sim.state,select);if(id==='all'||id==='club')renderer.selection=null;input?.reset();ui.inspectorKey='';ui.update(sim.state,true);};
  const applyResult=result=>{if(!result?.ok){ui.toast(result?.reason||'Ação indisponível.',6);return false;}ui.renderKey='';ui.update(sim.state,true);persist();return true;};
- const ui=new UI({
+ const beginPlacement=id=>{const s=sim.state;if(!WORLD_STRUCTURES[id])return;if(s.map.placements[id]||WORLD_STRUCTURES[id].fixed){focus(id);return;}focus(id,false);renderer.placement=id;renderer.hover={x:WORLD_STRUCTURES[id].x,y:WORLD_STRUCTURES[id].y};ui.close();ui.toast('Posicione a base verde no terreno e toque para confirmar. Arraste para mover o mapa.',7);};
+ const ui=new WorldUI({
   start:()=>{input.reset();lastTime=performance.now();if(loaded.message)ui.toast(loaded.message,9);},
   onPauseChange:()=>{input?.reset();accumulator=0;lastTime=performance.now();},
-  travel:zone=>{district('arena');const p=zonePosition(zone);if(p)sim.goTo(p);},
-  navigate:()=>{const m=currentMission(sim.state);if(!m){district('club');ui.openSports('land');return;}if(['club','facilities','league'].includes(m.zone)){district('club');ui.openSports(m.zone==='club'?'land':m.zone);return;}const p=m.zone?zonePosition(m.zone):CFG.supply;if(p){district('arena');sim.goTo(p);}},
-  toggleView:()=>{district('arena');renderer.overview=!renderer.overview;return renderer.overview;},
+  focus,
+  district:id=>focus(id),
+  travel:zone=>{const p=zonePosition(zone);if(p){const ok=sim.goTo(p);if(!ok)ui.toast('Não há passagem até este ponto.');renderer.mapCamera.follow=true;renderer.mapCamera.zoom=Math.max(.65,renderer.mapCamera.zoom);}},
+  navigate:()=>{const s=sim.state,m=currentMission(s);if(!m||['club','facilities'].includes(m.zone)){
+   if(!s.land.academy)focus('academy');else if(!s.facilities.youth)beginPlacement('youth');else if(!s.facilities.training)beginPlacement('training');else if(!s.land.stadium)focus('stadium');else if(!s.facilities.stadium)beginPlacement('stadium');else if(!s.land.business)focus('business');else if(!s.facilities.board)beginPlacement('board');else focus('all');return;
+  }if(m.zone==='league'){ui.openSports('league');return;}const point=zonePosition(m.zone)||CFG.supply;sim.goTo(point);renderer.mapCamera.follow=true;},
+  toggleView:()=>renderer.follow(sim.state),
   toggleQuality:()=>{renderer.lowQuality=!renderer.lowQuality;renderer.resize();return renderer.lowQuality;},
-  district,purchase:id=>applyResult(sim.purchase(id)),
+  purchase:id=>{const result=sim.purchase(id);if(applyResult(result)&&id==='field2')ui.toast('Segundo campo aberto. Agora explore os terrenos ao redor da arena.',7);},
   export:()=>{const blob=new Blob([encodeSave(sim.state)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`arena-${profile.id}-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);ui.toast('Backup exportado. Guarde seu JSON.');},
-  import:async text=>{const next=decodeSave(text);sim.state=next;sim.events=[];renderer.particles=[];ui.lastMission=null;conflict=false;lastSaved=sim.state.t;input.reset();const r=persist(true);ui.update(sim.state,true);ui.toast(r.ok?'Progresso importado no perfil atual.':'Importado apenas nesta sessão. Exporte antes de sair.',8);},
-  reset:()=>{if(!store.reset()){ui.toast('Não foi possível limpar o armazenamento.');return;}sim.state=newGame(profile);sim.events=[];renderer.particles=[];ui.lastMission=null;conflict=false;lastSaved=0;input.reset();district('arena');persist(true);ui.update(sim.state,true);ui.open('welcome-dialog');},
-  logout:async()=>{const r=persist();if(!r.ok&&!confirm('O progresso não foi salvo. Sair mesmo assim?'))return;try{await logout();}catch(e){ui.toast(e.message);}},
+  import:async text=>{const next=decodeSave(text);sim.state=next;ensureWorld(next);sim.events=[];renderer.particles=[];renderer.roadKey='';renderer.selection=null;ui.lastMission=null;conflict=false;lastSaved=next.t;input.reset();const result=persist(true);ui.update(next,true);ui.toast(result.ok?'Progresso importado, incluindo mapa e obras.':'Armazenamento indisponível; exporte antes de sair.',7);},
+  reset:()=>{if(!store.reset()){ui.toast('Não foi possível limpar o armazenamento.');return;}sim.state=newGame(profile);ensureWorld(sim.state);sim.events=[];renderer.particles=[];renderer.roadKey='';renderer.selection=null;ui.lastMission=null;conflict=false;lastSaved=0;input.reset();focus('arena',false);persist(true);ui.update(sim.state,true);ui.open('welcome-dialog');},
+  logout:async()=>{const result=persist();if(!result.ok&&!confirm('O progresso não foi salvo. Sair mesmo assim?'))return;try{await logout();}catch(error){ui.toast(error.message);}},
+  worldCommand:(cmd,id)=>{
+   if(cmd==='closeInspector'){renderer.selection=null;return;}
+   if(cmd==='cancel'){renderer.placement=null;return;}
+   if(cmd==='zoomIn'||cmd==='zoomOut'){renderer.zoomAt(cmd==='zoomIn'?1.25:.8);return;}
+   if(cmd==='focusPlot'){ui.close();focus(id);renderer.selection={kind:'plot',id};ui.inspectorKey='';ui.update(sim.state,true);return;}
+   if(cmd==='focusBuilding'){ui.close();focus(id);return;}
+   if(cmd==='operation'){ui.open('upgrade-dialog');return;}
+   if(cmd==='manage'){ui.openSports(id);return;}
+   if(cmd==='place'){beginPlacement(id);return;}
+   if(cmd==='buyLand'){if(applyResult(sim.buyLand(id))){renderer.selection={kind:'plot',id};renderer.roadKey='';ui.toast('Terreno incorporado ao clube. Escolha a instalação e posicione no chão.',6);}return;}
+   if(cmd==='upgrade'){applyResult(sim.upgradeFacility(id));return;}
+   if(cmd==='walkBuilding'){if(!sim.moveToStructure(id))ui.toast('Não há caminho livre até a entrada.');else renderer.mapCamera.follow=true;return;}
+   if(cmd==='deliverCT'){if(sim.state.player.carry<1){sim.goTo(CFG.supply);renderer.mapCamera.follow=true;ui.toast('Pegue kits no depósito. Depois use “Levar os kits ao CT”.');}else if(sim.moveToStructure('training')){renderer.mapCamera.follow=true;ui.toast('O gerente vai levar os kits ao CT. A entrega ocorre ao chegar.');}else ui.toast('Não há passagem livre até o CT.');return;}
+   if(cmd==='courier'){applyResult(sim.hireCourier());return;}
+   if(cmd==='trainTeam'){if(applyResult(sim.trainTeam())){ui.close();focus('training');}return;}
+  },
   command:(name,id)=>{
-   let result;
-   const functions={train:()=>sim.trainPlayer(id),trainYouth:()=>sim.trainYouth(id),hire:()=>sim.hireMarket(id),refresh:()=>sim.refreshMarket(),scout:()=>sim.scoutYouth(),promote:()=>sim.promoteYouth(id),sellYouth:()=>sim.sellYouth(id),facility:()=>sim.upgradeFacility(id),land:()=>sim.buyLand(id),captain:()=>sim.setTactic('captain',id),formation:()=>sim.setTactic('formation',id),posture:()=>sim.setTactic('posture',id),campaign:()=>sim.startCampaign(),club:()=>sim.editClub(id.name,id.sigla),season:()=>sim.nextSeason(),round:()=>sim.playLeagueRound()};
-   if(name==='sell'){if(!confirm('Vender este reserva? A operação não pode ser desfeita.'))return;result=sim.sellPlayer(id);}
+   let result;const functions={train:()=>sim.trainPlayer(id),trainYouth:()=>sim.trainYouth(id),hire:()=>sim.hireMarket(id),refresh:()=>sim.refreshMarket(),scout:()=>sim.scoutYouth(),promote:()=>sim.promoteYouth(id),sellYouth:()=>sim.sellYouth(id),captain:()=>sim.setTactic('captain',id),formation:()=>sim.setTactic('formation',id),posture:()=>sim.setTactic('posture',id),campaign:()=>sim.startCampaign(),club:()=>sim.editClub(id.name,id.sigla),season:()=>sim.nextSeason(),round:()=>sim.playLeagueRound()};
+   if(name==='facility'){ui.close();focus(id);return;}if(name==='land'){ui.close();focus(id);return;}
+   if(name==='sell'){if(!confirm('Vender este reserva? Esta ação não pode ser desfeita.'))return;result=sim.sellPlayer(id);}
    else if(name==='sub'){const s=sim.state,p=s.roster.find(p=>p.id===id),target=getStarters(s.roster).filter(p2=>p2.pos===p?.pos).sort((a,b)=>a.overall-b.overall)[0];if(!p||!target)result={ok:false,reason:'Não há titular da mesma posição para trocar.'};else{swapRosterPlayers(s.roster,p.id,target.id);if(s.tactics.captainId===target.id)s.tactics.captainId=null;sim.emit('tactic',`${p.name} entrou no lugar de ${target.name}.`);result={ok:true};}}
    else if(functions[name])result=functions[name]();else result={ok:false,reason:'Ação não reconhecida.'};
-   if(applyResult(result)&&name==='round'){ui.close();district(sim.state.facilities.stadium?'stadium':'arena');ui.toast('Partida oficial iniciada. Seu time é o azul; acompanhe o placar.',6);}
+   if(applyResult(result)&&name==='round'){ui.close();focus(sim.state.facilities.stadium?'stadium':'arena');ui.toast('Partida oficial iniciada. Seu time é o azul.',6);}
+   if(result?.ok&&['train','trainYouth'].includes(name)){ui.close();focus('training');}
   }
- });
- renderer.district='arena';
- input=new InputController(renderer.canvas,document.getElementById('joystick'),(x,y)=>{
-  const p=renderer.clickPosition(x,y);
-  if(p.zone==='campus'){if(p.plot)ui.openSports('land');else if(p.facility==='arena')district('arena');else if(p.facility){if(renderer.district==='club')district(p.facility);else ui.openSports(p.facility==='youth'?'youth':['board','marketing','coaching'].includes(p.facility)?'board':'facilities');}return;}
-  if(p.zone==='office')ui.open('upgrade-dialog');else if(renderer.district==='arena')sim.goTo(p);
- },()=>ui.paused||conflict,(x,y)=>renderer.screenAxisToWorld(x,y));
+ },renderer);
+ input=new WorldInput(renderer.canvas,document.getElementById('joystick'),(x,y)=>{
+  const p=renderer.clickPosition(x,y);if(p.zone==='minimap')return;
+  if(p.zone==='place'){
+   const id=renderer.placement,result=sim.upgradeFacility(id,p.point);if(applyResult(result)){renderer.placement=null;renderer.selection={kind:'building',id};renderer.roadKey='';ui.inspectorKey='';}return;
+  }
+  if(p.zone==='world-select'){
+   if(p.kind==='operation'){ui.open('upgrade-dialog');return;}
+   if(p.kind==='travel'){ui.actions.travel(p.id);return;}
+   renderer.selection={kind:p.kind,id:p.id};ui.inspectorKey='';ui.update(sim.state,true);return;
+  }
+  renderer.selection=null;if(!sim.goMap(p.point))ui.toast('Área fechada ou sem passagem. Toque na placa do terreno para expandir.',5);
+ },()=>ui.paused||conflict,renderer);
  window.addEventListener('resize',()=>renderer.resize());
  document.addEventListener('visibilitychange',()=>{input.reset();lastTime=performance.now();accumulator=0;if(document.hidden&&store.writable)persist();});
  window.addEventListener('pagehide',()=>{if(store.writable)persist();});
@@ -52,17 +83,19 @@ async function boot(){
  ui.update(sim.state,true);ui.saveStatus(store.writable);const step=1/60;
  function frame(now){
   const dt=Math.min(.1,Math.max(0,(now-lastTime)/1000));lastTime=now;
-  if(!ui.paused&&!document.hidden&&!conflict){accumulator+=dt;while(accumulator>=step){sim.tick(step,renderer.district==='arena'?input.read():{x:0,z:0});accumulator-=step;}if(sim.state.t-lastSaved>=CFG.autosaveSeconds){if(store.writable)persist();lastSaved=sim.state.t;}}else accumulator=0;
-  const events=sim.drainEvents();renderer.addEvents(events);for(const e of events)ui.showEvent(e);
+  if(!ui.paused&&!document.hidden&&!conflict){accumulator+=dt;while(accumulator>=step){sim.tick(step,input.read());accumulator-=step;}if(sim.state.t-lastSaved>=CFG.autosaveSeconds){if(store.writable)persist();lastSaved=sim.state.t;}}else accumulator=0;
+  const events=sim.drainEvents();renderer.addEvents(events);for(const e of events){ui.showEvent(e);if(['construction','trainingStart','ctDelivery'].includes(e.type))ui.toast(e.text,4);}
   if(now-lastUI>=150){ui.update(sim.state);lastUI=now;}
   if(now-lastDraw>=(renderer.lowQuality?1000/30:1000/60)-1){renderer.draw(sim.state,Math.min(.1,(now-lastDraw)/1000));lastDraw=now;}
   requestAnimationFrame(frame);
  }
  requestAnimationFrame(frame);
+ // Only the explicitly requested debug query enables test hooks. No funds are
+ // granted by this hook, and it is not enabled in distributed links.
  if(new URLSearchParams(location.search).get('debug')==='1')window.__arena={
   snapshot:()=>structuredClone(sim.state),goTo:zone=>{const p=zonePosition(zone);return p?sim.goTo(p):false;},
   step:seconds=>{if(ui.paused||conflict)throw new Error('Feche os menus.');if(!Number.isFinite(seconds)||seconds<0||seconds>120)throw new Error('Use até 120 segundos.');for(let i=0;i<Math.ceil(seconds*60);i++)sim.tick(step);const events=sim.drainEvents();renderer.addEvents(events);events.forEach(e=>ui.showEvent(e));ui.update(sim.state,true);renderer.draw(sim.state,.016);return structuredClone(sim.state);},
-  save:()=>persist(),rendererInfo:()=>({width:renderer.width,height:renderer.height,loaded:renderer.loaded,assets:Object.keys(renderer.assets),hits:renderer.hitZones,district:renderer.district})
+  save:()=>persist(),focus:id=>focus(id),rendererInfo:()=>({width:renderer.width,height:renderer.height,loaded:renderer.loaded,hits:renderer.hitZones,scale:renderer.scale,ox:renderer.ox,oy:renderer.oy,camera:renderer.mapCamera,selection:renderer.selection,placement:renderer.placement})
  };
 }
 boot().catch(error=>{console.error(error);document.getElementById('asset-loading').hidden=true;const card=document.createElement('section');card.className='fatal-error';const title=document.createElement('h1');title.textContent='Não foi possível abrir a arena.';const text=document.createElement('p');text.textContent=error.message||'Erro desconhecido.';card.append(title,text);document.body.append(card);});

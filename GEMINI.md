@@ -1,7 +1,20 @@
-# Publicar a atualização implementada
+# Versão 0.5 já implementada — aplicar e enviar, não reconstruir
 
-Leia AGENTS.md e README.md. Você recebeu uma versão executável, não um pedido para desenvolver novamente o jogo. Preserve este renderer, estes controles e a operação. O usuário solicitou que você aplique os arquivos e faça o push no drtrafego/futbol_ready; ele cuidará da Vercel.
+Leia README.md e docs/VALIDACAO.md. Este projeto já contém o mapa contínuo, as
+parcelas compráveis no chão, obras com funcionários, mudanças de cenário por
+fase e treino consumindo moedas e kits entregues fisicamente no CT.
 
-Antes de qualquer escrita, git fetch origin e examine main. O commit-base auditado é 36c491029ea3fcf898b3f656be12f84bd4271469. O aplicador externo do pacote valida esta base, a integridade dos arquivos e uma árvore de trabalho limpa. Em caso de divergência não force; faça a reconciliação por diff com uma branch de segurança.
+Destino: drtrafego/futbol_ready. Preservar todo o histórico Git e as alterações
+posteriores ao commit af0a14e2f24e43cbc820e633eca2d7125b41031f.
 
-Depois de aplicar, npm run verify. Não execute git add .: adicione apenas os arquivos listados no manifesto. Jamais envie configurações privadas. Faça commit e push da branch de atualização; confirme que main contém a atualização antes de comunicar que a produção foi atualizada. Não apague refs nem use force push. Reporte o hash efetivamente enviado e a branch; não invente URL de deploy.
+Mantenha o código pronto desta versão e execute `npm run verify`. Não retorne à
+0.3/0.4, não substitua o mapa pela velha tela de campus, não mude os perfis/senhas
+e não acrescente outras funcionalidades antes de publicar esta correção.
+
+O pacote de entrega tem `aplicar-atualizacao.mjs` e `manifesto.json` fora desta
+pasta. O aplicador valida hashes, mostra as diferenças, cria backup dos arquivos
+alterados e não toca nos segredos. Sem `--apply`, apenas verifica. Havendo conflito,
+faça a comparação de código; nunca use reset --hard/force push para apagar trabalho.
+
+Depois dos testes, commit e push autenticados no ambiente do usuário. Informe o
+commit efetivamente enviado. O usuário fará a Vercel; não execute deploy.

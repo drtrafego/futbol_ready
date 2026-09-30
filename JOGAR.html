@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#153d35">
   <meta name="description" content="Arena de Bairro: protótipo original de gestão de uma arena de futebol.">
-  <title>Arena de Bairro — Clube em evolução 0.4</title>
+  <title>Arena de Bairro — Mapa Vivo 0.5</title>
   <style>
 :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#173e35;font-synthesis:none;--ink:#173e35;--cream:#f8f7e9;--lime:#ddeb85;--gold:#f4d37f}*{box-sizing:border-box}body{margin:0;overflow:hidden;overscroll-behavior:none;background:#abc69b}button{font:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:focus-visible{outline:3px solid #437eb8;outline-offset:4px}button:disabled{cursor:default}#game{display:block;position:fixed;inset:0;touch-action:none}#ui{position:fixed;inset:0;pointer-events:none;user-select:none}#ui button,#joystick{pointer-events:auto}.topbar{position:absolute;top:max(20px,env(safe-area-inset-top));left:26px;right:26px;display:flex;align-items:center;gap:16px}.brand{display:flex;gap:12px;align-items:center;margin-right:auto}.crest{display:grid;place-content:center;line-height:1.1;text-align:center;font-size:27px;font-weight:950;width:50px;height:60px;background:var(--ink);color:var(--lime);clip-path:polygon(0 0,100% 0,100% 72%,50% 100%,0 72%);border-top:4px solid var(--lime)}.crest span{font-size:10px;letter-spacing:3px}h1{font-size:25px;margin:0;font-weight:950;letter-spacing:-1px;line-height:.98}h1 span{display:block;font-size:14px;letter-spacing:1.8px;font-weight:800}.brand p{font-size:8px;letter-spacing:2.4px;font-weight:800;margin:7px 0 0}.wallet{background:var(--ink);color:var(--cream);padding:11px 23px 11px 13px;display:flex;align-items:center;gap:12px;border-radius:17px;box-shadow:0 5px 0 #153d3520;min-width:130px}.wallet small{font-size:8px;font-weight:800;letter-spacing:2px;display:block;opacity:.75}.wallet strong{font-size:27px;line-height:1.1;font-variant-numeric:tabular-nums}.coin{color:var(--gold);font-size:37px;line-height:1;text-shadow:2px 3px #aa842d}.icon-button{width:48px;height:48px;border:1px solid #173e3533;border-radius:15px;background:#f6f7e8d9;font-size:23px;color:var(--ink)}.mission-card{position:absolute;left:26px;top:116px;width:260px;background:#f8f7e9f0;padding:20px;border-radius:18px;border:1px solid #fff8;box-shadow:0 10px 40px #153d350d}.eyebrow{font-size:8px;letter-spacing:1.5px;font-weight:900;display:flex;align-items:center;gap:6px;color:#627462}.live-dot{height:6px;width:6px;border-radius:50%;background:#5c9465}.eyebrow>span:last-child{margin-left:auto}.mission-card h2{font-size:22px;line-height:1.08;letter-spacing:-.7px;margin:13px 0 9px}.mission-card p{font-size:12px;line-height:1.55;margin:0 0 15px;color:#596e5e}.progress-track{height:4px;border-radius:4px;background:#e0e5cf;overflow:hidden}.progress-track>div{height:100%;width:0;background:#527d50;transition:width .2s}.text-button{background:none;border:0;display:flex;justify-content:space-between;align-items:center;width:100%;padding:13px 0 0;color:var(--ink);font-size:10px;letter-spacing:.7px;font-weight:850;min-height:38px}.text-button span{font-size:20px}.text-button:disabled{opacity:.4}.stats-strip{position:absolute;right:27px;top:112px;display:flex;gap:17px;align-items:center;border-bottom:1px solid #173e3530;padding-bottom:9px}.stats-strip span{font-size:8px;letter-spacing:1px;color:#375d48;font-weight:800}.stats-strip strong{display:block;font-size:17px;letter-spacing:0;margin-top:4px;font-variant-numeric:tabular-nums}.bottom-ui{position:absolute;left:26px;right:26px;bottom:max(19px,env(safe-area-inset-bottom));display:flex;align-items:flex-end;gap:20px}.control-wrap{display:flex;align-items:center;flex-direction:column;gap:8px}.control-wrap>span{font-size:8px;letter-spacing:1.4px;font-weight:800;opacity:.7}#joystick{width:116px;height:116px;border-radius:50%;background:#f8f7e947;border:1.5px solid #173e3524;display:grid;place-items:center;touch-action:none;position:relative;box-shadow:inset 0 0 0 14px #f8f7e926}.stick-knob{width:48px;height:48px;border-radius:50%;background:#173e35d9;border:2px solid #e5efb9;box-shadow:0 4px 10px #173e3533;position:absolute}.stick-cross{font-size:75px;color:#173e3522}.control-hint{padding-bottom:25px;display:flex;align-items:center;flex-direction:column;gap:4px}.control-hint span{display:flex;gap:4px}kbd{display:inline-grid;place-items:center;font-family:inherit;font-size:10px;font-weight:800;border:1px solid #173e3550;border-radius:4px;width:22px;height:21px;background:#f8f7e947}.control-hint p{font-size:9px;opacity:.7;margin:4px 0}.bottom-actions{display:flex;gap:9px;flex-direction:column;align-items:stretch;margin-left:auto;min-width:181px}.bottom-actions small{text-align:center;font-size:7px;letter-spacing:1.1px;color:#244e3c;max-width:190px}.primary-button{border:0;background:var(--ink);color:var(--lime);border-radius:13px;padding:17px 23px;font-size:12px;font-weight:900;letter-spacing:1.1px;box-shadow:0 4px 0 #102d26;min-height:48px}.primary-button:hover{background:#255346}.primary-button:active{transform:translateY(2px);box-shadow:0 2px 0 #102d26}.primary-button span{font-size:20px;margin-right:8px}.secondary-button{border:1px solid #173e3535;background:#f8f7e9df;color:var(--ink);border-radius:12px;padding:13px 17px;font-size:10px;font-weight:850;letter-spacing:.6px;min-height:44px}.danger-button{border:1px solid #b4746135;background:#faf0e8;color:#a35340;border-radius:12px;padding:13px 17px;font-size:10px;font-weight:800;letter-spacing:.5px;min-height:44px}#toast{position:absolute;left:50%;top:94px;transform:translateX(-50%);padding:12px 20px;border-radius:14px;background:#173e35f0;color:#f4e3a6;font-size:12px;text-align:center;max-width:min(530px,86vw);box-shadow:0 4px 15px #173e3520;z-index:5}dialog{border:1px solid #e8ebd8;border-radius:25px;background:var(--cream);color:var(--ink);padding:30px;width:min(760px,calc(100vw - 24px));max-height:calc(100dvh - 36px);box-shadow:0 25px 100px #092b3955;overscroll-behavior:contain}dialog::backdrop{background:#143b365e;backdrop-filter:blur(5px)}.dialog-eyebrow{font-size:9px;font-weight:850;letter-spacing:1.6px;color:#6a7d60}.dialog-heading{display:flex;align-items:center;justify-content:space-between;gap:20px}.dialog-heading h2{font-size:29px;letter-spacing:-1px;margin:10px 0 5px;line-height:1.04}.close-button{border:0;border-radius:50%;width:44px;height:44px;background:#e9eddc;color:#47654d;font-size:30px;flex-shrink:0}.dialog-subtitle,dialog>p{font-size:12px;line-height:1.6;color:#697864}.dialog-footnote{font-size:10px;color:#67775b;margin:18px 0 0}#upgrade-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:21px}.upgrade-card{border:1px solid #d9e1ca;border-radius:14px;padding:16px;background:#fffdf7;display:grid;grid-template-columns:35px 1fr;gap:5px 10px}.upgrade-icon{font-size:25px;grid-row:1/3}.upgrade-card h3{font-size:13px;letter-spacing:-.3px;margin:0}.upgrade-card p{font-size:10px;line-height:1.45;margin:0;color:#74806d;min-height:28px}.upgrade-card button{grid-column:1/-1;background:#dfecac;color:#26432d;border:0;border-radius:9px;min-height:38px;font-size:10px;font-weight:850;margin-top:9px}.upgrade-card button:disabled{background:#edf0e5;color:#929d85}.upgrade-level{font-weight:600;font-size:9px;color:#819173;margin-left:4px}.welcome-dialog{max-width:550px;text-align:center;padding:31px 38px}.welcome-mark{font-size:48px;margin:13px 0}.welcome-dialog h2{font-size:57px;letter-spacing:-3px;font-weight:900;line-height:.94;margin:12px 0 21px}.welcome-dialog em{font-style:normal;color:#7b994e}.welcome-dialog>p{max-width:385px;margin:0 auto 24px;line-height:1.65}.welcome-steps{display:grid;grid-template-columns:1fr 1fr;text-align:left;gap:15px 10px;margin:25px 0;font-size:10px;font-weight:750}.welcome-steps b{display:inline-block;color:#719355;margin-right:8px;border-bottom:1px solid #d5dfc1;padding-bottom:3px}.welcome-dialog>.primary-button{width:100%;margin:3px 0 18px}.welcome-dialog>small{font-size:9px;color:#859079}.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:23px 0}.menu-grid button:first-child{grid-column:1/-1}.help-box{background:#eaf0dc;padding:18px;border-radius:15px;font-size:12px}.help-box p{font-size:11px;line-height:1.55;color:#5f7056;margin-bottom:0}[hidden]{display:none!important}.fatal-error{position:absolute;inset:25%;background:#fff4e2;padding:30px;border-radius:20px;color:#5b4734;z-index:100}.saved-warn{color:#9c4d35!important}@media(min-width:1600px){.mission-card{width:285px;top:135px;padding:24px}.mission-card h2{font-size:26px}.stats-strip{top:130px}.topbar{top:28px}}@media(max-width:799px){.topbar{left:16px;right:16px;top:max(13px,env(safe-area-inset-top));gap:9px}.crest{width:37px;height:45px;font-size:20px}.crest span{font-size:7px}.brand{gap:8px}h1{font-size:19px}h1 span{font-size:10px;letter-spacing:1.2px}.brand p{display:none}.wallet{padding:8px 12px 8px 9px;gap:7px;min-width:90px;border-radius:13px}.wallet small{font-size:6px;letter-spacing:1.2px}.wallet strong{font-size:22px}.coin{font-size:27px}.icon-button{width:39px;height:39px;border-radius:11px;font-size:20px}.mission-card{left:16px;right:16px;top:82px;width:auto;padding:13px 15px;border-radius:14px}.mission-card h2{font-size:17px;margin:8px 0 5px}.mission-card p{font-size:10px;margin:0 0 9px;line-height:1.4;padding-right:13px}.eyebrow{font-size:7px}.text-button{font-size:8px;padding-top:5px;min-height:29px}.text-button span{font-size:17px}.stats-strip{right:16px;left:16px;top:259px;justify-content:center;border:0;background:#eaf0dca8;border-radius:9px;gap:20px;padding:6px 10px;pointer-events:none}.stats-strip span{font-size:7px;display:flex;align-items:center;gap:5px}.stats-strip strong{font-size:12px;display:inline;margin:0}.bottom-ui{left:16px;right:16px;bottom:max(15px,env(safe-area-inset-bottom));gap:8px}.control-hint{display:none}#joystick{width:105px;height:105px}.control-wrap>span{font-size:6px;letter-spacing:1px}.bottom-actions{min-width:144px;gap:8px}.bottom-actions>.primary-button{padding:13px 15px;font-size:11px}.bottom-actions>.secondary-button{padding:9px;font-size:8px;min-height:36px}.bottom-actions small{font-size:6px;max-width:150px}#toast{top:292px;padding:9px 14px;font-size:10px;min-width:220px}.welcome-dialog{padding:26px 23px}.welcome-dialog h2{font-size:48px}.welcome-dialog>p{font-size:11px}.welcome-steps{gap:13px 6px;font-size:9px}.dialog-heading h2{font-size:23px}dialog{padding:22px}#upgrade-grid{grid-template-columns:1fr}.upgrade-card p{min-height:0}.menu-grid{grid-template-columns:1fr;gap:9px}.menu-grid button{font-size:10px}}@media(max-height:600px){.mission-card{top:84px;padding:12px;width:245px;right:auto}.mission-card h2{font-size:16px}.mission-card p{font-size:9px;margin-bottom:6px}.stats-strip{top:90px;left:auto;right:20px;background:none}.bottom-ui{bottom:9px}#joystick{width:82px;height:82px}.control-wrap>span,.control-hint{display:none}.welcome-dialog{padding:20px 30px}.welcome-dialog h2{font-size:35px}.welcome-mark{display:none}.welcome-dialog>p{font-size:10px;margin-bottom:10px}.welcome-steps{margin:13px 0}.welcome-dialog>.primary-button{margin-bottom:9px}#toast{top:70px}.bottom-actions{gap:5px}}
 
@@ -111,6 +111,40 @@ body[data-district="club"] #goal-alert{top:auto;bottom:190px}
 @media(max-width:999px),(max-height:619px){body[data-district="club"] #goal-alert{top:201px;bottom:auto}}
 
 </style>
+  <style>
+/* World HUD never scales with the map. Panels are contextual, not replacement maps. */
+#ui{position:fixed!important;inset:0!important;width:100%!important;height:100%!important;transform:none!important;pointer-events:none}
+#game{position:fixed;inset:0;width:100%;height:100%;touch-action:none}
+body[data-district=world] .topbar,.topbar{position:absolute;top:max(12px,env(safe-area-inset-top));left:18px;right:18px;height:66px;display:flex;gap:14px;pointer-events:none}
+.topbar>*{pointer-events:auto}.brand{gap:9px;margin-right:auto}.brand h1{font-size:21px}.brand h1 span{font-size:18px}.brand p{font-size:7px;margin-top:6px;letter-spacing:1.8px}.brand .crest{width:49px;height:60px;font-size:26px}.brand .crest span{font-size:9px}.club-pill{margin-left:10px;margin-right:10px;min-height:54px;max-width:260px;padding:8px 13px}.club-pill strong{font-size:14px}.wallet{width:205px;min-width:205px;height:63px;border-radius:17px;padding:7px 10px;gap:10px}.wallet strong{font-size:26px}.wallet small{font-size:8px}.coin{width:33px;height:33px}.wallet-add{width:34px;height:36px;font-size:25px}.icon-button{width:50px;height:51px;border-radius:14px;font-size:25px}
+.mission-card{position:absolute!important;display:flex!important;left:18px!important;top:130px!important;width:238px!important;height:auto!important;min-height:0!important;padding:16px!important;border-radius:18px!important;transform:none!important;pointer-events:auto}.mission-card h2{font-size:21px;margin:11px 0}.mission-card p{font-size:12px;line-height:1.5}.mission-card .eyebrow{font-size:8px}.mission-card .text-button{font-size:11px;min-height:39px;margin-top:11px;padding:0 12px}.mission-card .live-dot{height:13px;width:13px}.progress-track{height:6px}
+.stats-strip{position:absolute;top:86px!important;right:18px!important;width:233px!important;height:43px!important;padding:6px 11px!important;border-radius:12px;transform:none!important}.stats-strip strong{font-size:15px!important}.stats-strip span{font-size:7px!important}
+.world-map-tools{position:absolute;left:18px;top:84px;display:flex;gap:5px;pointer-events:auto;max-width:calc(100% - 280px);overflow-x:auto;scrollbar-width:none}.world-map-tools button{border:1px solid #c5d7a970;background:#123f35ee;color:#fff6d3;border-radius:9px;font:750 11px system-ui;padding:9px 11px;min-height:36px;white-space:nowrap}.world-map-tools button:first-child,.world-map-tools button:nth-child(2){font-size:19px;padding:3px 13px}
+.world-status{position:absolute;bottom:123px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;max-width:calc(100% - 34px);padding:7px 11px;background:#123f35ed;color:#f3efcc;border:1px solid #c1ce9455;border-radius:10px;white-space:nowrap;font:650 8px system-ui;letter-spacing:.7px;pointer-events:auto}.world-status button{background:#c3dfa5;color:#17442e;border:0;padding:6px 9px;border-radius:6px;font:850 9px system-ui;white-space:nowrap}
+.bottom-ui{position:absolute!important;left:18px!important;right:18px!important;bottom:20px!important;transform:none!important;pointer-events:none;display:flex!important}.bottom-actions{margin-left:auto;width:170px;pointer-events:auto}.bottom-actions #view-button{min-height:37px;font-size:10px}.bottom-actions #upgrade-button{min-height:47px;font-size:13px}.bottom-actions small{font-size:7px}.control-wrap{display:block!important}.control-wrap>span{font-size:7px}.control-hint{display:none!important}#joystick{width:87px;height:87px;touch-action:none}.stick-knob{width:40px;height:40px}.sports-dock{bottom:65px!important;left:50%!important;transform:translateX(-50%)!important;width:auto!important;max-width:calc(100% - 440px);overflow-x:auto;padding:4px;gap:4px;border-radius:12px;white-space:nowrap}.sports-dock button{padding:7px 10px;min-height:35px;font-size:10px}.travel-dock{position:absolute!important;bottom:19px!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;width:auto!important;max-width:calc(100% - 440px);display:flex!important;overflow-x:auto!important;padding:4px;gap:4px;background:#133f35ed;border:1px solid #cfdeb255;border-radius:12px}.travel-dock button{font-size:9px!important;min-height:32px!important;padding:6px 9px!important;white-space:nowrap}
+#world-inspector{position:absolute;right:18px;top:145px;width:300px;max-height:calc(100dvh - 305px);overflow:auto;pointer-events:auto;background:linear-gradient(145deg,#fffef3,#eeecd7);border:1px solid #dfdfb5;border-radius:19px;padding:21px;box-shadow:0 12px 40px #0b29234f;color:#173e34;scrollbar-width:thin;z-index:8}.inspector-close{position:absolute;right:11px;top:11px;border:0;background:#e5ebd7;color:#345c42;width:32px;height:32px;border-radius:50%;font-size:23px}.world-eyebrow{font:850 8px system-ui;letter-spacing:1px;color:#6f815b;display:block;padding-right:18px}.world-inspector-body h2{font:850 24px/1.13 system-ui;letter-spacing:-.8px;margin:11px 14px 12px 0}.world-inspector-body p{font:400 12px/1.6 system-ui;color:#59715a}.world-inspector-body button,.training-resources button,.sports-card [data-world-action]{display:block;width:100%;border:1px solid #3c8055;background:linear-gradient(#4a9a63,#26704e);box-shadow:0 2px 0 #1a533b;color:#fffbe1;border-radius:10px;min-height:43px;font:750 11px/1.4 system-ui;padding:10px 12px;margin:9px 0;text-align:left;white-space:normal}.world-inspector-body button:disabled,.training-resources button:disabled{background:#dce3cc;border-color:#c6d1b7;box-shadow:none;color:#76876b;cursor:not-allowed}.world-cost{font:850 30px system-ui;letter-spacing:-1px;margin:16px 0;color:#1b513a}.world-cost small{font-size:8px;letter-spacing:1px;display:block;color:#7a8364}.world-reason{font:400 10px/1.6 system-ui;display:block;color:#677955}.world-stock{font-size:11px;margin-top:16px;padding:10px;background:#dfeacf;border-radius:9px}.world-stock b{font-size:18px;margin-right:8px}.work-status{padding:12px;background:#e4e9d5;border-radius:11px;margin:12px 0;font-size:11px}.work-status b,.work-status small{display:block}.work-status small{margin-top:7px;font-size:10px;line-height:1.4;color:#698060}.work-status progress{display:block;width:100%;height:8px;margin:9px 0;accent-color:#387e51}.phase-change{border-left:3px solid #9ab16e;padding-left:9px!important}.training-resources{background:#e5edda;border:1px solid #c3d5b5;padding:14px;border-radius:13px;font-size:12px}.training-resources p{font-size:11px;line-height:1.6}.training-resources small{font-size:10px;display:block;color:#6a7252}.world-build-list{display:grid;gap:2px}
+#placement-bar{position:absolute;left:50%;top:135px;transform:translateX(-50%);max-width:calc(100% - 30px);padding:12px 16px;background:#173e35f5;color:#fff1ba;border:1px solid #e0c583;border-radius:12px;pointer-events:auto;z-index:9;text-align:center}#placement-bar b,#placement-bar span{display:block;font-size:11px;margin-bottom:5px}#placement-bar span{font-size:10px}#placement-bar button{border:1px solid #c8d5b166;border-radius:8px;padding:7px 14px;background:#49674d;color:white;font-size:10px}
+#toast{position:fixed!important;left:50%!important;top:auto!important;bottom:169px!important;transform:translateX(-50%)!important;width:max-content;max-width:calc(100vw - 45px);font-size:12px!important;z-index:20}#goal-alert{top:140px!important;font-size:18px!important;max-width:calc(100vw - 40px)}
+@media(max-width:1000px){.topbar .brand p{display:none}.club-pill{max-width:185px;margin:0}.wallet{min-width:170px;width:170px}.world-map-tools button{font-size:10px;padding:9px}.mission-card{width:205px!important}#world-inspector{width:270px;max-height:calc(100dvh - 296px)}.sports-dock,.travel-dock{max-width:calc(100% - 310px)}.bottom-actions{width:142px}}
+@media(max-width:680px){
+ .topbar{left:10px!important;right:10px!important;top:max(8px,env(safe-area-inset-top))!important;gap:8px;height:48px!important}.brand{gap:5px}.brand .crest{width:29px;height:38px;font-size:16px;border-top-width:3px}.brand .crest span{font-size:6px}.brand h1{font-size:13px;line-height:1}.brand h1 span{font-size:10px}.wallet{width:124px;min-width:124px;height:46px;padding:5px 8px;gap:6px;border-radius:12px}.coin{width:23px;height:23px;border-width:1px}.wallet strong{font-size:19px}.wallet small{font-size:6px}.wallet-add{display:none}.icon-button{height:41px;width:38px;font-size:22px;border-radius:11px}.club-pill{display:none}.world-map-tools{top:65px;left:10px;right:10px;max-width:none;gap:5px}.world-map-tools button{font-size:9px;padding:8px;min-height:33px}.world-map-tools button:first-child,.world-map-tools button:nth-child(2){padding:4px 12px}
+ .stats-strip{top:106px!important;left:auto!important;right:10px!important;height:39px!important;width:146px!important;padding:5px!important}.stats-strip strong{font-size:13px!important}.stats-strip span{font-size:6px!important}
+ .mission-card{top:104px!important;left:10px!important;width:calc(100% - 173px)!important;padding:9px 10px!important;border-radius:11px!important;max-height:110px!important;overflow:hidden}.mission-card .eyebrow{font-size:6px;gap:4px}.mission-card h2{font-size:12px;margin:6px 0}.mission-card p{display:none}.mission-card .progress-track{height:4px}.mission-card .text-button{margin-top:7px;min-height:28px;padding:0 7px;font-size:8px}.mission-card .text-button span{font-size:15px}.mission-card .live-dot{width:9px;height:9px}
+ .world-status{bottom:112px;padding:5px 8px;gap:8px;font-size:6px}.world-status button{font-size:7px;padding:5px}.world-status span{max-width:180px;overflow:hidden;text-overflow:ellipsis}
+ .bottom-ui{bottom:73px!important;left:10px!important;right:10px!important}.control-wrap>span{display:none}#joystick{width:62px;height:62px}.stick-knob{width:28px;height:28px}.bottom-actions{width:105px;gap:4px}.bottom-actions #upgrade-button{min-height:31px;font-size:9px;border-radius:9px;padding:5px 7px}.bottom-actions #view-button{min-height:28px;font-size:7px;padding:6px}.bottom-actions small{display:none}
+ .travel-dock{bottom:max(6px,env(safe-area-inset-bottom))!important;left:10px!important;right:10px!important;max-width:none!important;transform:none!important;width:auto!important;gap:3px}.travel-dock button{font-size:8px!important;min-height:27px!important;padding:5px 6px!important;flex:1}.travel-dock button span{display:none}.sports-dock{bottom:42px!important;left:10px!important;right:10px!important;max-width:none!important;transform:none!important;width:auto!important;gap:3px;padding:3px}.sports-dock button{font-size:8px;min-height:25px;padding:4px 7px;flex:1}
+ #world-inspector{left:10px;right:10px;top:auto;bottom:153px;width:auto;max-height:min(42dvh,345px);padding:16px 18px;border-radius:15px}.world-inspector-body h2{font-size:20px;margin:8px 24px 9px 0}.world-inspector-body p{font-size:11px;margin:6px 0}.world-inspector-body button{min-height:40px;font-size:10px;margin:7px 0;padding:9px 11px}.world-cost{font-size:25px;margin:10px 0}.world-cost small{font-size:7px}.world-eyebrow{font-size:7px}.world-build-list{grid-template-columns:1fr 1fr;gap:5px}.world-build-list button{margin:0}.world-stock{font-size:10px}.world-reason{font-size:9px}#toast{bottom:223px!important;font-size:10px!important;padding:9px 12px!important}#goal-alert{top:182px!important;font-size:13px!important;padding:13px!important}#placement-bar{top:179px!important;width:280px;max-width:calc(100% - 24px);padding:10px}#placement-bar b{font-size:10px}
+}
+@media(max-height:500px) and (min-width:681px){.mission-card{display:none!important}.world-map-tools{top:81px}.stats-strip{top:81px!important}#world-inspector{top:132px;bottom:93px;max-height:none;width:285px;padding:14px}.world-inspector-body h2{font-size:18px}.world-inspector-body p{font-size:10px}.world-status{display:none}.sports-dock{bottom:54px!important}.travel-dock{bottom:13px!important}.bottom-ui{bottom:15px!important}#joystick{width:68px;height:68px}#toast{bottom:122px!important}}
+@media(prefers-reduced-motion:reduce){button{transition:none!important}}
+#ui .brand{opacity:1!important;min-width:0!important}
+.bottom-actions{position:static!important;height:auto!important;display:flex!important;flex-direction:column!important;gap:7px!important;width:170px!important}
+.bottom-actions>.secondary-button,.bottom-actions>.primary-button,.bottom-actions>small{position:static!important;top:auto!important;left:auto!important;width:100%!important;height:auto!important}
+.control-wrap{transform:none!important}.control-wrap>span{visibility:visible!important}
+@media(max-width:1000px){.bottom-actions{width:142px!important}}
+@media(max-width:680px){.bottom-actions{width:105px!important;gap:4px!important}}
+
+</style>
   <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZD0iTTUgNVEzMi0zIDU5IDVWNDJMMzIgNjAgNSA0MloiIGZpbGw9IiMxMzQ5MzYiIHN0cm9rZT0iI2Y2ZTc4YyIgc3Ryb2tlLXdpZHRoPSI0Ii8+PHRleHQgeD0iMzIiIHk9IjM3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmMTkzIj5BPC90ZXh0Pjx0ZXh0IHg9IjMyIiB5PSI0OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjkiIGZpbGw9IiNmZmYxOTMiPkZDPC90ZXh0Pjwvc3ZnPg==" type="image/svg+xml">
 </head>
 <body>
@@ -118,6 +152,10 @@ body[data-district="club"] #goal-alert{top:auto;bottom:190px}
   <div id="asset-loading" role="status"><p>Preparando sua arena…</p><small>Carregando a arte e os personagens.</small></div>
   <canvas id="game" aria-label="Arena de futebol em perspectiva 2.5D. Use WASD, setas ou controle virtual para mover o gerente."></canvas>
   <div id="ui">
+ <div class="world-map-tools"><button data-world-action="zoomOut" aria-label="Diminuir zoom">−</button><button data-world-action="zoomIn" aria-label="Aumentar zoom">+</button><button data-world-focus="all">Expandir mapa ↗</button><button data-world-focus="academy">Formação</button><button data-world-focus="stadium">Estádio</button><button data-world-focus="business">Sede</button></div>
+ <div class="world-status"><span id="world-jobs">MAPA CONTÍNUO · ARRASTE PARA EXPLORAR</span><button id="ct-resource" data-world-action="focusBuilding" data-world-id="training">0 KITS NO CT</button></div>
+ <aside id="world-inspector" hidden><button class="inspector-close" data-world-action="closeInspector" aria-label="Fechar seleção">×</button><div class="world-inspector-body"></div></aside>
+ <div id="placement-bar" hidden><b>POSICIONAR CONSTRUÇÃO</b><span>Toque no terreno livre. Verde = permitido.</span><button data-world-action="cancel">Cancelar</button></div>
     <header class="topbar">
       <div class="brand"><span class="crest" aria-hidden="true">A<span>FC</span></span><div><h1>ARENA <span>DE BAIRRO</span></h1><p>DO CAMPO AO SONHO</p></div></div>
       <button id="header-league-pill" class="club-pill"><strong id="header-club">Clube da Vila</strong><small id="header-team-strength">Série D</small><small id="preparation-status">PREPARO 0/3</small></button><div class="wallet"><span class="coin" aria-hidden="true">●</span><div><small>CARTEIRA</small><strong id="wallet">0</strong></div><button id="wallet-upgrades" class="wallet-add" aria-label="Abrir melhorias">+</button></div>
@@ -139,10 +177,10 @@ body[data-district="club"] #goal-alert{top:auto;bottom:190px}
       <div class="bottom-actions"><button id="view-button" class="secondary-button">VISÃO GERAL</button><button id="upgrade-button" class="primary-button"><span>↗</span> EVOLUIR</button><small id="save-status">SAVE LOCAL · SEM NUVEM</small></div>
     </div>
     <nav class="travel-dock" aria-label="Destinos rápidos"><button data-travel="supply"><span aria-hidden="true">▣</span>Depósito</button><button data-travel="field0"><span aria-hidden="true">⚽</span>Campo 1</button><button data-travel="gate"><span aria-hidden="true">▤</span>Ingressos</button><button data-travel="cash"><span aria-hidden="true">◉</span>Caixa</button><button data-travel="field1" id="travel-field2"><span aria-hidden="true">⚑</span>Campo 2</button></nav>
-    <nav class="sports-dock" aria-label="Gestão do clube"><button id="arena-button">⚽ Arena</button><button id="district-button">🏟 Clube</button><button id="btn-dock-team">Elenco</button><button id="btn-dock-league">Tabela</button><button id="btn-dock-youth">Base</button><button id="btn-dock-market">Mercado</button></nav>
+    <nav class="sports-dock" aria-label="Gestão do clube"><button id="arena-button">⚽ Arena</button><button id="district-button">↗ Mapa completo</button><button id="btn-dock-team">Elenco</button><button id="btn-dock-league">Tabela</button><button id="btn-dock-youth">Base</button><button id="btn-dock-market">Mercado</button></nav>
   </div>
   <dialog id="welcome-dialog" class="welcome-dialog">
-    <div class="dialog-eyebrow">CLUBE EM EVOLUÇÃO 0.4 · ARENA DE BAIRRO</div>
+    <div class="dialog-eyebrow">MAPA VIVO 0.5 · ARENA DE BAIRRO</div>
     <div class="welcome-mark">⚽</div>
     <h2>Seu clube.<br><em>Sua arena.</em></h2>
     <p>Prepare partidas, receba a torcida e transforme um campo de bairro em um negócio que funciona com a sua equipe.</p>
@@ -151,10 +189,10 @@ body[data-district="club"] #goal-alert{top:auto;bottom:190px}
     <small>Arte aprovada integrada · Controles e economia reais</small><p class="art-note">Cenário ilustrado 2.5D: parte da torcida e dos atletas faz parte da arte. Não é uma cena 3D.</p>
   </dialog>
   <dialog id="upgrade-dialog">
-    <div class="dialog-heading"><div><div class="dialog-eyebrow">SUA PRÓXIMA CONQUISTA</div><h2>Faça o clube crescer.</h2></div><button class="close-button" data-close aria-label="Fechar melhorias">×</button></div>
+    <div class="dialog-heading"><div><div class="dialog-eyebrow">OPERAÇÃO DA ARENA</div><h2>Equipe da operação.</h2></div><button class="close-button" data-close aria-label="Fechar melhorias">×</button></div>
     <p class="dialog-subtitle">Carteira: <b id="shop-wallet">0</b> moedas. O dinheiro do caixa precisa ser recolhido.</p>
-    <div id="upgrade-grid"></div>
-    <button class="primary-button" data-tab="facilities">ESTÁDIO, BASE E DEPARTAMENTOS →</button><p class="dialog-footnote">Funcionários trabalham enquanto o jogo está aberto e não está pausado.</p>
+    <p class="section-note">Estes são os funcionários e equipamentos. O clube continua crescendo no mapa, mesmo depois de concluir esta lista.</p><button class="primary-button" data-world-focus="all">VER TERRENOS E CONSTRUÇÕES NO MAPA →</button><div id="upgrade-grid"></div>
+    <button class="primary-button" data-tab="facilities">IR AO MAPA DO CLUBE →</button><p class="dialog-footnote">Funcionários trabalham enquanto o jogo está aberto e não está pausado.</p>
   </dialog>
   <dialog id="sports-dialog"><div class="dialog-heading"><div><div class="dialog-eyebrow">GESTÃO DO SEU CLUBE</div><h2 id="sports-title">Elenco</h2></div><button class="close-button" data-close aria-label="Fechar gestão">×</button></div><p id="sports-meta"></p><nav id="sports-tabs"></nav><section id="sports-content"></section></dialog>
   <dialog id="menu-dialog">
@@ -934,7 +972,284 @@ class Simulation {
 }
 
 
+// src/scene.js
+/** Calibration between the original simulation and the approved painted board.
+ * Rows are [world z, art y, art origin x, pixels per world x].
+ * No rendering or game state is stored here; projection is invertible.
+ */
+const ART = Object.freeze({ width:1536, height:960 });
+const SCENE_ROWS = Object.freeze([
+  [-14,95,866,34],[-10.3,217,852,35.6],[-1.7,410,818,37.2],
+  [0,459,814,38],[2.5,550,797,38],[6,634,755,41],
+  [7,681,742,43],[8.9,713,718,44],[9.75,735,701,44.8],
+  [14,870,620,48],[17.5,981,588,50],
+]);
+function interpolateRow(value,column=0){
+  let i=0;
+  while(i<SCENE_ROWS.length-2 && value>SCENE_ROWS[i+1][column])i++;
+  const a=SCENE_ROWS[i],b=SCENE_ROWS[i+1],t=(value-a[column])/(b[column]-a[column]);
+  return a.map((v,j)=>v+(b[j]-v)*t);
+}
+function worldToArt(x,z){const r=interpolateRow(z);return {x:r[2]+x*r[3],y:r[1]};}
+function artToWorld(x,y){const r=interpolateRow(y,1);return {x:(x-r[2])/r[3],z:r[0]};}
+function sceneLayout(width,height){
+  const compact=width<1000 || height<620, portrait=height>width;
+  if(!compact)return {compact,portrait,viewport:{x:0,y:0,w:width,h:height},hudScale:Math.min(width/ART.width,height/ART.height)};
+  if(portrait)return {compact,portrait,viewport:{x:0,y:206,w:width,h:Math.max(140,height-206-140)},hudScale:1};
+  return {compact,portrait,viewport:{x:198,y:77,w:Math.max(220,width-210),h:Math.max(100,height-77-94)},hudScale:1};
+}
+
+
+// src/world-model.js
+
+
+
+
+/** Physical parcels share one coordinate system. Buying removes a boundary,
+ * not a screen. Art coordinates are pixels at a nominal zoom of 1. */
+const WORLD_PLOTS = Object.freeze([
+  { id:'home', name:'Arena da Vila', x:0, y:0, w:1536, h:960, cost:0 },
+  { id:'academy', name:'Terreno da formação', x:1536, y:0, w:960, h:960, cost:500 },
+  { id:'stadium', name:'Terreno do estádio', x:0, y:-896, w:1536, h:896, cost:1200 },
+  { id:'business', name:'Terreno da sede', x:-960, y:0, w:960, h:960, cost:1800 },
+]);
+const WORLD_STRUCTURES = Object.freeze({
+  pitch1:{x:608,y:310,w:340,h:210, fixed:true},
+  pitch2:{x:1056,y:310,w:348,h:210, fixed:true},
+  stands:{x:608,y:450,w:350,h:48, fixed:true},
+  gate:{x:704,y:660,w:148,h:80, fixed:true},
+  canteen:{x:328,y:794,w:148,h:90, fixed:true},
+  youth:{x:1968,y:248,w:448,h:224},
+  training:{x:1968,y:652,w:288,h:192},
+  stadium:{x:768,y:-440,w:768,h:352},
+  board:{x:-472,y:252,w:256,h:160},
+  marketing:{x:-696,y:672,w:224,h:144},
+  coaching:{x:-272,y:672,w:224,h:144},
+});
+const WORLD_LIMITS=Object.freeze({left:-960,top:-896,right:2496,bottom:960,step:32});
+const TRAINING_KIT_LIMIT=48;
+const worldPlotAt=(x,y)=>WORLD_PLOTS.find(p=>x>=p.x&&x<p.x+p.w&&y>=p.y&&y<p.y+p.h);
+const structureRect=(id,pos)=>({x:pos.x-WORLD_STRUCTURES[id].w/2,y:pos.y-WORLD_STRUCTURES[id].h/2,w:WORLD_STRUCTURES[id].w,h:WORLD_STRUCTURES[id].h});
+const structureEntry=(id,pos)=>({x:pos.x,y:pos.y+WORLD_STRUCTURES[id].h/2+42});
+const insideRect=(x,y,r,padding=0)=>x>r.x-padding&&x<r.x+r.w+padding&&y>r.y-padding&&y<r.y+r.h+padding;
+function blankWorld(s){
+  const pos=worldToArt(s.player.x,s.player.z), placements={};
+  for(const id of Object.keys(WORLD_STRUCTURES))if((s.facilities[id]||0)>0)placements[id]={x:WORLD_STRUCTURES[id].x,y:WORLD_STRUCTURES[id].y};
+  return {version:1,actor:{...pos,route:[],walk:0},placements,construction:[],training:null,ctKits:0,courierHired:false,
+    courier:{...worldToArt(CFG.supply.x,CFG.supply.z),route:[],walk:0,carry:0,target:'supply'},completedJobs:0,delivered:0};
+}
+function ensureWorld(s){if(!s.map)s.map=blankWorld(s);return s.map;}
+function mapPlacementCheck(s,id,pos,ignoreSelf=false){
+  const spec=WORLD_STRUCTURES[id],fac=FACILITIES[id];
+  if(!spec||!fac||!pos||!Number.isFinite(pos.x)||!Number.isFinite(pos.y))return{ok:false,reason:'Local inválido.'};
+  const plot=WORLD_PLOTS.find(p=>p.id===fac.plot),r=structureRect(id,pos);
+  if(!s.land[plot.id])return{ok:false,reason:'Compre o terreno antes de construir.'};
+  if(spec.fixed)return{ok:true};
+  if(r.x<plot.x+48||r.y<plot.y+96||r.x+r.w>plot.x+plot.w-48||r.y+r.h>plot.y+plot.h-92)return{ok:false,reason:'Deixe espaço para os acessos dentro do lote.'};
+  for(const [other,p] of Object.entries(s.map?.placements||{})){
+    if(ignoreSelf&&other===id)continue;
+    const b=structureRect(other,p);
+    if(r.x<b.x+b.w+55&&r.x+r.w>b.x-55&&r.y<b.y+b.h+55&&r.y+r.h>b.y-55)return{ok:false,reason:'Muito perto de outra construção. Reserve espaço para circulação.'};
+  }
+  return{ok:true};
+}
+function mapWalkable(s,x,y){
+  const plot=worldPlotAt(x,y);
+  if(!plot||!s.land[plot.id])return false;
+  if(plot.id==='home'){
+    const p=artToWorld(x,y);
+    // Public perimeter and central access lane connect the inherited arena to
+    // the new parcels without changing the arena's resource/queue coordinates.
+    return walkable(p.x,p.z,.33)||y>=856||x<150||x>1354||(x>824&&x<880&&y<215);
+  }
+  for(const [id,pos] of Object.entries(s.map?.placements||{})){
+    if(FACILITIES[id].plot==='home')continue;
+    if(insideRect(x,y,structureRect(id,pos),12))return false;
+  }
+  return true;
+}
+class MapHeap{
+ constructor(){this.a=[];}
+ push(id,score){let i=this.a.length;this.a.push({id,score});while(i){const p=(i-1)>>1;if(this.a[p].score<=score)break;this.a[i]=this.a[p];i=p;}this.a[i]={id,score};}
+ pop(){const top=this.a[0],last=this.a.pop();if(this.a.length){let i=0;while(true){let k=i*2+1;if(k>=this.a.length)break;if(k+1<this.a.length&&this.a[k+1].score<this.a[k].score)k++;if(last.score<=this.a[k].score)break;this.a[i]=this.a[k];i=k;}this.a[i]=last;}return top;}
+}
+/** Eight-way A*, no diagonal corner cutting. Bounded work for mobile devices. */
+function worldPath(s,start,end){
+ if(!end||!Number.isFinite(end.x)||!Number.isFinite(end.y)||!worldPlotAt(end.x,end.y)||!s.land[worldPlotAt(end.x,end.y).id])return[];
+ const b=WORLD_LIMITS,step=b.step,cols=(b.right-b.left)/step,rows=(b.bottom-b.top)/step,n=cols*rows;
+ const point=i=>({x:b.left+(i%cols)*step+step/2,y:b.top+Math.floor(i/cols)*step+step/2});
+ const available=new Uint8Array(n);let first=-1,last=-1,ds=Infinity,de=Infinity;
+ for(let i=0;i<n;i++){const p=point(i);if(!mapWalkable(s,p.x,p.y))continue;available[i]=1;const a=Math.hypot(p.x-start.x,p.y-start.y),z=Math.hypot(p.x-end.x,p.y-end.y);if(a<ds){ds=a;first=i;}if(z<de){de=z;last=i;}}
+ if(first<0||last<0||de>100||ds>120)return[];
+ const g=new Float64Array(n).fill(Infinity),from=new Int32Array(n).fill(-1),closed=new Uint8Array(n),heap=new MapHeap();g[first]=0;heap.push(first,0);
+ const target=point(last),dirs=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[-1,1],[1,-1],[-1,-1]];
+ while(heap.a.length){const current=heap.pop().id;if(closed[current])continue;if(current===last)break;closed[current]=1;const xx=current%cols,yy=Math.floor(current/cols);
+  for(const [dx,dy]of dirs){const x=xx+dx,y=yy+dy,j=y*cols+x;if(x<0||x>=cols||y<0||y>=rows||!available[j]||closed[j])continue;if(dx&&dy&&(!available[yy*cols+x]||!available[y*cols+xx]))continue;const cost=g[current]+(dx&&dy?1.41421356:1);if(cost>=g[j])continue;g[j]=cost;from[j]=current;const p=point(j);heap.push(j,cost+Math.hypot(p.x-target.x,p.y-target.y)/step);}}
+ if(last!==first&&from[last]<0)return[];const result=[];let i=last;while(i!==first&&i>=0){result.push(point(i));i=from[i];}result.reverse();
+ // Exact final point is useful for resource interaction circles.
+ if(mapWalkable(s,end.x,end.y))result.push({...end});
+ return result;
+}
+function advanceMapActor(actor,dt,speed){
+ let remaining=dt*speed,moved=0;
+ while(remaining>0&&actor.route.length){const p=actor.route[0],d=Math.hypot(p.x-actor.x,p.y-actor.y);if(d<.05){actor.route.shift();continue;}const step=Math.min(remaining,d);actor.x+=(p.x-actor.x)*step/d;actor.y+=(p.y-actor.y)*step/d;remaining-=step;moved+=step;if(d<=step+.01)actor.route.shift();}
+ actor.walk=dt?moved/dt:0;return actor.route.length===0;
+}
+/** Versioned map extension. Old saves migrate without resetting balances,
+ * clubs, profiles or existing construction levels. */
+function restoreWorld(s,raw){
+ const fresh=blankWorld(s);if(!raw.map){s.map=fresh;return s;}
+ const m=raw.map,bad=label=>{throw new Error(`Save inválido: mapa / ${label}.`);};
+ const int=(v,min,max,label)=>{if(!Number.isInteger(v)||v<min||v>max)bad(label);return v;};
+ const num=(v,min,max,label)=>{if(typeof v!=='number'||!Number.isFinite(v)||v<min||v>max)bad(label);return v;};
+ const pos=p=>{if(!p)bad('posição');return{x:num(p.x,-970,2506,'x'),y:num(p.y,-906,970,'y')};};
+ const actor=a=>{if(!Array.isArray(a?.route)||a.route.length>500)bad('caminho');return{...pos(a),walk:0,route:a.route.map(pos)};};
+ if(m.version!==1)bad('versão');fresh.actor=actor(m.actor);fresh.placements={};
+ if(!m.placements||typeof m.placements!=='object'||Array.isArray(m.placements))bad('instalações');
+ for(const[id,p]of Object.entries(m.placements)){if(!WORLD_STRUCTURES[id])bad('tipo de instalação');fresh.placements[id]=pos(p);}
+ fresh.ctKits=int(m.ctKits,0,TRAINING_KIT_LIMIT,'kits');fresh.delivered=int(m.delivered??0,0,1e12,'entregas');fresh.completedJobs=int(m.completedJobs??0,0,1e12,'obras');
+ if(typeof m.courierHired!=='boolean')bad('auxiliar');fresh.courierHired=m.courierHired;
+ fresh.courier={...actor(m.courier),carry:int(m.courier.carry,0,3,'carga'),target:m.courier.target==='training'?'training':'supply'};
+ s.map=fresh;
+ if(!Array.isArray(m.construction)||m.construction.length>3)bad('obras');
+ fresh.construction=m.construction.map(j=>{if(!WORLD_STRUCTURES[j.id]||!fresh.placements[j.id])bad('obra');const from=int(j.from,0,14,'nível'),to=int(j.to,1,15,'nível alvo');if(to!==from+1||s.facilities[j.id]!==from)bad('estado da obra');return{id:j.id,from,to,elapsed:num(j.elapsed,0,300,'tempo'),duration:num(j.duration,1,300,'duração'),worker:actor(j.worker)};});
+ if(new Set(fresh.construction.map(j=>j.id)).size!==fresh.construction.length)bad('obra duplicada');
+ if(m.training){const j=m.training;if(!['team','player','youth'].includes(j.kind)||!Array.isArray(j.ids)||!j.ids.length||j.ids.length>30)bad('treino');const roster=j.kind==='youth'?s.youthList:s.roster;if(j.ids.some(id=>!roster.some(p=>p.id===id))||new Set(j.ids).size!==j.ids.length)bad('atletas do treino');fresh.training={kind:j.kind,ids:[...j.ids],elapsed:num(j.elapsed,0,300,'tempo de treino'),duration:num(j.duration,1,300,'duração de treino')};}
+ for(const id of Object.keys(WORLD_STRUCTURES)){if(s.facilities[id]>0&&!fresh.placements[id])fresh.placements[id]={x:WORLD_STRUCTURES[id].x,y:WORLD_STRUCTURES[id].y};}
+ for(const[id,p]of Object.entries(fresh.placements)){if(!s.land[FACILITIES[id].plot])bad('construção em terreno fechado');if(!mapPlacementCheck(s,id,p,true).ok)bad('construções sobrepostas');}
+ if(!mapWalkable(s,fresh.actor.x,fresh.actor.y))fresh.actor={...worldToArt(s.player.x,s.player.z),route:[],walk:0};
+ return s;
+}
+
+
+// src/world-simulation.js
+
+
+
+
+
+
+
+function trainingQuote(s,kind='team',id=''){
+ const list=kind==='youth'?s.youthList:s.roster;
+ const players=kind==='team'?list.filter(p=>p.starter&&p.overall<p.potential):list.filter(p=>p.id===id&&p.overall<p.potential);
+ const coins=kind==='team'?Math.max(1,Math.ceil(players.reduce((sum,p)=>sum+calculateTrainingCost(p,s.facilities.training),0)*.65)):players.reduce((sum,p)=>sum+calculateTrainingCost(p,s.facilities.training+(kind==='youth'?s.facilities.youth:0)),0);
+ const kits=kind==='team'?Math.ceil(players.length/3):1,duration=Math.max(12,Math.round((kind==='team'?35:24)*(1-Math.min(.4,s.facilities.training*.025))));
+ let reason='';
+ if(!s.facilities.training)reason='Construa o centro de treinamento no terreno da formação.';
+ else if(kind==='youth'&&!s.facilities.youth)reason='Construa primeiro o campo da base.';
+ else if(s.map?.construction.some(j=>j.id==='training'))reason='O CT está em obras. Aguarde a conclusão.';
+ else if(s.map?.training)reason='Já existe um treino em andamento.';
+ else if(s.official)reason='A equipe está disputando uma partida oficial.';
+ else if(!players.length)reason='Os atletas selecionados já atingiram seu potencial ou não estão disponíveis.';
+ else if(s.wallet<coins)reason=`Faltam ${coins-s.wallet} moedas para o treino.`;
+ else if((s.map?.ctKits||0)<kits)reason=`Faltam ${kits-(s.map?.ctKits||0)} kits no CT. Leve os kits do depósito ou contrate o auxiliar logístico.`;
+ return{ok:!reason,reason,coins,kits,duration,ids:players.map(p=>p.id)};
+}
+/** Same economy, league, profiles and arena rules; a physical world layer is
+ * added rather than replacing those systems with decorative pages. */
+class WorldSimulation extends Simulation{
+ constructor(state=newGame()){super(state);ensureWorld(this.state);}
+ purchase(id){const result=super.purchase(id);if(result.ok&&id==='field2'){const p=WORLD_STRUCTURES.pitch2;this.state.map.placements.pitch2={x:p.x,y:p.y};}return result;}
+ updateGate(dt){const a=this.state.map.actor,g=worldToArt(CFG.gate.x,CFG.gate.z);if(!this.state.staff.gate&&Math.hypot(a.x-g.x,a.y-g.y)>58){this.state.timers.gate=0;return;}super.updateGate(dt);}
+ goTo(point){if(!point||!Number.isFinite(point.x)||!Number.isFinite(point.z))return false;return this.goMap(worldToArt(point.x,point.z));}
+ goMap(point){const m=ensureWorld(this.state),route=worldPath(this.state,m.actor,point);if(!route.length)return false;m.actor.route=route;this.state.player.route=[];return true;}
+ moveToStructure(id){const s=this.state,p=s.map.placements[id];return p?this.goMap(structureEntry(id,p)):false;}
+ buyLand(id){
+  const s=this.state,p=WORLD_PLOTS.find(p=>p.id===id);if(!p||id==='home'||s.land[id])return{ok:false,reason:'Terreno já adquirido ou inexistente.'};
+  if(!s.fields[1].unlocked)return{ok:false,reason:'Abra o segundo campo para liberar a expansão do clube.'};
+  if(s.wallet<p.cost)return{ok:false,reason:`Faltam ${p.cost-s.wallet} moedas para este terreno.`};
+  // All three expansion parcels touch the original owned arena. No teleport.
+  s.wallet-=p.cost;s.land[id]=true;this.emit('purchase',`${p.name} adquirido. A cerca foi aberta; escolha onde construir.`);return{ok:true,cost:p.cost};
+ }
+ upgradeFacility(id,position=null){
+  const s=this.state,m=ensureWorld(s),spec=WORLD_STRUCTURES[id],f=FACILITIES[id];
+  if(!f||!spec)return{ok:false,reason:'Instalação inválida.'};
+  if(m.construction.some(j=>j.id===id))return{ok:false,reason:'Esta instalação já está em obras.'};
+  if(m.construction.length>=2)return{ok:false,reason:'As duas equipes de obra estão ocupadas.'};
+  if(id==='training'&&m.training)return{ok:false,reason:'Espere o treino terminar antes de reformar o CT.'};
+  const from=s.facilities[id]||0,check=canUpgradeFacility(id,from,s.season.divisionIndex,s.wallet,s);if(!check.ok)return check;
+  const p=m.placements[id]||position||(spec.fixed?{x:spec.x,y:spec.y}:null);
+  if(!p)return{ok:false,placement:true,reason:'Escolha a posição da construção no próprio terreno.'};
+  const valid=mapPlacementCheck(s,id,p,true);if(!valid.ok)return valid;
+  const isNew=!m.placements[id];
+  if(isNew&&!spec.fixed&&Math.abs(m.actor.x-p.x)<spec.w/2+15&&Math.abs(m.actor.y-p.y)<spec.h/2+15)return{ok:false,reason:'Mova o gerente antes de construir nesta posição.'};
+  m.placements[id]={x:p.x,y:p.y};
+  const entry=structureEntry(id,p),workerStart={x:820,y:910},route=worldPath(s,workerStart,entry);
+  if(!route.length){if(isNew)delete m.placements[id];return{ok:false,reason:'Não há acesso até a obra. Deixe espaço ao redor da entrada.'};}
+  s.wallet-=check.cost;
+  const duration=12+Math.ceil((from+1)/3)*5;
+  m.construction.push({id,from,to:from+1,elapsed:0,duration,worker:{...workerStart,route,walk:0}});
+  // New foundations may intersect an old route. Recalculate paths instead of
+  // letting actors cross the new building or teleporting them.
+  for(const actor of [m.actor,m.courier,...m.construction.map(j=>j.worker)])if(actor.route.length&&actor.route.some(q=>!mapWalkable(s,q.x,q.y))){const goal=actor.route.at(-1);actor.route=worldPath(s,actor,goal);}
+  this.emit('construction',`Obra iniciada: ${f.name}. Benefício liberado só ao concluir.`);
+  return{ok:true,cost:check.cost,duration,construction:true};
+ }
+ hireCourier(){const s=this.state,m=ensureWorld(s);if(m.courierHired)return{ok:false,reason:'Auxiliar já contratado.'};if(!s.facilities.training)return{ok:false,reason:'Construa o CT antes de contratar o auxiliar.'};if(s.wallet<240)return{ok:false,reason:'O auxiliar custa 240 moedas.'};s.wallet-=240;m.courierHired=true;this.emit('hire','Auxiliar logístico contratado. Ele leva kits reais do depósito ao CT.');return{ok:true,cost:240};}
+ trainPlayer(id){return this.startTraining('player',id);}
+ trainYouth(id){return this.startTraining('youth',id);}
+ trainTeam(){return this.startTraining('team');}
+ startTraining(kind,id=''){
+  const s=this.state;ensureWorld(s);const q=trainingQuote(s,kind,id);if(!q.ok)return q;
+  s.wallet-=q.coins;s.map.ctKits-=q.kits;s.map.training={kind,ids:q.ids,elapsed:0,duration:q.duration};
+  this.emit('trainingStart',`Treino iniciado: ${q.coins} moedas + ${q.kits} kits. Duração ${q.duration}s de jogo.`);
+  return{...q,started:true};
+ }
+ sellPlayer(id){if(this.state.map.training?.ids.includes(id))return{ok:false,reason:'Espere este atleta terminar o treino.'};return super.sellPlayer(id);}
+ sellYouth(id){if(this.state.map.training?.ids.includes(id))return{ok:false,reason:'Espere o jovem terminar o treino.'};return super.sellYouth(id);}
+ promoteYouth(id){if(this.state.map.training?.ids.includes(id))return{ok:false,reason:'Espere o jovem terminar o treino.'};return super.promoteYouth(id);}
+ playLeagueRound(){if(this.state.map.training)return{ok:false,reason:'O treino está em andamento. Aguarde para disputar a rodada.'};return super.playLeagueRound();}
+ updatePlayer(dt,input){
+  const s=this.state,m=ensureWorld(s),a=m.actor,p=s.player,before={x:a.x,y:a.y};
+  let dx=Number.isFinite(input.x)?input.x:0,dy=Number.isFinite(input.z)?input.z:0;
+  if(Math.hypot(dx,dy)>.05){a.route=[];const len=Math.max(1,Math.hypot(dx,dy)),speed=walkingSpeed(s)*38,step=speed*dt;dx=dx/len*step;dy=dy/len*step;
+   if(mapWalkable(s,a.x+dx,a.y+dy)){a.x+=dx;a.y+=dy;}else{if(mapWalkable(s,a.x+dx,a.y))a.x+=dx;if(mapWalkable(s,a.x,a.y+dy))a.y+=dy;}
+  }else advanceMapActor(a,dt,walkingSpeed(s)*38);
+  a.walk=Math.hypot(a.x-before.x,a.y-before.y)/dt;s.stats.walked+=Math.hypot(a.x-before.x,a.y-before.y)/38;
+  const local=artToWorld(a.x,a.y);p.route=[];
+  // The original interaction logic still owns pickup, field supply and cashier.
+  if(a.x>=0&&a.x<=1536&&a.y>=0&&a.y<=960&&walkable(local.x,local.z)){
+   p.x=local.x;p.z=local.z;super.updatePlayer(dt,{x:0,z:0});
+  }
+  p.walk=a.walk/38;
+  const ct=m.placements.training;
+  if(ct&&s.facilities.training>0&&Math.hypot(a.x-structureEntry('training',ct).x,a.y-structureEntry('training',ct).y)<58&&p.carry>0&&m.ctKits<TRAINING_KIT_LIMIT){
+   // Delivery has a separate clock, so closing panels never manufactures kits.
+   this.deliveryClock=(this.deliveryClock||0)+dt;
+   if(this.deliveryClock>=CFG.transferInterval){this.deliveryClock=0;p.carry--;m.ctKits++;m.delivered++;this.emit('ctDelivery','+1 kit entregue ao CT.');}
+  }else this.deliveryClock=0;
+ }
+ tick(delta,input={x:0,z:0}){
+  ensureWorld(this.state);super.tick(delta,input);if(!Number.isFinite(delta)||delta<=0)return;
+  const s=this.state,m=s.map,dt=Math.min(.1,delta);
+  for(const j of [...m.construction]){
+   const arrived=advanceMapActor(j.worker,dt,190);
+   if(!arrived)continue;
+   j.elapsed=Math.min(j.duration,j.elapsed+dt);
+   if(j.elapsed>=j.duration){s.facilities[j.id]=j.to;m.completedJobs++;s.stats.upgrades++;m.construction=m.construction.filter(x=>x!==j);
+    const stage=facilityStage(j.to);this.emit('facility',`${FACILITIES[j.id].name}: fase ${stage.phase}, melhoria ${stage.step}/3 concluída!`);}
+  }
+  const training=m.training;
+  if(training){training.elapsed=Math.min(training.duration,training.elapsed+dt);if(training.elapsed>=training.duration){const list=training.kind==='youth'?s.youthList:s.roster;let count=0;for(const id of training.ids){const p=list.find(p=>p.id===id);if(p&&p.overall<p.potential){p.overall++;p.trainings++;if(training.kind==='youth')p.marketValue+=5;count++;}}m.training=null;this.emit('training',`Treino concluído: ${count} atleta${count===1?'':'s'} evoluiu${count===1?'':'ram'} +1 de força.`);}}
+  this.updateCourier(dt);
+ }
+ updateCourier(dt){
+  const s=this.state,m=s.map,a=m.courier,ct=m.placements.training;if(!m.courierHired||!ct||!s.facilities.training)return;
+  const target=a.carry?'training':'supply',goal=target==='training'?structureEntry('training',ct):worldToArt(CFG.supply.x,CFG.supply.z);
+  if(a.target!==target){a.target=target;a.route=[];}
+  if(Math.hypot(a.x-goal.x,a.y-goal.y)>32){if(!a.route.length)a.route=worldPath(s,a,goal);advanceMapActor(a,dt,180);return;}
+  a.route=[];a.walk=0;
+  if(a.carry){const amount=Math.min(a.carry,TRAINING_KIT_LIMIT-m.ctKits);if(amount>0){a.carry-=amount;m.ctKits+=amount;m.delivered+=amount;this.emit('ctDelivery',`Auxiliar entregou ${amount} kits ao CT.`);}}
+  else if(m.ctKits<TRAINING_KIT_LIMIT-2&&s.kits>=3&&s.fields.every(f=>!f.unlocked||f.stock>0)){
+   const amount=Math.min(3,s.kits-1,TRAINING_KIT_LIMIT-m.ctKits);a.carry=amount;s.kits-=amount;
+  }
+ }
+}
+
+
 // src/save.js
+
 
 
 
@@ -1007,7 +1322,7 @@ function validateState(raw) {
   for (const k of Object.keys(s.timers)) s.timers[k] = num(raw.timers[k], `relógio ${k}`, 1000);
   obj(raw.stats, 'estatísticas');
   for (const k of Object.keys(s.stats)) s.stats[k] = num(raw.stats[k], k, 1_000_000_000_000_000);
-  return restoreExtensions(s, raw);
+  return restoreWorld(restoreExtensions(s, raw),raw);
 }
 
 function encodeSave(state, writer = 'export') {
@@ -1071,34 +1386,6 @@ class SaveStore {
     try { this.storage.removeItem(this.saveKey); this.storage.removeItem(this.backupKey); this.lastRaw = null; this.writable = true; return true; }
     catch { return false; }
   }
-}
-
-
-// src/scene.js
-/** Calibration between the original simulation and the approved painted board.
- * Rows are [world z, art y, art origin x, pixels per world x].
- * No rendering or game state is stored here; projection is invertible.
- */
-const ART = Object.freeze({ width:1536, height:960 });
-const SCENE_ROWS = Object.freeze([
-  [-14,95,866,34],[-10.3,217,852,35.6],[-1.7,410,818,37.2],
-  [0,459,814,38],[2.5,550,797,38],[6,634,755,41],
-  [7,681,742,43],[8.9,713,718,44],[9.75,735,701,44.8],
-  [14,870,620,48],[17.5,981,588,50],
-]);
-function interpolateRow(value,column=0){
-  let i=0;
-  while(i<SCENE_ROWS.length-2 && value>SCENE_ROWS[i+1][column])i++;
-  const a=SCENE_ROWS[i],b=SCENE_ROWS[i+1],t=(value-a[column])/(b[column]-a[column]);
-  return a.map((v,j)=>v+(b[j]-v)*t);
-}
-function worldToArt(x,z){const r=interpolateRow(z);return {x:r[2]+x*r[3],y:r[1]};}
-function artToWorld(x,y){const r=interpolateRow(y,1);return {x:(x-r[2])/r[3],z:r[0]};}
-function sceneLayout(width,height){
-  const compact=width<1000 || height<620, portrait=height>width;
-  if(!compact)return {compact,portrait,viewport:{x:0,y:0,w:width,h:height},hudScale:Math.min(width/ART.width,height/ART.height)};
-  if(portrait)return {compact,portrait,viewport:{x:0,y:206,w:width,h:Math.max(140,height-206-140)},hudScale:1};
-  return {compact,portrait,viewport:{x:198,y:77,w:Math.max(220,width-210),h:Math.max(100,height-77-94)},hudScale:1};
 }
 
 
@@ -1264,9 +1551,9 @@ class Renderer {
   draw(s,dt){
     if(!this.loaded)return;
     if(this.district&&this.district!=='arena'){document.body.dataset.district='club';drawCampus(this,s,dt);return;}
-    document.body.dataset.district='arena';
+    if(!this._offscreen)document.body.dataset.district='arena';
     const c=this.ctx,v=this.layout.viewport;this.lastPlayer=s.player;
-    const mode=this.overview?'overview':'follow';if(document.body.dataset.camera!==mode)document.body.dataset.camera=mode;
+    const mode=this.overview?'overview':'follow';if(!this._offscreen&&document.body.dataset.camera!==mode)document.body.dataset.camera=mode;
     const actor=worldToArt(s.player.x,s.player.z);
     let desiredScale,target;
     if(!this.layout.compact&&this.overview){desiredScale=Math.min(this.width/1536,this.height/960);target={x:768,y:480};}
@@ -1274,7 +1561,7 @@ class Renderer {
     else{desiredScale=this.layout.portrait?clamp(v.w/570,.56,.9):clamp(v.h/540,.55,1.12);target={x:clamp(actor.x+45,330,1170),y:clamp(actor.y-90,370,660)};}
     if(!this.initialized){this.camera={...target};this.scale=desiredScale;this.initialized=true;}
     const smooth=1-Math.exp(-dt*7);this.camera.x+=(target.x-this.camera.x)*smooth;this.camera.y+=(target.y-this.camera.y)*smooth;this.scale+=(desiredScale-this.scale)*smooth;
-    this.frameArt=this.assets[!this.layout.compact&&this.overview?'arena-cenario.png':'arena-mapa.png'];
+    this.frameArt=this.assets[this._offscreen?'arena-mapa.png':!this.layout.compact&&this.overview?'arena-cenario.png':'arena-mapa.png'];
     this.ox=v.x+v.w/2-this.camera.x*this.scale;this.oy=v.y+v.h/2-this.camera.y*this.scale;
     c.setTransform(this.dpr,0,0,this.dpr,0,0);c.fillStyle='#0b2c25';c.fillRect(0,0,this.width,this.height);
     c.save();c.beginPath();c.rect(v.x,v.y,v.w,v.h);c.clip();c.translate(this.ox,this.oy);c.scale(this.scale,this.scale);
@@ -1297,7 +1584,7 @@ class Renderer {
     // Route hint is derived from the same path used by the simulation.
     if(s.player.route.length&&!this.lowQuality){c.save();c.setLineDash([2,9]);c.strokeStyle='#ffef9aaa';c.lineWidth=3;c.lineCap='round';c.beginPath();c.moveTo(actor.x,actor.y);for(const p of s.player.route){const q=worldToArt(p.x,p.z);c.lineTo(q.x,q.y);}c.stroke();c.restore();}
     const drawable=[];
-    drawable.push({y:actor.y,draw:()=>this.person(s.player,s,'player')});
+    if(!this.hidePlayer)drawable.push({y:actor.y,draw:()=>this.person(s.player,s,'player')});
     if(s.staff.runner){const p=worldToArt(s.runner.x,s.runner.z);drawable.push({y:p.y,draw:()=>this.person(s.runner,s,'runner')});}
     for(const fan of s.fans){if(fan.phase==='watching')continue;const p=worldToArt(fan.x,fan.z);drawable.push({y:p.y,draw:()=>this.person(fan,s)});}
     drawable.push({y:586,draw:()=>this.foreground([[248,491],[413,480],[411,583],[247,583]])});
@@ -1359,6 +1646,217 @@ class Renderer {
 }
 
 
+// src/world-view.js
+
+
+
+
+
+const worldRand=n=>{const x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x);};
+const worldPoly=(c,points,color)=>{c.fillStyle=color;c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.fill();};
+function worldText(c,x,y,text,size=15,color='#f8f2d7',align='center'){c.fillStyle=color;c.font=`750 ${size}px system-ui`;c.textAlign=align;c.textBaseline='middle';c.fillText(text,x,y);}
+function worldRound(c,x,y,w,h,color,r=8){c.fillStyle=color;c.beginPath();c.roundRect(x,y,w,h,r);c.fill();}
+function worldLine(c,points,width,color){c.strokeStyle=color;c.lineWidth=width;c.lineCap='round';c.lineJoin='round';c.beginPath();points.forEach((p,i)=>i?c.lineTo(p.x,p.y):c.moveTo(p.x,p.y));c.stroke();}
+
+/** A single moving camera renders the inherited arena AND neighbouring plots.
+ * There is no campus page. Buildings/works are individually rendered entities. */
+class WorldRenderer extends Renderer{
+ constructor(canvas){
+  super(canvas);this.mapCamera={x:780,y:480,zoom:.8,follow:false};this.selection=null;this.placement=null;this.hover=null;this.district='world';this.mapInitialized=false;
+ }
+ resize(){super.resize();this.mapInitialized=false;}
+ screenAxisToWorld(x,y){const n=Math.max(1,Math.hypot(x,y));return{x:x/n,z:y/n};}
+ unproject(x,y){return{x:(x-this.ox)/this.scale,y:(y-this.oy)/this.scale};}
+ pan(dx,dy){this.mapCamera.follow=false;this.mapCamera.x-=dx/this.scale;this.mapCamera.y-=dy/this.scale;this.clampCamera();}
+ clampCamera(){this.mapCamera.x=Math.max(-1120,Math.min(2640,this.mapCamera.x));this.mapCamera.y=Math.max(-1080,Math.min(1120,this.mapCamera.y));}
+ zoomAt(factor,sx=this.width/2,sy=this.height/2){const before=this.unproject(sx,sy),old=this.mapCamera.zoom;this.mapCamera.zoom=Math.max(.22,Math.min(1.6,old*factor));this.mapCamera.follow=false;this.mapCamera.x=before.x-(sx-this.width/2)/this.mapCamera.zoom;this.mapCamera.y=before.y-(sy-this.height/2)/this.mapCamera.zoom;this.clampCamera();}
+ focus(area,s,select=true){
+  ensureWorld(s);let p;
+  if(area==='club'||area==='all'){p={x:768,y:16};this.mapCamera.zoom=Math.max(.22,Math.min((this.width-60)/3456,(this.height-170)/1856));}
+  else if(area==='arena'){p={x:780,y:490};this.mapCamera.zoom=Math.min(this.width/1580,(this.height-100)/1020);}
+  else{const plot=WORLD_PLOTS.find(p=>p.id===area),spec=WORLD_STRUCTURES[area];p=s.map.placements[area]||spec||(plot?{x:plot.x+plot.w/2,y:plot.y+plot.h/2}:null);if(!p)return;
+   this.mapCamera.zoom=Math.min(1.1,Math.max(.45,(this.width-(this.width>800?380:0))/(area==='stadium'?1120:850)));if(select)this.selection=plot&&!s.land[plot.id]?{kind:'plot',id:area}:spec?{kind:'building',id:area}:{kind:'plot',id:area};}
+  this.mapCamera.x=p.x+(this.width>900&&select&&area!=='club'&&area!=='arena'?130:0);this.mapCamera.y=p.y+30;this.mapCamera.follow=false;this.mapInitialized=true;
+ }
+ follow(s){this.mapCamera.follow=!this.mapCamera.follow;if(this.mapCamera.follow){this.mapCamera.zoom=Math.max(.65,this.mapCamera.zoom);this.mapCamera.x=s.map.actor.x;this.mapCamera.y=s.map.actor.y;}return this.mapCamera.follow;}
+ clickPosition(x,y){
+  if(this.miniRect&&x>=this.miniRect.x&&x<this.miniRect.x+this.miniRect.w&&y>=this.miniRect.y&&y<this.miniRect.y+this.miniRect.h){const z=this.miniRect;this.mapCamera.x=-960+(x-z.x)/z.w*3456;this.mapCamera.y=-896+(y-z.y)/z.h*1856;this.mapCamera.follow=false;return{zone:'minimap'};}
+  const p=this.unproject(x,y);if(this.placement)return{zone:'place',point:this.snapped(p)};
+  for(const h of [...this.hitZones].reverse())if(x>=h.x&&x<=h.x+h.w&&y>=h.y&&y<=h.y+h.h)return{zone:'world-select',kind:h.kind,id:h.key,point:p};
+  return{zone:'walk',point:p};
+ }
+ snapped(p){return{x:Math.round(p.x/32)*32,y:Math.round(p.y/32)*32};}
+ draw(s,dt){
+  if(!this.loaded)return;ensureWorld(s);
+  if(!this.mapInitialized){this.focus('arena',s,false);this.mapInitialized=true;}
+  const c=this.ctx,cam=this.mapCamera;
+  if(cam.follow){const k=1-Math.exp(-dt*6);cam.x+=(s.map.actor.x-cam.x)*k;cam.y+=(s.map.actor.y-50-cam.y)*k;}
+  this.scale=cam.zoom;this.ox=this.width/2-cam.x*this.scale;this.oy=this.height/2-cam.y*this.scale;this.hitZones=[];
+  document.body.dataset.district='world';document.body.dataset.camera='world';
+  c.setTransform(this.dpr,0,0,this.dpr,0,0);c.fillStyle='#244c3a';c.fillRect(0,0,this.width,this.height);
+  c.save();c.translate(this.ox,this.oy);c.scale(this.scale,this.scale);
+  this.drawTerrain(s);
+  this.drawRoads(s);
+  this.drawHome(s,dt);
+  this.drawPortals(s);
+  const sorted=Object.entries(s.map.placements).filter(([id])=>!WORLD_STRUCTURES[id].fixed).sort((a,b)=>a[1].y-b[1].y);
+  for(const[id,p]of sorted)this.drawStructure(s,id,p);
+  // A canteen is a new independent object even though the main arena is painted.
+  if(s.map.placements.canteen)this.drawStructure(s,'canteen',s.map.placements.canteen);
+  for(const job of s.map.construction)this.drawWork(s,job);
+  this.drawActors(s);
+  for(const plot of WORLD_PLOTS){if(plot.id!=='home'&&!s.land[plot.id])this.drawBoundary(s,plot);}
+  if(this.selection?.kind==='building'){
+   const id=this.selection.id,p=s.map.placements[id]||WORLD_STRUCTURES[id];if(p){const rect=structureRect(id,p);c.strokeStyle='#fff3a1';c.lineWidth=3/this.scale;c.setLineDash([8/this.scale,5/this.scale]);c.strokeRect(rect.x-15,rect.y-35,rect.w+30,rect.h+70);c.setLineDash([]);}
+  }
+  if(this.placement){const p=this.hover||WORLD_STRUCTURES[this.placement],rect=structureRect(this.placement,p),valid=mapPlacementCheck(s,this.placement,p,true).ok;c.fillStyle=valid?'#58d58c66':'#f0787866';c.fillRect(rect.x,rect.y,rect.w,rect.h);c.strokeStyle=valid?'#aaf5c4':'#ffc3b7';c.lineWidth=3;c.strokeRect(rect.x,rect.y,rect.w,rect.h);this.plate(rect.x,rect.y-43,rect.w,34,valid?'CLIQUE PARA CONFIRMAR A OBRA':'LOCAL BLOQUEADO',valid?'#eeffe8':'#ffcabf',14);}
+  c.restore();this.drawMinimap(s);
+ }
+ drawHome(s,dt){
+  if(!this.homeLayer){const canvas=document.createElement('canvas');canvas.width=1536;canvas.height=960;
+   this.homeLayer=Object.assign(Object.create(Renderer.prototype),{canvas,ctx:canvas.getContext('2d'),width:1536,height:960,dpr:1,layout:{compact:false,portrait:false,viewport:{x:0,y:0,w:1536,h:960}},camera:{x:768,y:480},scale:1,initialized:false,overview:true,assets:this.assets,particles:[],hitZones:[],loaded:true,district:'arena',lowQuality:false,_offscreen:true,hidePlayer:true});
+  }
+  const h=this.homeLayer;h.particles=this.particles;h.lowQuality=this.lowQuality;h.draw(s,dt);this.particles=h.particles;
+  this.ctx.drawImage(h.canvas,0,0,1536,960);
+  for(const zone of h.hitZones){if(zone.id==='office')this.hot('operation','staff',zone.x,zone.y,zone.w,zone.h);else this.hot('travel',zone.id,zone.x,zone.y,zone.w,zone.h);}
+  // Select the actual playing surface to evolve it. Intake labels remain operational.
+  for(const id of ['pitch1','pitch2','stands']){const p=WORLD_STRUCTURES[id];if(id==='pitch2'&&!s.fields[1].unlocked)continue;this.hot('building',id,p.x-p.w/2,p.y-p.h/2,p.w,p.h);}
+ }
+ hot(kind,key,x,y,w,h){const p=this.screen(x,y);this.hitZones.push({kind,key,x:p.x,y:p.y,w:w*this.scale,h:h*this.scale});}
+ drawTerrain(s){
+  const c=this.ctx;
+  if(!this.terrain){const tile=document.createElement('canvas');tile.width=256;tile.height=256;const t=tile.getContext('2d');t.fillStyle='#709151';t.fillRect(0,0,256,256);for(let i=0;i<2500;i++){t.fillStyle=i%3?'#456b3026':'#bdd77b30';t.fillRect(worldRand(i)*256,worldRand(i+5000)*256,1+worldRand(i+25)*4,1.5);}this.terrain=c.createPattern(tile,'repeat');}
+  c.fillStyle=this.terrain;c.fillRect(-1250,-1100,4070,2340);
+  for(const plot of WORLD_PLOTS){if(plot.id==='home')continue;
+   const owned=s.land[plot.id];c.fillStyle=owned?'#b6c98d08':'#173d344a';c.fillRect(plot.x,plot.y,plot.w,plot.h);
+   // Perimeter hedges and untouched vegetation disappear only under placed yards.
+   for(let i=0;i<35;i++){const x=plot.x+36+worldRand(i+plot.cost)* (plot.w-72),y=plot.y+36+worldRand(i+plot.cost+400)*(plot.h-72);
+    const occupied=Object.entries(s.map.placements).some(([id,p])=>{const r=structureRect(id,p);return x>r.x-70&&x<r.x+r.w+70&&y>r.y-90&&y<r.y+r.h+110;});
+    if(!occupied&&(!owned||i<13))this.tree(x,y,.65+worldRand(i+2)*.75);
+   }
+  }
+ }
+ tree(x,y,size=1){
+  const c=this.ctx;c.save();c.translate(x,y);c.scale(size,size);this.ellipse(17,4,35,10,'#15362744');worldPoly(c,[[-5,0],[5,0],[7,-49],[-3,-51]],'#786142');
+  const spots=[[-15,-44,27], [12,-54,29],[-4,-72,31],[-20,-64,22],[21,-71,20],[-7,-90,20]];
+  for(let i=0;i<spots.length;i++){const [x,y,r]=spots[i],g=c.createRadialGradient(x-7,y-12,2,x,y,r);g.addColorStop(0,'#a0bd54');g.addColorStop(.35,'#568f43');g.addColorStop(1,'#245638');this.ellipse(x,y,r,r,g);}
+  for(let i=0;i<26;i++)this.ellipse(-28+worldRand(i+Math.floor(x))*55,-89+worldRand(i+8)*40,3,2,'#dae28435');c.restore();
+ }
+ drawRoads(s){
+  const c=this.ctx,key=JSON.stringify([s.land,s.map.placements]);
+  if(key!==this.roadKey){this.roadKey=key;this.roads=[];for(const[id,p]of Object.entries(s.map.placements)){if(WORLD_STRUCTURES[id].fixed)continue;const end=structureEntry(id,p),path=worldPath(s,{x:830,y:912},end);this.roads.push(path);}}
+  for(const road of this.roads||[]){if(road.length<2)continue;worldLine(c,road,43,'#324d3730');worldLine(c,road,33,'#cfbd88');worldLine(c,road,25,'#decda2');}
+  // Entrances connect directly across parcel borders when a purchase is made.
+  if(s.land.academy){worldLine(c,[{x:1340,y:850},{x:1580,y:850},{x:1770,y:850}],48,'#d7c394');}
+  if(s.land.business){worldLine(c,[{x:210,y:892},{x:-150,y:892}],48,'#d7c394');}
+  if(s.land.stadium){worldLine(c,[{x:855,y:80},{x:855,y:-155}],40,'#d7c394');}
+ }
+ drawPortals(s){
+  const c=this.ctx;
+  const connections={academy:[{x:1340,y:885},{x:1640,y:885}],business:[{x:150,y:892},{x:-90,y:892}],stadium:[{x:852,y:60},{x:852,y:-100}]};
+  for(const [id,road] of Object.entries(connections))if(s.land[id]){worldLine(c,road,49,'#86976b');worldLine(c,road,38,'#d8c394');worldLine(c,road,29,'#e7d3a6');}
+  for(const p of WORLD_PLOTS)if(p.id!=='home'&&s.land[p.id]){const x=p.x+p.w/2,y=p.y+40;this.plate(x-160,y-16,320,32,p.name.toUpperCase()+' +','#f2e5ae',13);this.hot('plot',p.id,x-160,y-16,320,32);}
+ }
+ drawBoundary(s,p){
+  const c=this.ctx;c.fillStyle='#173e3133';c.fillRect(p.x,p.y,p.w,p.h);c.strokeStyle='#4a5541';c.lineWidth=5;c.strokeRect(p.x+5,p.y+5,p.w-10,p.h-10);
+  const fence=(x,y)=>{worldRound(c,x-3,y-8,6,24,'#c0b27d',1);};for(let x=p.x+16;x<p.x+p.w;x+=64){fence(x,p.y+4);fence(x,p.y+p.h-10);}for(let y=p.y+20;y<p.y+p.h;y+=64){fence(p.x+4,y);fence(p.x+p.w-6,y);}
+  const cx=p.x+p.w/2,cy=p.y+p.h/2;c.save();c.shadowColor='#18372977';c.shadowBlur=16;c.shadowOffsetY=10;worldRound(c,cx-160,cy-51,320,98,'#123f37ed',14);c.restore();
+  worldText(c,cx,cy-24,p.name.toUpperCase(),17);worldText(c,cx,cy+9,`${p.cost.toLocaleString('pt-BR')} MOEDAS`,22,'#f7de82');worldText(c,cx,cy+34,'TOQUE NO TERRENO PARA COMPRAR',11,'#bdd9bb');
+  if(this.selection?.kind==='plot'&&this.selection.id===p.id){c.setLineDash([16,10]);c.strokeStyle='#ffe89b';c.lineWidth=5;c.strokeRect(p.x+12,p.y+12,p.w-24,p.h-24);c.setLineDash([]);}
+  this.hot('plot',p.id,p.x,p.y,p.w,p.h);
+ }
+ drawStructure(s,id,p){
+  const c=this.ctx,level=s.facilities[id]||0,stage=facilityStage(level),spec=WORLD_STRUCTURES[id],rect=structureRect(id,p),job=s.map.construction.find(j=>j.id===id);
+  if(!level){this.drawFoundation(p,spec,job?job.elapsed/job.duration:0);this.hot('building',id,rect.x-12,rect.y-25,rect.w+24,rect.h+65);return;}
+  worldRound(c,rect.x-24,rect.y-25,rect.w+48,rect.h+72,stage.phase>=3?'#d7ccab':'#aaa272',15);
+  if(stage.phase>=3){for(let x=rect.x-15;x<rect.x+rect.w+22;x+=30){c.strokeStyle='#b6b49b65';c.lineWidth=1;c.beginPath();c.moveTo(x,rect.y-20);c.lineTo(x,rect.y+rect.h+47);c.stroke();}for(let y=rect.y-15;y<rect.y+rect.h+48;y+=26){c.beginPath();c.moveTo(rect.x-20,y);c.lineTo(rect.x+rect.w+20,y);c.stroke();}}
+  if(id==='stadium'||id==='youth')this.pitch(s,id,p,stage);
+  else this.building(s,id,p,stage);
+  const entry=structureEntry(id,p);
+  this.plate(p.x-spec.w*.41,entry.y+14,spec.w*.82,29,FACILITIES[id].name.toUpperCase(),'#f3e9bb',12);
+  worldText(c,p.x,entry.y+54,`FASE ${stage.phase} · MELHORIA ${stage.step}/3`,12,'#fbf2cf');
+  this.hot('building',id,rect.x-15,rect.y-70,rect.w+30,rect.h+160);
+  if(id==='training'){
+   const m=s.map;this.plate(p.x-90,rect.y-95,180,28,`CT · ${m.ctKits}/${TRAINING_KIT_LIMIT} KITS`,'#bde4eb',13);
+   for(let i=0;i<Math.min(12,m.ctKits);i++){worldRound(c,rect.x+15+(i%4)*21,entry.y-24-Math.floor(i/4)*17,17,15,'#c69542',2);worldText(c,rect.x+23+(i%4)*21,entry.y-17-Math.floor(i/4)*17,'+',10,'#ffe5a1');}
+   if(m.training){const progress=m.training.elapsed/m.training.duration;worldRound(c,p.x-100,entry.y+71,200,8,'#244d37');worldRound(c,p.x-100,entry.y+71,Math.max(1,progress*200),8,'#9ce16d');}
+  }
+ }
+ drawFoundation(p,spec,progress){
+  const c=this.ctx,x=p.x-spec.w/2,y=p.y-spec.h/2;worldRound(c,x,y,spec.w,spec.h,'#b5a172',6);c.strokeStyle='#efe0b4';c.lineWidth=5;c.strokeRect(x+12,y+12,spec.w-24,spec.h-24);
+  for(let i=0;i<4;i++){const xx=x+20+i*(spec.w-40)/3;worldRound(c,xx-3,y+20,6,spec.h-38,'#b99159',1);}
+  for(const xx of[x+8,x+spec.w-8])for(const yy of[y+8,y+spec.h-8]){worldPoly(c,[[xx-4,yy],[xx+4,yy],[xx+4,yy-25-progress*32],[xx-4,yy-25-progress*32]],'#dbba79');}
+ }
+ building(s,id,p,st){
+  const c=this.ctx,spec=WORLD_STRUCTURES[id],w=spec.w*.78,d=spec.h*.64,x=p.x,y=p.y+spec.h*.25,h=st.phase===1?64:st.phase===2?94:st.phase===3?142:st.phase===4?172:204;
+  c.save();c.shadowColor='#18332666';c.shadowBlur=10;c.shadowOffsetX=15;c.shadowOffsetY=13;worldPoly(c,[[x-w/2,y],[x+w/2,y],[x+w/2+28,y-d],[x-w/2+28,y-d]],'#335944');c.restore();
+  const front=st.phase===1?'#c8aa75':st.phase===2?'#e1c692':'#e3d3b2',side=st.phase===1?'#938258':'#aaa68d';
+  worldPoly(c,[[x-w/2,y],[x+w/2,y],[x+w/2,y-h],[x-w/2,y-h]],front);
+  worldPoly(c,[[x+w/2,y],[x+w/2+28,y-d],[x+w/2+28,y-d-h],[x+w/2,y-h]],side);
+  if(st.phase===1){c.strokeStyle='#977849';c.lineWidth=2;for(let yy=y-9;yy>y-h;yy-=12){c.beginPath();c.moveTo(x-w/2,yy);c.lineTo(x+w/2,yy);c.stroke();}}
+  const roof=st.phase===1?'#887441':st.phase===2?'#527b65':'#176858';
+  worldPoly(c,[[x-w/2-12,y-h],[x-w/2+20,y-h-d],[x+w/2+41,y-h-d],[x+w/2+10,y-h]],roof);
+  c.strokeStyle='#ecf1b826';c.lineWidth=2;for(let i=0;i<10;i++){const xx=x-w/2+i*w/9;c.beginPath();c.moveTo(xx,y-h-3);c.lineTo(xx+32,y-h-d+3);c.stroke();}
+  worldRound(c,x-19,y-55,38,55,'#244f44',3);worldRound(c,x-14,y-49,27,38,'#7fbdad',2);this.ellipse(x+8,y-22,2,2,'#e9c65e');
+  const rows=st.phase>=3?2:1;for(let row=0;row<rows;row++)for(const sign of[-1,1]){const xx=x+sign*w*.31,yy=y-45-row*65;worldRound(c,xx-15,yy-19,30,28,'#466e61',2);worldRound(c,xx-12,yy-16,24,22,'#ffe9a3',1);c.strokeStyle='#799281';c.lineWidth=2;c.beginPath();c.moveTo(xx,yy-16);c.lineTo(xx,yy+6);c.stroke();}
+  if(st.phase>=2){worldPoly(c,[[x-46,y-59],[x+46,y-59],[x+55,y-45],[x-55,y-45]],'#218565');}
+  if(st.phase>=3){worldRound(c,x-w/2-4,y+1,w+8,7,'#335b4c',1);worldRound(c,x+w/2-17,y-h-d-40,3,45,'#d6d7ad',1);worldPoly(c,[[x+w/2-14,y-h-d-40],[x+w/2+30,y-h-d-35],[x+w/2-14,y-h-d-13]],'#e9ce64');this.tree(x-w/2-38,y+2,.48);}
+  if(st.phase>=4){worldRound(c,x-w/2-22,y-20,36,25,'#315f4b',2);for(let i=0;i<4;i++)this.ellipse(x-w/2-18+i*8,y-25,8,10,'#589653');worldRound(c,x+w/2+40,y-30,10,35,'#627968',2);worldRound(c,x+w/2+29,y-38,32,8,'#fff1b7',2);}
+  if(st.phase>=5){worldPoly(c,[[x-w/2+25,y-h-d+4],[x+w/2+22,y-h-d+4],[x+w/2+8,y-h-15],[x-w/2+11,y-h-15]],'#20576c');worldText(c,x,y-h+18,'CLUBE · EXCELÊNCIA',11,'#194739');}
+  // Early internal improvements also have real visual effects before phase 3.
+  for(let i=0;i<st.step;i++){worldRound(c,x-w*.39+i*22,y+17,17,9,'#e5d4a2',2);worldRound(c,x-w*.39+i*22,y+12,17,7,'#427f61',2);}
+  if(id==='marketing'){const bx=x+w/2+45;worldRound(c,bx-5,y-110,7,106,'#697e5d',1);worldRound(c,bx-55,y-152,112,55,st.phase>=3?'#093c35':'#d8c69a',5);worldText(c,bx,y-132,'PARCEIROS',10,st.phase>=3?'#f9e5a0':'#385640');worldText(c,bx,y-116,`FASE ${st.phase}`,11,st.phase>=3?'#aadba8':'#385640');}
+  if(id==='training'){
+   for(let i=0;i<(st.phase>=3?6:3);i++){const xx=x-w*.32+i*22;worldPoly(c,[[xx,y+38],[xx+7,y+21],[xx+14,y+38]],'#e08a3c');c.fillStyle='#fcebbd';c.fillRect(xx+4,y+29,6,3);}
+   if(s.map.training)for(let i=0;i<Math.min(6,s.map.training.ids.length);i++)this.actorSprite(x-w*.3+i*27+Math.sin(s.t*1.8+i)*8,y+67,'atleta-azul.png',34,s.t,true);
+  }else if(s.facilities[id]>0){for(let i=0;i<Math.min(st.phase,3);i++)this.actorSprite(x-35+i*38+Math.sin(s.t*.4+i)*13,y+50,'torcedor-dourado.png',31,s.t,true);}
+ }
+ pitch(s,id,p,st){
+  const c=this.ctx,sp=WORLD_STRUCTURES[id],x=p.x,y=p.y,w=sp.w*.84,h=sp.h*.71,ox=x-w/2,oy=y-h/2;
+  for(let i=0;i<10;i++){c.fillStyle=i%2?(st.phase>=3?'#389a40':'#65894a'):(st.phase>=3?'#4dac4c':'#78994d');c.fillRect(ox+i*w/10,oy,w/10+1,h);}
+  for(let i=0;i<300;i++){c.fillStyle='#e3ed8b20';c.fillRect(ox+worldRand(i)*w,oy+worldRand(i+122)*h,1,2);}
+  c.strokeStyle='#f3f4cc';c.lineWidth=2;c.strokeRect(ox+9,oy+9,w-18,h-18);c.beginPath();c.moveTo(x,oy+9);c.lineTo(x,oy+h-9);c.stroke();c.beginPath();c.ellipse(x,y,h*.2,h*.2,0,0,Math.PI*2);c.stroke();
+  for(const end of[-1,1]){const gx=x+end*(w/2-9);c.strokeRect(gx+(end<0?0:-w*.16),y-h*.25,w*.16,h*.5);c.strokeStyle='#ffffffbb';c.strokeRect(gx+(end<0?-12:0),y-25,12,50);for(let i=0;i<6;i++){c.beginPath();c.moveTo(gx+(end<0?-12:0),y-25+i*10);c.lineTo(gx+(end<0?0:12),y-25+i*10);c.stroke();}}
+  const count=id==='youth'?6:10;for(let i=0;i<count;i++){const ours=i<count/2;const px=ox+40+(i%5)*(w-80)/4+Math.sin(s.t+i)*6,py=oy+(ours?.33:.78)*h+Math.cos(s.t*.9+i)*7;this.actorSprite(px,py,ours?'atleta-azul.png':'atleta-laranja.png',id==='stadium'?33:29,s.t,true);}
+  this.ellipse(x+Math.sin(s.t*.75)*w*.32,y+Math.cos(s.t)*h*.25,5,5,'#fffdeb');this.ellipse(x+Math.sin(s.t*.75)*w*.32,y+Math.cos(s.t)*h*.25,2,2,'#163b2a');
+  const rows=st.phase>=3?3:st.phase===2?2:1,chairs=st.phase===1?4+st.step*2:10+st.phase*4;
+  for(let side of(id==='stadium'&&st.phase>=2?[-1,1]:[1]))for(let row=0;row<rows;row++){const yy=y+side*(h/2+18+row*14);worldRound(c,ox,yy-3,w,12,'#b5af8a',1);for(let n=0;n<chairs;n++){const px=ox+10+n*(w-20)/(chairs-1);worldRound(c,px-5,yy-6,10,9,n%4===0?'#f0d985':'#236f55',1);if(s.official&&id==='stadium')this.actorSprite(px,yy+3,'torcedor-verde.png',16,s.t,s.fields[0].lastGoalOurs&&s.t-s.fields[0].lastGoal<3);}}
+  if(st.phase>=3){
+   for(const a of[-1,1])for(const b of[-1,1]){const xx=x+a*(w/2+18),yy=y+b*(h/2+24);worldRound(c,xx-3,yy-80,6,84,'#829982',1);worldRound(c,xx-20,yy-88,40,13,'#f9e7a0',2);if(!this.lowQuality){const g=c.createRadialGradient(xx,yy-80,0,xx,yy-80,28);g.addColorStop(0,'#ffe59c55');g.addColorStop(1,'#ffe59c00');this.ellipse(xx,yy-80,28,22,g);}}
+   worldPoly(c,[[ox-12,oy-70],[ox+w+12,oy-70],[ox+w+28,oy-40],[ox-28,oy-40]],'#236a55');
+  }
+  if(st.phase>=4){for(const side of[-1,1]){const xx=x+side*(w/2+37);worldRound(c,xx-15,y-h/2,30,h,'#557568',3);for(let i=0;i<9;i++)worldRound(c,xx-13,y-h/2+8+i*(h-15)/9,26,7,'#d6d9ab',1);}worldPoly(c,[[ox-20,oy+h+55],[ox+w+20,oy+h+55],[ox+w+32,oy+h+71],[ox-32,oy+h+71]],'#1b6053');}
+  if(st.phase>=5){c.strokeStyle='#d6e1bf';c.lineWidth=8;c.beginPath();c.ellipse(x,y-h*.28,w*.61,h*.95,0,Math.PI,Math.PI*2);c.stroke();}
+  if(id==='stadium'){const f=s.fields[0];this.plate(x-215,oy-111,430,32,`${s.club.sigla} (VOCÊ)  ${f.score[0]} × ${f.score[1]}  ADVERSÁRIO`,'#f8eba4',14);worldText(c,x,y+h/2+70,'SEU TIME · AZUL                         ADVERSÁRIO · LARANJA',11,'#fff2cc');}
+ }
+ drawWork(s,j){
+  const p=s.map.placements[j.id],sp=WORLD_STRUCTURES[j.id],c=this.ctx,rect=structureRect(j.id,p),progress=j.elapsed/j.duration;
+  c.save();c.strokeStyle='#cfab5f';c.lineWidth=4;for(let x=rect.x;x<=rect.x+rect.w;x+=48){c.beginPath();c.moveTo(x,rect.y+rect.h);c.lineTo(x,rect.y-32);c.stroke();}for(let y=rect.y-24;y<rect.y+rect.h;y+=35){c.beginPath();c.moveTo(rect.x,y);c.lineTo(rect.x+rect.w,y);c.stroke();}c.restore();
+  for(const sign of[-1,1]){const x=p.x+sign*(sp.w/2+16),y=rect.y+rect.h+15;worldPoly(c,[[x-7,y],[x,y-19],[x+7,y]],'#df8642');}
+  this.actorSprite(j.worker.x,j.worker.y+(j.worker.route.length?0:Math.sin(s.t*11)*2),'roupeiro.png',43,s.t,true);
+  this.plate(p.x-130,rect.y-76,260,32,j.worker.route.length?'EQUIPE A CAMINHO':`EM OBRAS · ${Math.round(progress*100)}%`,'#ffe0a2',13);
+  worldRound(c,p.x-105,rect.y-34,210,7,'#224b3c',3);worldRound(c,p.x-105,rect.y-34,Math.max(1,210*progress),7,'#f1cc65',3);
+ }
+ actorSprite(x,y,key,height,t,moving=false){
+  const c=this.ctx,img=this.assets[key];if(!img)return;const h=height,w=h*.64,bob=moving?Math.sin(t*9+x*.03)*1.5:0;this.ellipse(x+5,y+3,w*.55,4,'#12372d44');c.save();c.translate(x,y-bob);if(moving)c.rotate(Math.sin(t*8)*.02);c.drawImage(img,-w/2,-h,w,h);c.restore();
+ }
+ drawActors(s){
+  const c=this.ctx,m=s.map,a=m.actor;
+  if(a.route.length){c.setLineDash([3,10]);worldLine(c,[a,...a.route],3,'#fff0a6aa');c.setLineDash([]);}
+  this.ellipse(a.x,a.y,22,8,'#f1e18866');this.actorSprite(a.x,a.y,'gerente.png',48,s.t,a.walk>1);this.plate(a.x-27,a.y-72,54,20,'VOCÊ','#fff1b1',10);
+  for(let i=0;i<s.player.carry;i++){const xx=a.x+18+(i%2)*8,yy=a.y-20-Math.floor(i/2)*9;this.ellipse(xx,yy,5,5,'#fff7da');this.ellipse(xx,yy,2,2,'#214c3d');}
+  if(m.courierHired){const a=m.courier;this.actorSprite(a.x,a.y,'roupeiro.png',42,s.t,a.walk>1);for(let i=0;i<a.carry;i++)worldRound(c,a.x+12,a.y-12-i*10,13,10,'#d7ac5b',2);}
+ }
+ drawMinimap(s){
+  const c=this.ctx;if(this.width<680){this.miniRect=null;return;}
+  const w=182,h=98,x=20,y=this.height-212;this.miniRect={x,y,w,h};c.save();worldRound(c,x-6,y-6,w+12,h+12,'#143d32e8',9);
+  for(const p of WORLD_PLOTS){c.fillStyle=s.land[p.id]?'#779b60':'#3e6349';c.fillRect(x+(p.x+960)/3456*w,y+(p.y+896)/1856*h,p.w/3456*w-1,p.h/1856*h-1);}
+  const a=s.map.actor;this.ellipse(x+(a.x+960)/3456*w,y+(a.y+896)/1856*h,3,3,'#ffe797');
+  const cw=this.width/this.scale,ch=this.height/this.scale;c.strokeStyle='#fff3c2';c.lineWidth=1;c.strokeRect(x+(this.mapCamera.x-cw/2+960)/3456*w,y+(this.mapCamera.y-ch/2+896)/1856*h,cw/3456*w,ch/1856*h);c.restore();
+ }
+}
+
+
 // src/input.js
 class InputController {
   constructor(canvas, stick, onClick, isPaused, toWorld = null) {
@@ -1410,6 +1908,37 @@ class InputController {
     const power=Math.min(1,Math.hypot(x,y));
     return{x:dx/length*power,z:dz/length*power};
   }
+}
+
+
+// src/world-input.js
+/** Tap chooses a world object; dragging pans. WASD/joystick still move the manager.
+ * Wheel and two-finger pinch zoom around the pointer, without changing the save. */
+class WorldInput{
+ constructor(canvas,stick,onClick,isPaused,renderer){
+  this.keys=new Set();this.axis={x:0,y:0};this.knob=stick.querySelector('.stick-knob');this.points=new Map();this.stickId=null;this.renderer=renderer;
+  this.reset=()=>{this.keys.clear();this.axis={x:0,y:0};this.stickId=null;this.points.clear();this.drag=null;this.knob.style.transform='';};
+  const editable=()=>/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName);
+  window.addEventListener('keydown',e=>{if(isPaused()||editable())return;if(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowLeft','ArrowDown','ArrowRight'].includes(e.code)){e.preventDefault();this.keys.add(e.code);renderer.mapCamera.follow=true;}if(e.key==='Escape'){renderer.placement=null;renderer.selection=null;}});
+  window.addEventListener('keyup',e=>this.keys.delete(e.code));window.addEventListener('blur',this.reset);
+  const moveStick=e=>{const r=stick.getBoundingClientRect(),radius=r.width*.34,dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2,len=Math.max(1,Math.hypot(dx,dy)/radius);this.axis={x:dx/len/radius,y:dy/len/radius};this.knob.style.transform=`translate(${dx/len}px,${dy/len}px)`;renderer.mapCamera.follow=true;};
+  stick.addEventListener('pointerdown',e=>{if(isPaused()||this.stickId!==null)return;e.preventDefault();this.stickId=e.pointerId;stick.setPointerCapture(e.pointerId);moveStick(e);});
+  stick.addEventListener('pointermove',e=>{if(e.pointerId===this.stickId)moveStick(e);});
+  for(const name of['pointerup','pointercancel','lostpointercapture'])stick.addEventListener(name,e=>{if(e.pointerId===this.stickId){this.axis={x:0,y:0};this.stickId=null;this.knob.style.transform='';}});
+  canvas.addEventListener('contextmenu',e=>e.preventDefault());
+  canvas.addEventListener('pointerdown',e=>{if(isPaused())return;e.preventDefault();canvas.setPointerCapture(e.pointerId);this.points.set(e.pointerId,{x:e.clientX,y:e.clientY});if(this.points.size===1)this.drag={id:e.pointerId,x:e.clientX,y:e.clientY,lastX:e.clientX,lastY:e.clientY,moved:false};else{this.drag.moved=true;this.pinch=this.pinchInfo();}});
+  canvas.addEventListener('pointermove',e=>{
+   renderer.hover=renderer.snapped(renderer.unproject(e.clientX,e.clientY));
+   if(isPaused()||!this.points.has(e.pointerId))return;e.preventDefault();this.points.set(e.pointerId,{x:e.clientX,y:e.clientY});
+   if(this.points.size===2){const p=this.pinchInfo();if(this.pinch){renderer.zoomAt(p.distance/Math.max(1,this.pinch.distance),p.x,p.y);renderer.pan(p.x-this.pinch.x,p.y-this.pinch.y);}this.pinch=p;return;}
+   if(this.drag?.id===e.pointerId){const d=this.drag;if(Math.hypot(e.clientX-d.x,e.clientY-d.y)>7)d.moved=true;if(d.moved)renderer.pan(e.clientX-d.lastX,e.clientY-d.lastY);d.lastX=e.clientX;d.lastY=e.clientY;}
+  });
+  canvas.addEventListener('pointerup',e=>{const d=this.drag;const single=this.points.size===1;this.points.delete(e.pointerId);if(single&&d?.id===e.pointerId&&!d.moved&&!isPaused())onClick(e.clientX,e.clientY);if(!this.points.size)this.drag=null;this.pinch=null;});
+  for(const name of['pointercancel','lostpointercapture'])canvas.addEventListener(name,e=>{this.points.delete(e.pointerId);if(!this.points.size)this.drag=null;this.pinch=null;});
+  canvas.addEventListener('wheel',e=>{if(isPaused())return;e.preventDefault();renderer.zoomAt(Math.exp(-e.deltaY*.0015),e.clientX,e.clientY);},{passive:false});
+ }
+ pinchInfo(){const [a,b]=[...this.points.values()];return a&&b?{x:(a.x+b.x)/2,y:(a.y+b.y)/2,distance:Math.hypot(a.x-b.x,a.y-b.y)}:null;}
+ read(){let x=this.axis.x,y=this.axis.y;if(this.keys.has('KeyA')||this.keys.has('ArrowLeft'))x--;if(this.keys.has('KeyD')||this.keys.has('ArrowRight'))x++;if(this.keys.has('KeyW')||this.keys.has('ArrowUp'))y--;if(this.keys.has('KeyS')||this.keys.has('ArrowDown'))y++;const n=Math.max(1,Math.hypot(x,y));return{x:x/n,z:y/n};}
 }
 
 
@@ -1520,7 +2049,84 @@ class UI{
 }
 
 
+// src/world-ui.js
+
+
+
+
+const worldButton=(label,command,id='',disabled=false)=>`<button type="button" data-world-action="${command}" data-world-id="${id}" ${disabled?'disabled':''}>${label}</button>`;
+class WorldUI extends UI{
+ constructor(actions,renderer){
+  super(actions);this.worldRenderer=renderer;this.inspectorKey='';
+  document.addEventListener('click',e=>{const b=e.target.closest('[data-world-action],[data-world-focus]');if(!b||b.disabled)return;if(b.dataset.worldFocus){this.close();actions.focus(b.dataset.worldFocus);return;}actions.worldCommand(b.dataset.worldAction,b.dataset.worldId||'');});
+ }
+ openSports(tab='team'){
+  if(['land','facilities'].includes(tab)&&this.actions.focus){this.close();this.actions.focus('all');this.toast('Escolha um terreno ou uma construção diretamente no mapa.');return;}
+  super.openSports(tab);
+ }
+ update(s,force=false){
+  ensureWorld(s);super.update(s,force);if(!this.worldRenderer)return;
+  const ct=document.getElementById('ct-resource');if(ct)ct.textContent=`${s.map.ctKits} KITS NO CT`;
+  const jobs=document.getElementById('world-jobs');if(jobs)jobs.textContent=s.map.construction.length?`${s.map.construction.length} OBRA${s.map.construction.length>1?'S':''} EM ANDAMENTO`:s.map.training?'EQUIPE EM TREINAMENTO':'MAPA CONTÍNUO · ARRASTE PARA EXPLORAR';
+  document.getElementById('view-button').textContent=this.worldRenderer.mapCamera.follow?'CÂMERA LIVRE':'SEGUIR GERENTE';
+  const stage=s.map.construction.length;document.body.classList.toggle('building-placement',!!this.worldRenderer.placement);
+  document.getElementById('placement-bar').hidden=!this.worldRenderer.placement;
+  const mission=document.getElementById('mission-text');if(s.fields[1].unlocked&&s.stats.upgrades>=5&&!s.land.academy){mission.textContent='A operação está pronta. Arraste o mapa para a direita e compre o terreno vizinho; depois escolha onde construir a base e o CT.';}
+  this.renderInspector(s,force);
+ }
+ renderInspector(s,force=false){
+  const r=this.worldRenderer,n=document.getElementById('world-inspector'),selection=r.selection;
+  if(!selection||r.placement){n.hidden=true;this.inspectorKey='';return;}n.hidden=false;
+  const id=selection.id,kind=selection.kind,job=s.map.construction.find(j=>j.id===id),level=s.facilities[id]||0;
+  const key=JSON.stringify([kind,id,level,s.land,s.wallet,s.map.ctKits,s.map.courierHired,!!s.map.training,job?.to,s.map.construction.length,s.season.divisionIndex]);
+  if(force||key!==this.inspectorKey){this.inspectorKey=key;let html='';
+   if(kind==='plot'){
+    const plot=WORLD_PLOTS.find(p=>p.id===id),owned=s.land[id];
+    html=`<span class="world-eyebrow">${owned?'SEU TERRENO':'EXPANSÃO FÍSICA DO CLUBE'}</span><h2>${escapeText(plot?.name||'Terreno')}</h2>`;
+    if(!owned){html+=`<p>Este lote encosta na arena. A compra abre a cerca e libera circulação e construção aqui.</p><div class="world-cost">${formatNumber(plot.cost)} <small>MOEDAS DO JOGO</small></div>${worldButton(s.fields[1].unlocked?'Comprar este terreno':'Abra o segundo campo primeiro','buyLand',id,!s.fields[1].unlocked||s.wallet<plot.cost)}`;}
+    else{html+='<p>Escolha uma instalação e posicione a obra dentro deste lote.</p><div class="world-build-list">';for(const [fid,f]of Object.entries(FACILITIES)){if(f.plot!==id||s.map.placements[fid])continue;html+=worldButton(`${f.icon} ${f.name} · ${getFacilityCost(fid,0,s.facilities.board)}`,'place',fid,s.season.divisionIndex<f.minDivision);}html+='</div>';}
+   }else if(kind==='building'){
+    const f=FACILITIES[id],st=facilityStage(level);if(!f){n.hidden=true;return;}
+    html=`<span class="world-eyebrow">${st.built?`FASE ${st.phase} · MELHORIA ${st.step}/3`:'INSTALAÇÃO A CONSTRUIR'}</span><h2>${f.name}</h2><p>${f.desc}</p>`;
+    if(job)html+=`<div class="work-status"><b id="work-status-text">EM OBRAS</b><progress id="world-work-progress" max="1"></progress><small>As melhorias entram em vigor ao concluir a obra.</small></div>`;
+    else if(!s.land[f.plot])html+=worldButton('Ver terreno necessário','focusPlot',f.plot);
+    else if(!s.map.placements[id]&&!WORLD_STRUCTURES[id].fixed)html+=worldButton('Escolher posição no terreno','place',id,s.wallet<getFacilityCost(id,level,s.facilities.board));
+    else if(!st.maxed){const next=facilityStage(level+1),cost=getFacilityCost(id,level,s.facilities.board);html+=`<p class="phase-change">${next.phase!==st.phase?`Próxima fase: ${next.phase}. A estrutura do prédio será transformada.`:`Próxima melhoria: ${next.step}/3. Acrescenta estrutura e aumenta a produção.`}</p>${worldButton(`Iniciar obra · ${formatNumber(cost)} moedas`,'upgrade',id,s.wallet<cost||s.map.construction.length>=2||s.season.divisionIndex<f.minDivision)}`;}
+    else html+='<p class="phase-change">Instalação completa. Continue desenvolvendo os outros espaços e disputando as temporadas.</p>';
+    if(s.map.placements[id])html+=worldButton('Levar o gerente até aqui','walkBuilding',id);
+    if(['pitch1','pitch2','stands','gate'].includes(id))html+=worldButton('Funcionários e operação','operation');
+    if(id==='training'){
+     const q=trainingQuote(s,'team');html+=`<div class="world-stock"><b>${s.map.ctKits}/${TRAINING_KIT_LIMIT}</b> kits entregues ao CT</div>`;
+     if(s.map.training)html+='<div class="work-status"><b>TREINO EM ANDAMENTO</b><progress id="world-training-progress" max="1"></progress><small id="world-training-clock"></small></div>';
+     else html+=`${worldButton(`Treinar equipe · ${q.coins} moedas + ${q.kits} kits`,'trainTeam','',!q.ok)}<small class="world-reason">${escapeText(q.reason||`+1 de força por atleta elegível, após ${q.duration}s de treino.`)}</small>`;
+     html+=worldButton('Levar os kits carregados ao CT','deliverCT','',!s.facilities.training);
+     if(!s.map.courierHired)html+=worldButton('Auxiliar logístico · 240 moedas','courier','',!s.facilities.training||s.wallet<240);
+     else html+='<small class="world-reason">Auxiliar contratado: transporta kits do depósito ao CT sem tirar material de um campo vazio.</small>';
+     html+=worldButton('Gerenciar atletas e treinos','manage','team');
+    }
+    if(id==='youth')html+=worldButton('Gerenciar os jovens da base','manage','youth');
+    if(id==='stadium')html+=worldButton('Classificação e partidas','manage','league');
+    if(['board','marketing','coaching'].includes(id))html+=worldButton('Administrar departamento','manage','board');
+   }
+   n.querySelector('.world-inspector-body').innerHTML=html;
+  }
+  if(job){const progress=document.getElementById('world-work-progress');if(progress)progress.value=job.elapsed/job.duration;const t=document.getElementById('work-status-text');if(t)t.textContent=job.worker.route.length?'EQUIPE A CAMINHO':`OBRA · ${Math.max(0,Math.ceil(job.duration-job.elapsed))}s DE JOGO`;}
+  if(s.map.training){const p=document.getElementById('world-training-progress');if(p)p.value=s.map.training.elapsed/s.map.training.duration;const t=document.getElementById('world-training-clock');if(t)t.textContent=`${Math.ceil(s.map.training.duration-s.map.training.elapsed)}s · ${s.map.training.ids.length} atletas treinando`;}
+ }
+ teamHTML(s){
+  let html=super.teamHTML(s);const q=trainingQuote(s,'team');
+  html=html.replace(/<button[^>]*data-action="train"[^>]*data-id="([^"]*)"[^>]*>[^<]*<\/button>/g,(whole,htmlId)=>{const p=s.roster.find(p=>escapeText(p.id)===htmlId),quote=trainingQuote(s,'player',p?.id);return `<button class="action-button" data-action="train" data-id="${htmlId}" ${quote.ok?'':'disabled'} title="${escapeText(quote.reason)}">Treinar · ${quote.coins} moedas + 1 kit</button>`;});
+  return `<section class="training-resources"><b>Treino usa recursos produzidos no clube</b><p>Moedas da operação + kits fisicamente entregues ao CT. O resultado é aplicado depois do tempo de treinamento.</p><strong>CT: ${s.map.ctKits} kits</strong> ${worldButton(`Treinar titulares · ${q.coins} moedas + ${q.kits} kits`,'trainTeam','',!q.ok)}<small>${escapeText(q.reason)}</small>${worldButton('Ver e abastecer o CT','focusBuilding','training')}</section>`+html.replace(/Treinar · (\d+)/g,'Treinar · $1 moedas + 1 kit');
+ }
+ youthHTML(s){return '<p class="section-note">Treinar um jovem também exige 1 kit no CT, moedas e tempo. Não há treino instantâneo grátis.</p>'+super.youthHTML(s).replace(/Treinar · (\d+)/g,'Treinar · $1 moedas + 1 kit');}
+ facilityHTML(s,id){const f=FACILITIES[id],st=facilityStage(s.facilities[id]);return `<article class="sports-card"><span class="tag">FASE ${st.phase} · ${st.step}/3</span><h3>${f.name}</h3><p>As obras são feitas dentro do próprio mapa.</p>${worldButton('Localizar no terreno','focusBuilding',id)}</article>`;}
+}
+
+
 // src/main.js
+
+
+
 
 
 
@@ -1532,41 +2138,68 @@ class UI{
 async function boot(){
  const profile=await authenticate();
  const storage={getItem:k=>localStorage.getItem(k),setItem:(k,v)=>localStorage.setItem(k,v),removeItem:k=>localStorage.removeItem(k)};
- const store=new SaveStore(storage,profile.saveKey,profile.backupKey),loaded=store.load();
- if(loaded.status==='new')loaded.state=newGame(profile);
- const sim=new Simulation(loaded.state),renderer=new Renderer(document.getElementById('game'));await renderer.ready;
+ const store=new SaveStore(storage,profile.saveKey,profile.backupKey),loaded=store.load();if(loaded.status==='new')loaded.state=newGame(profile);
+ const sim=new WorldSimulation(loaded.state),renderer=new WorldRenderer(document.getElementById('game'));await renderer.ready;
  document.getElementById('asset-loading').hidden=true;
  let input,lastTime=performance.now(),accumulator=0,lastSaved=sim.state.t,conflict=false,lastUI=0,lastDraw=0;
  const persist=(force=false)=>{const result=store.save(sim.state,force);ui.saveStatus(result.ok);if(result.conflict){conflict=true;ui.open('menu-dialog');ui.toast(result.reason,30);}else if(!result.ok&&force)ui.toast(result.reason,8);return result;};
- const district=area=>{renderer.district=['pitch1','pitch2','stands','gate','canteen','arena'].includes(area)?'arena':area;renderer.initialized=false;input?.reset();document.body.dataset.district=renderer.district;};
+ const focus=(id,select=true)=>{renderer.focus(id,sim.state,select);if(id==='all'||id==='club')renderer.selection=null;input?.reset();ui.inspectorKey='';ui.update(sim.state,true);};
  const applyResult=result=>{if(!result?.ok){ui.toast(result?.reason||'Ação indisponível.',6);return false;}ui.renderKey='';ui.update(sim.state,true);persist();return true;};
- const ui=new UI({
+ const beginPlacement=id=>{const s=sim.state;if(!WORLD_STRUCTURES[id])return;if(s.map.placements[id]||WORLD_STRUCTURES[id].fixed){focus(id);return;}focus(id,false);renderer.placement=id;renderer.hover={x:WORLD_STRUCTURES[id].x,y:WORLD_STRUCTURES[id].y};ui.close();ui.toast('Posicione a base verde no terreno e toque para confirmar. Arraste para mover o mapa.',7);};
+ const ui=new WorldUI({
   start:()=>{input.reset();lastTime=performance.now();if(loaded.message)ui.toast(loaded.message,9);},
   onPauseChange:()=>{input?.reset();accumulator=0;lastTime=performance.now();},
-  travel:zone=>{district('arena');const p=zonePosition(zone);if(p)sim.goTo(p);},
-  navigate:()=>{const m=currentMission(sim.state);if(!m){district('club');ui.openSports('land');return;}if(['club','facilities','league'].includes(m.zone)){district('club');ui.openSports(m.zone==='club'?'land':m.zone);return;}const p=m.zone?zonePosition(m.zone):CFG.supply;if(p){district('arena');sim.goTo(p);}},
-  toggleView:()=>{district('arena');renderer.overview=!renderer.overview;return renderer.overview;},
+  focus,
+  district:id=>focus(id),
+  travel:zone=>{const p=zonePosition(zone);if(p){const ok=sim.goTo(p);if(!ok)ui.toast('Não há passagem até este ponto.');renderer.mapCamera.follow=true;renderer.mapCamera.zoom=Math.max(.65,renderer.mapCamera.zoom);}},
+  navigate:()=>{const s=sim.state,m=currentMission(s);if(!m||['club','facilities'].includes(m.zone)){
+   if(!s.land.academy)focus('academy');else if(!s.facilities.youth)beginPlacement('youth');else if(!s.facilities.training)beginPlacement('training');else if(!s.land.stadium)focus('stadium');else if(!s.facilities.stadium)beginPlacement('stadium');else if(!s.land.business)focus('business');else if(!s.facilities.board)beginPlacement('board');else focus('all');return;
+  }if(m.zone==='league'){ui.openSports('league');return;}const point=zonePosition(m.zone)||CFG.supply;sim.goTo(point);renderer.mapCamera.follow=true;},
+  toggleView:()=>renderer.follow(sim.state),
   toggleQuality:()=>{renderer.lowQuality=!renderer.lowQuality;renderer.resize();return renderer.lowQuality;},
-  district,purchase:id=>applyResult(sim.purchase(id)),
+  purchase:id=>{const result=sim.purchase(id);if(applyResult(result)&&id==='field2')ui.toast('Segundo campo aberto. Agora explore os terrenos ao redor da arena.',7);},
   export:()=>{const blob=new Blob([encodeSave(sim.state)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`arena-${profile.id}-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);ui.toast('Backup exportado. Guarde seu JSON.');},
-  import:async text=>{const next=decodeSave(text);sim.state=next;sim.events=[];renderer.particles=[];ui.lastMission=null;conflict=false;lastSaved=sim.state.t;input.reset();const r=persist(true);ui.update(sim.state,true);ui.toast(r.ok?'Progresso importado no perfil atual.':'Importado apenas nesta sessão. Exporte antes de sair.',8);},
-  reset:()=>{if(!store.reset()){ui.toast('Não foi possível limpar o armazenamento.');return;}sim.state=newGame(profile);sim.events=[];renderer.particles=[];ui.lastMission=null;conflict=false;lastSaved=0;input.reset();district('arena');persist(true);ui.update(sim.state,true);ui.open('welcome-dialog');},
-  logout:async()=>{const r=persist();if(!r.ok&&!confirm('O progresso não foi salvo. Sair mesmo assim?'))return;try{await logout();}catch(e){ui.toast(e.message);}},
+  import:async text=>{const next=decodeSave(text);sim.state=next;ensureWorld(next);sim.events=[];renderer.particles=[];renderer.roadKey='';renderer.selection=null;ui.lastMission=null;conflict=false;lastSaved=next.t;input.reset();const result=persist(true);ui.update(next,true);ui.toast(result.ok?'Progresso importado, incluindo mapa e obras.':'Armazenamento indisponível; exporte antes de sair.',7);},
+  reset:()=>{if(!store.reset()){ui.toast('Não foi possível limpar o armazenamento.');return;}sim.state=newGame(profile);ensureWorld(sim.state);sim.events=[];renderer.particles=[];renderer.roadKey='';renderer.selection=null;ui.lastMission=null;conflict=false;lastSaved=0;input.reset();focus('arena',false);persist(true);ui.update(sim.state,true);ui.open('welcome-dialog');},
+  logout:async()=>{const result=persist();if(!result.ok&&!confirm('O progresso não foi salvo. Sair mesmo assim?'))return;try{await logout();}catch(error){ui.toast(error.message);}},
+  worldCommand:(cmd,id)=>{
+   if(cmd==='closeInspector'){renderer.selection=null;return;}
+   if(cmd==='cancel'){renderer.placement=null;return;}
+   if(cmd==='zoomIn'||cmd==='zoomOut'){renderer.zoomAt(cmd==='zoomIn'?1.25:.8);return;}
+   if(cmd==='focusPlot'){ui.close();focus(id);renderer.selection={kind:'plot',id};ui.inspectorKey='';ui.update(sim.state,true);return;}
+   if(cmd==='focusBuilding'){ui.close();focus(id);return;}
+   if(cmd==='operation'){ui.open('upgrade-dialog');return;}
+   if(cmd==='manage'){ui.openSports(id);return;}
+   if(cmd==='place'){beginPlacement(id);return;}
+   if(cmd==='buyLand'){if(applyResult(sim.buyLand(id))){renderer.selection={kind:'plot',id};renderer.roadKey='';ui.toast('Terreno incorporado ao clube. Escolha a instalação e posicione no chão.',6);}return;}
+   if(cmd==='upgrade'){applyResult(sim.upgradeFacility(id));return;}
+   if(cmd==='walkBuilding'){if(!sim.moveToStructure(id))ui.toast('Não há caminho livre até a entrada.');else renderer.mapCamera.follow=true;return;}
+   if(cmd==='deliverCT'){if(sim.state.player.carry<1){sim.goTo(CFG.supply);renderer.mapCamera.follow=true;ui.toast('Pegue kits no depósito. Depois use “Levar os kits ao CT”.');}else if(sim.moveToStructure('training')){renderer.mapCamera.follow=true;ui.toast('O gerente vai levar os kits ao CT. A entrega ocorre ao chegar.');}else ui.toast('Não há passagem livre até o CT.');return;}
+   if(cmd==='courier'){applyResult(sim.hireCourier());return;}
+   if(cmd==='trainTeam'){if(applyResult(sim.trainTeam())){ui.close();focus('training');}return;}
+  },
   command:(name,id)=>{
-   let result;
-   const functions={train:()=>sim.trainPlayer(id),trainYouth:()=>sim.trainYouth(id),hire:()=>sim.hireMarket(id),refresh:()=>sim.refreshMarket(),scout:()=>sim.scoutYouth(),promote:()=>sim.promoteYouth(id),sellYouth:()=>sim.sellYouth(id),facility:()=>sim.upgradeFacility(id),land:()=>sim.buyLand(id),captain:()=>sim.setTactic('captain',id),formation:()=>sim.setTactic('formation',id),posture:()=>sim.setTactic('posture',id),campaign:()=>sim.startCampaign(),club:()=>sim.editClub(id.name,id.sigla),season:()=>sim.nextSeason(),round:()=>sim.playLeagueRound()};
-   if(name==='sell'){if(!confirm('Vender este reserva? A operação não pode ser desfeita.'))return;result=sim.sellPlayer(id);}
+   let result;const functions={train:()=>sim.trainPlayer(id),trainYouth:()=>sim.trainYouth(id),hire:()=>sim.hireMarket(id),refresh:()=>sim.refreshMarket(),scout:()=>sim.scoutYouth(),promote:()=>sim.promoteYouth(id),sellYouth:()=>sim.sellYouth(id),captain:()=>sim.setTactic('captain',id),formation:()=>sim.setTactic('formation',id),posture:()=>sim.setTactic('posture',id),campaign:()=>sim.startCampaign(),club:()=>sim.editClub(id.name,id.sigla),season:()=>sim.nextSeason(),round:()=>sim.playLeagueRound()};
+   if(name==='facility'){ui.close();focus(id);return;}if(name==='land'){ui.close();focus(id);return;}
+   if(name==='sell'){if(!confirm('Vender este reserva? Esta ação não pode ser desfeita.'))return;result=sim.sellPlayer(id);}
    else if(name==='sub'){const s=sim.state,p=s.roster.find(p=>p.id===id),target=getStarters(s.roster).filter(p2=>p2.pos===p?.pos).sort((a,b)=>a.overall-b.overall)[0];if(!p||!target)result={ok:false,reason:'Não há titular da mesma posição para trocar.'};else{swapRosterPlayers(s.roster,p.id,target.id);if(s.tactics.captainId===target.id)s.tactics.captainId=null;sim.emit('tactic',`${p.name} entrou no lugar de ${target.name}.`);result={ok:true};}}
    else if(functions[name])result=functions[name]();else result={ok:false,reason:'Ação não reconhecida.'};
-   if(applyResult(result)&&name==='round'){ui.close();district(sim.state.facilities.stadium?'stadium':'arena');ui.toast('Partida oficial iniciada. Seu time é o azul; acompanhe o placar.',6);}
+   if(applyResult(result)&&name==='round'){ui.close();focus(sim.state.facilities.stadium?'stadium':'arena');ui.toast('Partida oficial iniciada. Seu time é o azul.',6);}
+   if(result?.ok&&['train','trainYouth'].includes(name)){ui.close();focus('training');}
   }
- });
- renderer.district='arena';
- input=new InputController(renderer.canvas,document.getElementById('joystick'),(x,y)=>{
-  const p=renderer.clickPosition(x,y);
-  if(p.zone==='campus'){if(p.plot)ui.openSports('land');else if(p.facility==='arena')district('arena');else if(p.facility){if(renderer.district==='club')district(p.facility);else ui.openSports(p.facility==='youth'?'youth':['board','marketing','coaching'].includes(p.facility)?'board':'facilities');}return;}
-  if(p.zone==='office')ui.open('upgrade-dialog');else if(renderer.district==='arena')sim.goTo(p);
- },()=>ui.paused||conflict,(x,y)=>renderer.screenAxisToWorld(x,y));
+ },renderer);
+ input=new WorldInput(renderer.canvas,document.getElementById('joystick'),(x,y)=>{
+  const p=renderer.clickPosition(x,y);if(p.zone==='minimap')return;
+  if(p.zone==='place'){
+   const id=renderer.placement,result=sim.upgradeFacility(id,p.point);if(applyResult(result)){renderer.placement=null;renderer.selection={kind:'building',id};renderer.roadKey='';ui.inspectorKey='';}return;
+  }
+  if(p.zone==='world-select'){
+   if(p.kind==='operation'){ui.open('upgrade-dialog');return;}
+   if(p.kind==='travel'){ui.actions.travel(p.id);return;}
+   renderer.selection={kind:p.kind,id:p.id};ui.inspectorKey='';ui.update(sim.state,true);return;
+  }
+  renderer.selection=null;if(!sim.goMap(p.point))ui.toast('Área fechada ou sem passagem. Toque na placa do terreno para expandir.',5);
+ },()=>ui.paused||conflict,renderer);
  window.addEventListener('resize',()=>renderer.resize());
  document.addEventListener('visibilitychange',()=>{input.reset();lastTime=performance.now();accumulator=0;if(document.hidden&&store.writable)persist();});
  window.addEventListener('pagehide',()=>{if(store.writable)persist();});
@@ -1575,17 +2208,19 @@ async function boot(){
  ui.update(sim.state,true);ui.saveStatus(store.writable);const step=1/60;
  function frame(now){
   const dt=Math.min(.1,Math.max(0,(now-lastTime)/1000));lastTime=now;
-  if(!ui.paused&&!document.hidden&&!conflict){accumulator+=dt;while(accumulator>=step){sim.tick(step,renderer.district==='arena'?input.read():{x:0,z:0});accumulator-=step;}if(sim.state.t-lastSaved>=CFG.autosaveSeconds){if(store.writable)persist();lastSaved=sim.state.t;}}else accumulator=0;
-  const events=sim.drainEvents();renderer.addEvents(events);for(const e of events)ui.showEvent(e);
+  if(!ui.paused&&!document.hidden&&!conflict){accumulator+=dt;while(accumulator>=step){sim.tick(step,input.read());accumulator-=step;}if(sim.state.t-lastSaved>=CFG.autosaveSeconds){if(store.writable)persist();lastSaved=sim.state.t;}}else accumulator=0;
+  const events=sim.drainEvents();renderer.addEvents(events);for(const e of events){ui.showEvent(e);if(['construction','trainingStart','ctDelivery'].includes(e.type))ui.toast(e.text,4);}
   if(now-lastUI>=150){ui.update(sim.state);lastUI=now;}
   if(now-lastDraw>=(renderer.lowQuality?1000/30:1000/60)-1){renderer.draw(sim.state,Math.min(.1,(now-lastDraw)/1000));lastDraw=now;}
   requestAnimationFrame(frame);
  }
  requestAnimationFrame(frame);
+ // Only the explicitly requested debug query enables test hooks. No funds are
+ // granted by this hook, and it is not enabled in distributed links.
  if(new URLSearchParams(location.search).get('debug')==='1')window.__arena={
   snapshot:()=>structuredClone(sim.state),goTo:zone=>{const p=zonePosition(zone);return p?sim.goTo(p):false;},
   step:seconds=>{if(ui.paused||conflict)throw new Error('Feche os menus.');if(!Number.isFinite(seconds)||seconds<0||seconds>120)throw new Error('Use até 120 segundos.');for(let i=0;i<Math.ceil(seconds*60);i++)sim.tick(step);const events=sim.drainEvents();renderer.addEvents(events);events.forEach(e=>ui.showEvent(e));ui.update(sim.state,true);renderer.draw(sim.state,.016);return structuredClone(sim.state);},
-  save:()=>persist(),rendererInfo:()=>({width:renderer.width,height:renderer.height,loaded:renderer.loaded,assets:Object.keys(renderer.assets),hits:renderer.hitZones,district:renderer.district})
+  save:()=>persist(),focus:id=>focus(id),rendererInfo:()=>({width:renderer.width,height:renderer.height,loaded:renderer.loaded,hits:renderer.hitZones,scale:renderer.scale,ox:renderer.ox,oy:renderer.oy,camera:renderer.mapCamera,selection:renderer.selection,placement:renderer.placement})
  };
 }
 boot().catch(error=>{console.error(error);document.getElementById('asset-loading').hidden=true;const card=document.createElement('section');card.className='fatal-error';const title=document.createElement('h1');title.textContent='Não foi possível abrir a arena.';const text=document.createElement('p');text.textContent=error.message||'Erro desconhecido.';card.append(title,text);document.body.append(card);});

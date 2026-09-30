@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#153d35">
   <meta name="description" content="Arena de Bairro: protótipo original de gestão de uma arena de futebol.">
-  <title>Arena de Bairro — Clube em evolução 0.4</title>
+  <title>Arena de Bairro — Mapa Vivo 0.5</title>
   <link rel="stylesheet" href="./src/style.css">
   <link rel="stylesheet" href="./src/visual.css">
   <link rel="stylesheet" href="./src/expansion.css">
+  <link rel="stylesheet" href="./src/world.css">
   <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -16,6 +17,10 @@
   <div id="asset-loading" role="status"><p>Preparando sua arena…</p><small>Carregando a arte e os personagens.</small></div>
   <canvas id="game" aria-label="Arena de futebol em perspectiva 2.5D. Use WASD, setas ou controle virtual para mover o gerente."></canvas>
   <div id="ui">
+ <div class="world-map-tools"><button data-world-action="zoomOut" aria-label="Diminuir zoom">−</button><button data-world-action="zoomIn" aria-label="Aumentar zoom">+</button><button data-world-focus="all">Expandir mapa ↗</button><button data-world-focus="academy">Formação</button><button data-world-focus="stadium">Estádio</button><button data-world-focus="business">Sede</button></div>
+ <div class="world-status"><span id="world-jobs">MAPA CONTÍNUO · ARRASTE PARA EXPLORAR</span><button id="ct-resource" data-world-action="focusBuilding" data-world-id="training">0 KITS NO CT</button></div>
+ <aside id="world-inspector" hidden><button class="inspector-close" data-world-action="closeInspector" aria-label="Fechar seleção">×</button><div class="world-inspector-body"></div></aside>
+ <div id="placement-bar" hidden><b>POSICIONAR CONSTRUÇÃO</b><span>Toque no terreno livre. Verde = permitido.</span><button data-world-action="cancel">Cancelar</button></div>
     <header class="topbar">
       <div class="brand"><span class="crest" aria-hidden="true">A<span>FC</span></span><div><h1>ARENA <span>DE BAIRRO</span></h1><p>DO CAMPO AO SONHO</p></div></div>
       <button id="header-league-pill" class="club-pill"><strong id="header-club">Clube da Vila</strong><small id="header-team-strength">Série D</small><small id="preparation-status">PREPARO 0/3</small></button><div class="wallet"><span class="coin" aria-hidden="true">●</span><div><small>CARTEIRA</small><strong id="wallet">0</strong></div><button id="wallet-upgrades" class="wallet-add" aria-label="Abrir melhorias">+</button></div>
@@ -37,10 +42,10 @@
       <div class="bottom-actions"><button id="view-button" class="secondary-button">VISÃO GERAL</button><button id="upgrade-button" class="primary-button"><span>↗</span> EVOLUIR</button><small id="save-status">SAVE LOCAL · SEM NUVEM</small></div>
     </div>
     <nav class="travel-dock" aria-label="Destinos rápidos"><button data-travel="supply"><span aria-hidden="true">▣</span>Depósito</button><button data-travel="field0"><span aria-hidden="true">⚽</span>Campo 1</button><button data-travel="gate"><span aria-hidden="true">▤</span>Ingressos</button><button data-travel="cash"><span aria-hidden="true">◉</span>Caixa</button><button data-travel="field1" id="travel-field2"><span aria-hidden="true">⚑</span>Campo 2</button></nav>
-    <nav class="sports-dock" aria-label="Gestão do clube"><button id="arena-button">⚽ Arena</button><button id="district-button">🏟 Clube</button><button id="btn-dock-team">Elenco</button><button id="btn-dock-league">Tabela</button><button id="btn-dock-youth">Base</button><button id="btn-dock-market">Mercado</button></nav>
+    <nav class="sports-dock" aria-label="Gestão do clube"><button id="arena-button">⚽ Arena</button><button id="district-button">↗ Mapa completo</button><button id="btn-dock-team">Elenco</button><button id="btn-dock-league">Tabela</button><button id="btn-dock-youth">Base</button><button id="btn-dock-market">Mercado</button></nav>
   </div>
   <dialog id="welcome-dialog" class="welcome-dialog">
-    <div class="dialog-eyebrow">CLUBE EM EVOLUÇÃO 0.4 · ARENA DE BAIRRO</div>
+    <div class="dialog-eyebrow">MAPA VIVO 0.5 · ARENA DE BAIRRO</div>
     <div class="welcome-mark">⚽</div>
     <h2>Seu clube.<br><em>Sua arena.</em></h2>
     <p>Prepare partidas, receba a torcida e transforme um campo de bairro em um negócio que funciona com a sua equipe.</p>
@@ -49,10 +54,10 @@
     <small>Arte aprovada integrada · Controles e economia reais</small><p class="art-note">Cenário ilustrado 2.5D: parte da torcida e dos atletas faz parte da arte. Não é uma cena 3D.</p>
   </dialog>
   <dialog id="upgrade-dialog">
-    <div class="dialog-heading"><div><div class="dialog-eyebrow">SUA PRÓXIMA CONQUISTA</div><h2>Faça o clube crescer.</h2></div><button class="close-button" data-close aria-label="Fechar melhorias">×</button></div>
+    <div class="dialog-heading"><div><div class="dialog-eyebrow">OPERAÇÃO DA ARENA</div><h2>Equipe da operação.</h2></div><button class="close-button" data-close aria-label="Fechar melhorias">×</button></div>
     <p class="dialog-subtitle">Carteira: <b id="shop-wallet">0</b> moedas. O dinheiro do caixa precisa ser recolhido.</p>
-    <div id="upgrade-grid"></div>
-    <button class="primary-button" data-tab="facilities">ESTÁDIO, BASE E DEPARTAMENTOS →</button><p class="dialog-footnote">Funcionários trabalham enquanto o jogo está aberto e não está pausado.</p>
+    <p class="section-note">Estes são os funcionários e equipamentos. O clube continua crescendo no mapa, mesmo depois de concluir esta lista.</p><button class="primary-button" data-world-focus="all">VER TERRENOS E CONSTRUÇÕES NO MAPA →</button><div id="upgrade-grid"></div>
+    <button class="primary-button" data-tab="facilities">IR AO MAPA DO CLUBE →</button><p class="dialog-footnote">Funcionários trabalham enquanto o jogo está aberto e não está pausado.</p>
   </dialog>
   <dialog id="sports-dialog"><div class="dialog-heading"><div><div class="dialog-eyebrow">GESTÃO DO SEU CLUBE</div><h2 id="sports-title">Elenco</h2></div><button class="close-button" data-close aria-label="Fechar gestão">×</button></div><p id="sports-meta"></p><nav id="sports-tabs"></nav><section id="sports-content"></section></dialog>
   <dialog id="menu-dialog">

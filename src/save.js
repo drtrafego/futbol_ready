@@ -1,5 +1,6 @@
 import { CFG } from './config.js';
 import { restoreExtensions } from './state-extensions.js';
+import { restoreWorld } from './world-model.js';
 import { newGame, carryCapacity, seatCapacity } from './simulation.js';
 import { walkable } from './navigation.js';
 
@@ -71,7 +72,7 @@ export function validateState(raw) {
   for (const k of Object.keys(s.timers)) s.timers[k] = num(raw.timers[k], `relógio ${k}`, 1000);
   obj(raw.stats, 'estatísticas');
   for (const k of Object.keys(s.stats)) s.stats[k] = num(raw.stats[k], k, 1_000_000_000_000_000);
-  return restoreExtensions(s, raw);
+  return restoreWorld(restoreExtensions(s, raw),raw);
 }
 
 export function encodeSave(state, writer = 'export') {

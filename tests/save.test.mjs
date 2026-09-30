@@ -1,3 +1,4 @@
+import { ensureWorld } from '../src/world-model.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { CFG } from '../src/config.js';
@@ -8,7 +9,7 @@ const memory=()=>{const data=new Map();return{getItem:k=>data.get(k)??null,setIt
 test('exportar e importar preserva o estado de jogo',()=>{
   const sim=new Simulation();sim.state.staff={gate:true,runner:true,cashier:true};
   for(let i=0;i<6000;i++)sim.tick(1/60);
-  const loaded=decodeSave(encodeSave(sim.state));loaded.savedAt=0;assert.deepEqual(loaded,sim.state);
+  ensureWorld(sim.state);const loaded=decodeSave(encodeSave(sim.state));loaded.savedAt=0;assert.deepEqual(loaded,sim.state);
 });
 test('save rejeita JSON corrompido',()=>{assert.throws(()=>decodeSave('{ quebrado'));});
 test('save rejeita versão futura sem tentar convertê-la',()=>{const x=JSON.parse(encodeSave(newGame()));x.version=99;assert.throws(()=>decodeSave(JSON.stringify(x)),/versão/);});

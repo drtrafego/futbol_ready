@@ -1,11 +1,28 @@
-# Integração com outro repositório
+# Aplicar a versão 0.5 sobre a versão 0.4
 
-Nenhum repositório remoto foi modificado nesta entrega. A base usada é o Arena de Bairro disponibilizado nesta conversa, com a apresentação reconstruída em torno da arte aprovada.
+Base remota conferida: drtrafego/futbol_ready, commit
+`af0a14e2f24e43cbc820e633eca2d7125b41031f`.
 
-Não sobreponha este ZIP inteiro a um projeto com lógica diferente. Crie uma branch e compare primeiro o formato do estado, os IDs de estações, o fluxo de entrada e o salvamento. Nesta base, a economia fica em `simulation.js`; o renderizador recebe o estado e não concede moedas. A projeção de `scene.js` traduz as coordenadas originais para a ilustração.
+O código é uma extensão da versão 0.4, não um retorno ao projeto antigo. Não
+mescle o renderer Phaser ou o layout antigo. Preserve server/auth.mjs,
+api/session.js, .env.local e as variáveis privadas que já foram configuradas.
 
-Para integrar a apresentação em React/Next.js, mantenha Canvas e a simulação no cliente, monte os recursos de `assets` em um caminho público explícito e traduza o ciclo de montagem/desmontagem para um componente. Não execute o loop de animação no servidor nem mantenha múltiplos listeners ao remontar um componente. Isso é orientação de integração, não uma conversão já executada.
+O pacote externo contém `aplicar-atualizacao.mjs` e `manifesto.json`.
 
-Preserve a chave de save do projeto original ou implemente uma migração validada. Não importe um save de Arena de Craques como se fosse Arena de Bairro. O `vercel.json` desta entrega é para o site estático atual; um outro projeto Next.js pode exigir configuração distinta.
+```powershell
+node aplicar-atualizacao.mjs --repo "C:\caminho\futbol_ready"
+node aplicar-atualizacao.mjs --repo "C:\caminho\futbol_ready" --apply
+```
 
-Antes de mesclar: testes da base original, testes desta versão, inspeção visual em celular e confirmação dos recursos que não podem regredir.
+O primeiro comando apenas verifica. O segundo cria backup fora do clone e copia
+somente os arquivos listados com hashes compatíveis. Diante de conflito, nada é
+copiado: compare a alteração mais recente e adapte apenas o trecho necessário.
+Não use reset --hard, force push ou exclusão do repositório para evitar conflitos.
+
+No clone atualizado execute `npm run verify`; esse comando também reconstrói
+`dist/` e `JOGAR.html`. Revise `git diff`, confirme as alterações e envie ao GitHub.
+A publicação na Vercel fica com o usuário. O aplicador não faz push nem deploy.
+
+Antes de atualizar a versão publicada, exporte um backup JSON do jogo. Os saves
+0.4 são migrados; mudança de domínio não transfere localStorage automaticamente.
+As fixtures em qa/ são testes visuais e não devem ser carregadas no jogo normal.

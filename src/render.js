@@ -86,9 +86,9 @@ export class Renderer {
   draw(s,dt){
     if(!this.loaded)return;
     if(this.district&&this.district!=='arena'){document.body.dataset.district='club';drawCampus(this,s,dt);return;}
-    document.body.dataset.district='arena';
+    if(!this._offscreen)document.body.dataset.district='arena';
     const c=this.ctx,v=this.layout.viewport;this.lastPlayer=s.player;
-    const mode=this.overview?'overview':'follow';if(document.body.dataset.camera!==mode)document.body.dataset.camera=mode;
+    const mode=this.overview?'overview':'follow';if(!this._offscreen&&document.body.dataset.camera!==mode)document.body.dataset.camera=mode;
     const actor=worldToArt(s.player.x,s.player.z);
     let desiredScale,target;
     if(!this.layout.compact&&this.overview){desiredScale=Math.min(this.width/1536,this.height/960);target={x:768,y:480};}
@@ -96,7 +96,7 @@ export class Renderer {
     else{desiredScale=this.layout.portrait?clamp(v.w/570,.56,.9):clamp(v.h/540,.55,1.12);target={x:clamp(actor.x+45,330,1170),y:clamp(actor.y-90,370,660)};}
     if(!this.initialized){this.camera={...target};this.scale=desiredScale;this.initialized=true;}
     const smooth=1-Math.exp(-dt*7);this.camera.x+=(target.x-this.camera.x)*smooth;this.camera.y+=(target.y-this.camera.y)*smooth;this.scale+=(desiredScale-this.scale)*smooth;
-    this.frameArt=this.assets[!this.layout.compact&&this.overview?'arena-cenario.png':'arena-mapa.png'];
+    this.frameArt=this.assets[this._offscreen?'arena-mapa.png':!this.layout.compact&&this.overview?'arena-cenario.png':'arena-mapa.png'];
     this.ox=v.x+v.w/2-this.camera.x*this.scale;this.oy=v.y+v.h/2-this.camera.y*this.scale;
     c.setTransform(this.dpr,0,0,this.dpr,0,0);c.fillStyle='#0b2c25';c.fillRect(0,0,this.width,this.height);
     c.save();c.beginPath();c.rect(v.x,v.y,v.w,v.h);c.clip();c.translate(this.ox,this.oy);c.scale(this.scale,this.scale);
@@ -119,7 +119,7 @@ export class Renderer {
     // Route hint is derived from the same path used by the simulation.
     if(s.player.route.length&&!this.lowQuality){c.save();c.setLineDash([2,9]);c.strokeStyle='#ffef9aaa';c.lineWidth=3;c.lineCap='round';c.beginPath();c.moveTo(actor.x,actor.y);for(const p of s.player.route){const q=worldToArt(p.x,p.z);c.lineTo(q.x,q.y);}c.stroke();c.restore();}
     const drawable=[];
-    drawable.push({y:actor.y,draw:()=>this.person(s.player,s,'player')});
+    if(!this.hidePlayer)drawable.push({y:actor.y,draw:()=>this.person(s.player,s,'player')});
     if(s.staff.runner){const p=worldToArt(s.runner.x,s.runner.z);drawable.push({y:p.y,draw:()=>this.person(s.runner,s,'runner')});}
     for(const fan of s.fans){if(fan.phase==='watching')continue;const p=worldToArt(fan.x,fan.z);drawable.push({y:p.y,draw:()=>this.person(fan,s)});}
     drawable.push({y:586,draw:()=>this.foreground([[248,491],[413,480],[411,583],[247,583]])});
