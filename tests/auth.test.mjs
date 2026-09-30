@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import { hashPassword,verifyPassword,createSession,readSession,authConfig } from '../server/auth.mjs';
+test('senha é verificada por scrypt; credencial incorreta é recusada',async()=>{const hash=await hashPassword('test-password-only');assert.ok(!hash.includes('test-password-only'));assert.equal(await verifyPassword('test-password-only',hash),true);assert.equal(await verifyPassword('wrong',hash),false);});
+test('sessão assinada rejeita alteração e expiração',()=>{const secret='a'.repeat(64),token=createSession('bernardo',secret,1000);assert.equal(readSession(token,secret,1001).id,'bernardo');assert.equal(readSession(token+'a',secret,1001),null);assert.equal(readSession(token,'b'.repeat(64),1001),null);assert.equal(readSession(token,secret,1000+7*86400+1),null);});
+test('configuração ausente fecha o acesso; não há senha padrão no servidor',()=>{assert.equal(authConfig({}),null);assert.equal(authConfig({ARENA_SESSION_SECRET:'short',ARENA_USERS_JSON:'[]'}),null);});

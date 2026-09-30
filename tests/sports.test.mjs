@@ -1,195 +1,30 @@
-import test from 'node:test';
-import assert from 'node:assert/strict';
-import {
-  generateInitialRoster,
-  getStarters,
-  getReserves,
-  calculateTeamStrength,
-  calculateTrainingCost,
-  trainPlayer,
-  generateMarket,
-  hirePlayer,
-  swapRosterPlayers,
-  POSITIONS,
-  FORMATIONS,
-} from '../src/roster.js';
-import {
-  DIVISIONS,
-  getDivision,
-  createSeason,
-  sortTable,
-  simulateRound,
-  evaluateSeasonEnd,
-} from '../src/competition.js';
-import {
-  FACILITIES,
-  getFacilityCost,
-  canUpgradeFacility,
-  scoutYouthProspect,
-  promoteProspect,
-} from '../src/facilities.js';
-import {
-  PROFILES,
-  getActiveProfileId,
-  getProfileConfig,
-} from '../src/profile.js';
-
-test('Elenco Inicial: gera 15 atletas com 11 titulares e posições válidas', () => {
-  const roster = generateInitialRoster(46);
-  assert.equal(roster.length, 15);
-  const starters = getStarters(roster);
-  const reserves = getReserves(roster);
-  assert.equal(starters.length, 11);
-  assert.equal(reserves.length, 4);
-
-  // Confere posições
-  for (const j of roster) {
-    assert.ok(POSITIONS.includes(j.pos));
-    assert.ok(j.overall >= 35 && j.overall <= 80);
-    assert.ok(j.potential >= j.overall);
-  }
-});
-
-test('Força do Time: considera apenas titulares, postura, capitão e comissão', () => {
-  const roster = generateInitialRoster(50);
-  const strengthBase = calculateTeamStrength(roster, '4-4-2', 'equilibrada', null, 0);
-  assert.ok(strengthBase >= 40 && strengthBase <= 70);
-
-  // Bônus tático ofensivo
-  const strengthOfensiva = calculateTeamStrength(roster, '4-4-2', 'ofensiva', null, 0);
-  assert.ok(strengthOfensiva > strengthBase);
-
-  // Bônus do capitão
-  const starters = getStarters(roster);
-  const strengthComCapitao = calculateTeamStrength(roster, '4-4-2', 'equilibrada', starters[0].id, 0);
-  assert.ok(strengthComCapitao >= strengthBase);
-
-  // Multiplicador da comissão técnica
-  const strengthComissao = calculateTeamStrength(roster, '4-4-2', 'equilibrada', null, 2);
-  assert.ok(strengthComissao > strengthBase);
-});
-
-test('Treinamento: incrementa overall, respeita potencial e escala custo', () => {
-  const player = { id: 'p1', name: 'Atleta Teste', overall: 50, potential: 52, trainings: 0 };
-  const cost1 = calculateTrainingCost(player);
-  assert.equal(cost1, 40);
-
-  // Treina uma vez
-  const res1 = trainPlayer(player, 100);
-  assert.ok(res1.ok);
-  assert.equal(player.overall, 51);
-  assert.equal(player.trainings, 1);
-
-  // Custo sobe exponencialmente
-  const cost2 = calculateTrainingCost(player);
-  assert.ok(cost2 > cost1);
-
-  // Treina segunda vez até o potencial máximo
-  const res2 = trainPlayer(player, 100);
-  assert.ok(res2.ok);
-  assert.equal(player.overall, 52);
-
-  // Tentativa além do potencial deve ser rejeitada
-  const res3 = trainPlayer(player, 1000);
-  assert.equal(res3.ok, false);
-  assert.match(res3.reason, /máximo/);
-});
-
-test('Mercado: gera opções da divisão e contratação não apaga jogadores existentes', () => {
-  const market = generateMarket(0);
-  assert.equal(market.length, 3);
-  for (const m of market) {
-    assert.ok(m.cost > 0);
-    assert.ok(m.overall > 30);
-  }
-
-  const roster = generateInitialRoster(46);
-  const initialCount = roster.length;
-  const hired = hirePlayer(roster, market[0], market[0].cost + 50);
-  assert.ok(hired.ok);
-  assert.equal(roster.length, initialCount + 1); // Preservou todos os atletas no banco!
-  assert.equal(hired.player.starter, false);
-});
-
-test('Troca de jogadores: alterna titularidade sem corromper o elenco', () => {
-  const roster = generateInitialRoster(46);
-  const starter = roster.find(j => j.starter);
-  const reserve = roster.find(j => !j.starter);
-  assert.ok(starter && reserve);
-
-  const ok = swapRosterPlayers(roster, starter.id, reserve.id);
-  assert.ok(ok);
-  assert.equal(starter.starter, false);
-  assert.equal(reserve.starter, true);
-});
-
-test('Competição: calendário de 10 rodadas e simulação simétrica com invariantes', () => {
-  const season = createSeason(0, 'Bernardo FC', 'BFC');
-  assert.equal(season.clubs.length, 8);
-  assert.equal(season.totalRounds, 10);
-  assert.equal(season.rounds.length, 10);
-
-  // Simula todas as 10 rodadas
-  for (let r = 1; r <= 10; r++) {
-    const res = simulateRound(season, 52);
-    assert.ok(res);
-    assert.equal(res.roundNumber, r);
-  }
-
-  assert.equal(season.finished, true);
-
-  // Invariantes por clube: J = V + E + D, PTS = 3*V + E, SG = GP - GC
-  for (const club of season.clubs) {
-    assert.equal(club.played, 10);
-    assert.equal(club.played, club.won + club.drawn + club.lost);
-    assert.equal(club.points, club.won * 3 + club.drawn);
-    assert.equal(club.goalDiff, club.goalsFor - club.goalsAgainst);
-  }
-
-  // Invariantes globais: total de gols marcados = total de gols sofridos
-  const totalGP = season.clubs.reduce((acc, c) => acc + c.goalsFor, 0);
-  const totalGC = season.clubs.reduce((acc, c) => acc + c.goalsAgainst, 0);
-  assert.equal(totalGP, totalGC);
-
-  // Tabela e premiação de fim de temporada
-  const evaluation = evaluateSeasonEnd(season);
-  assert.ok(evaluation);
-  assert.ok(evaluation.playerPos >= 1 && evaluation.playerPos <= 8);
-  assert.ok(evaluation.reward > 0);
-});
-
-test('Base e Peneira: revela talentos e promove à reserva sem apagar atletas', () => {
-  const prospect = scoutYouthProspect(2, 0);
-  assert.ok(prospect.overall > 35);
-  assert.ok(prospect.potential >= prospect.overall);
-  assert.ok(prospect.marketValue > 0);
-
-  const roster = generateInitialRoster(46);
-  const countBefore = roster.length;
-  const promo = promoteProspect(roster, prospect);
-  assert.ok(promo.ok);
-  assert.equal(roster.length, countBefore + 1);
-  assert.equal(promo.player.starter, false);
-});
-
-test('Instalações: calcula custos de ampliação e respeita limites', () => {
-  const cost0 = getFacilityCost('stands', 0);
-  const cost1 = getFacilityCost('stands', 1);
-  assert.ok(cost1 > cost0);
-
-  const checkAllowed = canUpgradeFacility('stands', 0, 0, 500);
-  assert.ok(checkAllowed.ok);
-
-  const checkSemSaldo = canUpgradeFacility('stands', 0, 0, 10);
-  assert.equal(checkSemSaldo.ok, false);
-
-  const checkMax = canUpgradeFacility('stands', 5, 0, 999999);
-  assert.equal(checkMax.ok, false);
-});
-
-test('Perfis: disponibiliza Bernardo e Convidado com chaves isoladas', () => {
-  assert.equal(PROFILES.length, 2);
-  assert.equal(PROFILES[0].id, 'bernardo');
-  assert.equal(PROFILES[1].id, 'convidado');
-  assert.notEqual(PROFILES[0].saveKey, PROFILES[1].saveKey);
-});
+import test from 'node:test';import assert from 'node:assert/strict';
+import { Simulation,newGame,seatCapacity,ticketPrice } from '../src/simulation.js';
+import { createSeason,simulateRound,matchPerspective,evaluateSeasonEnd } from '../src/competition.js';
+import { generateInitialRoster,generateMarket,getStarters,getReserves,calculateTeamStrength,trainPlayer,calculateTrainingCost,hirePlayer,autoLineup } from '../src/roster.js';
+import { FACILITIES,LAND_PLOTS,facilityStage,canUpgradeFacility,getFacilityCost } from '../src/facilities.js';
+import { encodeSave,decodeSave,SaveStore } from '../src/save.js';import { PROFILES } from '../src/profile.js';
+const advance=(sim,seconds)=>{for(let i=0;i<Math.ceil(seconds*60);i++)sim.tick(1/60);};
+const funded=()=>{const sim=new Simulation();sim.state.wallet=10000000;sim.purchase('field2');return sim;};
+test('elenco preserva 15 atletas, 11 titulares e quatro reservas',()=>{const r=generateInitialRoster();assert.equal(r.length,15);assert.equal(getStarters(r).length,11);assert.equal(getReserves(r).length,4);});
+test('treino aumenta força, respeita potencial e usa desconto do CT',()=>{const p={overall:50,potential:52,trainings:0};assert.ok(calculateTrainingCost(p,5)<calculateTrainingCost(p,0));assert.equal(trainPlayer(p,100).ok,true);assert.equal(p.overall,51);trainPlayer(p,100);assert.equal(trainPlayer(p,1e6).ok,false);});
+test('compra do mercado preserva titulares; oferta repetida não duplica jogador',()=>{const sim=funded(),id=sim.state.market[0].id;assert.ok(sim.hireMarket(id).ok);assert.equal(sim.state.roster.length,16);assert.equal(getStarters(sim.state.roster).length,11);assert.equal(sim.hireMarket(id).ok,false);});
+test('troca de formação reorganiza 11 titulares e afeta força quando faltam posições',()=>{const r=generateInitialRoster();autoLineup(r,'4-3-3');assert.equal(getStarters(r).filter(p=>p.pos==='ATA').length,3);assert.equal(getStarters(r).length,11);const full=calculateTeamStrength(r,'4-3-3');r.find(p=>p.pos==='GOL'&&p.starter).starter=false;assert.ok(calculateTeamStrength(r,'4-3-3')<full);});
+test('mercados de todas as divisões respeitam o teto de 99 e o potencial',()=>{for(let d=0;d<6;d++)for(let k=0;k<30;k++)for(const p of generateMarket(d)){assert.ok(p.overall<=99);assert.ok(p.potential>=p.overall&&p.potential<=99);}});
+test('calendário de 14 rodadas inclui todos os pares em casa e fora',()=>{const s=createSeason(),pairs=new Set();for(const r of s.rounds){const used=[];for(const m of r.matches){used.push(m.homeId,m.awayId);pairs.add(m.homeId+'-'+m.awayId);}assert.equal(new Set(used).size,8);}assert.equal(s.rounds.length,14);assert.equal(pairs.size,56);});
+test('placares têm simetria: pontos, gols pró e contra permanecem consistentes',()=>{const s=createSeason();for(let r=0;r<14;r++)simulateRound(s,55);assert.ok(s.finished);let gf=0,ga=0;for(const c of s.clubs){assert.equal(c.played,14);assert.equal(c.played,c.won+c.drawn+c.lost);assert.equal(c.points,c.won*3+c.drawn);gf+=c.goalsFor;ga+=c.goalsAgainst;}assert.equal(gf,ga);});
+test('vitória visitante é vitória nossa, não vitória do mandante',()=>{assert.equal(matchPerspective({homeId:'other',awayId:'player',homeScore:0,awayScore:2}).result,'win');assert.equal(matchPerspective({homeId:'other',awayId:'player',homeScore:2,awayScore:0}).result,'loss');});
+test('não há prêmio de campeonato para o segundo colocado mundial',()=>{const s=createSeason(5);s.finished=true;s.clubs.forEach((c,i)=>{c.points=90-i;c.won=20;});s.clubs[0].points=88.5;const r=evaluateSeasonEnd(s);assert.equal(r.playerPos,2);assert.equal(r.status,'stay');});
+test('terrenos exigem segundo campo e vizinhança; não debitam em falha',()=>{const sim=new Simulation();sim.state.wallet=5000;assert.equal(sim.buyLand('academy').ok,false);assert.equal(sim.state.wallet,5000);sim.purchase('field2');assert.equal(sim.buyLand('stadium').ok,false);assert.ok(sim.buyLand('academy').ok);assert.ok(sim.buyLand('stadium').ok);const before=sim.state.wallet;assert.equal(sim.buyLand('stadium').ok,false);assert.equal(sim.state.wallet,before);});
+test('cada instalação tem 5 fases e 3 melhorias por fase',()=>{assert.deepEqual(facilityStage(7),{built:true,phase:3,step:1,level:7,maxed:false});assert.equal(facilityStage(15).maxed,true);for(const f of Object.values(FACILITIES))assert.equal(f.maxLevel,15);});
+test('o estádio evolui até fase 5 e não para no segundo campo',()=>{const sim=funded();for(const p of LAND_PLOTS.slice(1))assert.ok(sim.buyLand(p.id).ok);for(let i=0;i<15;i++)assert.ok(sim.upgradeFacility('stadium').ok);assert.equal(facilityStage(sim.state.facilities.stadium).phase,5);assert.equal(sim.upgradeFacility('stadium').ok,false);});
+test('base depende de terreno e campo construído; promove sem apagar atleta',()=>{const sim=funded();assert.equal(sim.scoutYouth().ok,false);assert.equal(sim.upgradeFacility('youth').ok,false);sim.buyLand('academy');sim.upgradeFacility('youth');assert.ok(sim.scoutYouth().ok);const id=sim.state.youthList[0].id,old=sim.state.roster.length;assert.ok(sim.trainYouth(id).ok);assert.ok(sim.promoteYouth(id).ok);assert.equal(sim.state.roster.length,old+1);assert.equal(sim.promoteYouth(id).ok,false);});
+test('venda da base e venda de reserva concedem moedas uma única vez',()=>{const sim=funded();sim.buyLand('academy');sim.upgradeFacility('youth');sim.scoutYouth();const id=sim.state.youthList[0].id;assert.ok(sim.sellYouth(id).ok);const balance=sim.state.wallet;assert.equal(sim.sellYouth(id).ok,false);assert.equal(sim.state.wallet,balance);const reserve=getReserves(sim.state.roster)[0];assert.ok(sim.sellPlayer(reserve.id).ok);assert.equal(sim.sellPlayer(reserve.id).ok,false);assert.equal(sim.sellPlayer(getStarters(sim.state.roster)[0].id).ok,false);});
+test('marketing, bilheteria, arquibancada e diretoria têm efeitos reais',()=>{const sim=funded();for(const p of LAND_PLOTS.slice(1))sim.buyLand(p.id);const capacity=seatCapacity(sim.state),price=ticketPrice(sim.state),cost=getFacilityCost('youth',1,0);sim.upgradeFacility('stands');sim.upgradeFacility('marketing');sim.upgradeFacility('board');assert.ok(seatCapacity(sim.state)>capacity);assert.ok(ticketPrice(sim.state)>price);assert.ok(getFacilityCost('youth',1,sim.state.facilities.board)<cost);assert.ok(sim.startCampaign().ok);assert.equal(sim.startCampaign().ok,false);});
+test('liga exige preparo: não pode gerar dinheiro com botão repetido',()=>{const sim=funded();assert.equal(sim.playLeagueRound().ok,false);sim.state.preparation=1;assert.ok(sim.playLeagueRound().ok);assert.equal(sim.playLeagueRound().ok,false);assert.equal(sim.state.season.clubs[0].played,0);const wallet=sim.state.wallet;advance(sim,23);assert.equal(sim.state.season.clubs[0].played,1);assert.ok(sim.state.wallet>wallet);assert.equal(sim.state.official,null);});
+test('gol nosso e sofrido geram eventos distintos e placar consistente',()=>{const sim=funded();sim.state.preparation=1;sim.playLeagueRound();const o=sim.state.official;o.timeline=[{at:1,ours:true},{at:2,ours:false}];o.cursor=0;advance(sim,2.2);const es=sim.drainEvents();assert.ok(es.some(e=>e.type==='goal'));assert.ok(es.some(e=>e.type==='conceded'));assert.deepEqual(sim.state.fields[0].score,[1,1]);});
+test('save esportivo preserva resultado, classificação e partida ativa',()=>{const sim=funded();sim.state.preparation=2;sim.playLeagueRound();advance(sim,9);const before=structuredClone(sim.state),after=decodeSave(encodeSave(before));after.savedAt=before.savedAt;assert.deepEqual(after,before);sim.state=after;advance(sim,14);const clean=decodeSave(encodeSave(sim.state));assert.equal(clean.season.clubs[0].played,1);assert.equal(clean.season.history.length,1);});
+test('histórico antigo do Gemini é reconstruído a partir dos confrontos',()=>{const sim=funded();simulateRound(sim.state.season,55);sim.state.season.history=[{roundNumber:1,homeName:'erro',awayName:'erro',homeScore:0,awayScore:0,isPlayerMatch:true}];const loaded=decodeSave(encodeSave(sim.state));assert.equal(loaded.season.history[0].homeId,'player');assert.notEqual(loaded.season.history[0].homeName,'erro');});
+test('nomes de perfil e saves são independentes',()=>{assert.equal(PROFILES[0].name,'Bernardo Cafure');assert.equal(PROFILES[1].name,'Miguel Matos');const data=new Map(),storage={getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v),removeItem:k=>data.delete(k)};const a=new SaveStore(storage,PROFILES[0].saveKey,PROFILES[0].backupKey),b=new SaveStore(storage,PROFILES[1].saveKey,PROFILES[1].backupKey);a.load();b.load();const s=newGame();s.wallet=111;a.save(s);s.wallet=222;b.save(s);assert.equal(a.load().state.wallet,111);assert.equal(b.load().state.wallet,222);});
+test('migração do save base sem departamentos preserva dinheiro e campos',()=>{const raw=newGame();for(const k of ['facilities','land','roster','market','club','season','tactics','career','official','departmentTimers'])delete raw[k];raw.wallet=543;const loaded=decodeSave(JSON.stringify({format:'arena-de-bairro',version:1,state:raw}));assert.equal(loaded.wallet,543);assert.equal(loaded.roster.length,15);});
+test('identidade entra na tabela e valores inválidos não geram dinheiro',()=>{const sim=new Simulation();assert.ok(sim.editClub('Miguel FC','MFC').ok);assert.equal(sim.state.season.clubs[0].name,'Miguel FC');const w=sim.state.wallet;assert.equal(sim.upgradeFacility('inventado').ok,false);assert.equal(sim.buyLand('inventado').ok,false);assert.equal(sim.state.wallet,w);});

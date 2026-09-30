@@ -1,9 +1,9 @@
 {
   "name": "arena-de-bairro",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
-  "description": "Arena de Bairro: visual ilustrado aprovado integrado ao prototipo 2.5D jogavel.",
+  "description": "Arena de Bairro: clubes expansíveis, partidas integradas e acesso para dois jogadores.",
   "engines": {
     "node": ">=22.16.0"
   },

@@ -6,5 +6,4 @@ artifacts/
 android/
 *.log
 .DS_Store
-_skyvern/
-.playwright-mcp/
+configuracao_privada/

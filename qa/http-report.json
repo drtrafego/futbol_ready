@@ -1,0 +1,73 @@
+{
+  "method": "Actual HTTP requests to Node on loopback; production Vercel not tested",
+  "checks": [
+    {
+      "name": "HTTP serves game",
+      "ok": true
+    },
+    {
+      "name": "anonymous has no session",
+      "ok": true
+    },
+    {
+      "name": "wrong password rejected",
+      "ok": true
+    },
+    {
+      "name": "bernardo login succeeds",
+      "ok": true
+    },
+    {
+      "name": "bernardo session cookie HttpOnly SameSite",
+      "ok": true
+    },
+    {
+      "name": "bernardo signed session read",
+      "ok": true
+    },
+    {
+      "name": "bernardo logout expires cookie",
+      "ok": true
+    },
+    {
+      "name": "miguel login succeeds",
+      "ok": true
+    },
+    {
+      "name": "miguel session cookie HttpOnly SameSite",
+      "ok": true
+    },
+    {
+      "name": "miguel signed session read",
+      "ok": true
+    },
+    {
+      "name": "miguel logout expires cookie",
+      "ok": true
+    },
+    {
+      "name": "cross-origin login rejected",
+      "ok": true
+    },
+    {
+      "name": "unsupported method rejected",
+      "ok": true
+    },
+    {
+      "name": "private source blocked /.env.local",
+      "ok": true
+    },
+    {
+      "name": "private source blocked /server/auth.mjs",
+      "ok": true
+    },
+    {
+      "name": "private source blocked /api/session.js",
+      "ok": true
+    },
+    {
+      "name": "map image served",
+      "ok": true
+    }
+  ]
+}

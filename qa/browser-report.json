@@ -1,199 +1,198 @@
 {
-  "environment": "Linux / Chromium. Navigation blocked by browser policy: standalone HTML mounted using set_content; localStorage replaced by in-memory adapter; optional QA hook enabled. HTTP checks done separately via Python. Emulated viewports, not physical devices.",
+  "method": "Chromium set_content; login changed to local demo only in fixture; in-memory localStorage; debug clock acceleration",
+  "errors": [],
   "checks": [
     {
-      "name": "Production HTML served via HTTP (separate Python check)",
-      "pass": true,
-      "detail": ""
+      "name": "new game: zero wallet, one field",
+      "ok": true
     },
     {
-      "name": "HTTP asset: arena-cenario.png",
-      "pass": true,
-      "detail": ""
+      "name": "manual cycle: collected kits and delivered",
+      "ok": true
     },
     {
-      "name": "HTTP asset: gerente.png",
-      "pass": true,
-      "detail": ""
+      "name": "manual cycle: revenue reached wallet",
+      "ok": true
     },
     {
-      "name": "HTTP asset: roupeiro.png",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-team opens working panel",
+      "ok": true
     },
     {
-      "name": "HTTP asset: icon.svg",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-league opens working panel",
+      "ok": true
     },
     {
-      "name": "Artwork and sprite resources loaded",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-youth opens working panel",
+      "ok": true
     },
     {
-      "name": "Depot navigation collects actual kits",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-market opens working panel",
+      "ok": true
     },
     {
-      "name": "Pitch navigation delivers actual kits",
-      "pass": true,
-      "detail": ""
+      "name": "buy land debits exactly 500",
+      "ok": true
     },
     {
-      "name": "Paid attendance and matches occur",
-      "pass": true,
-      "detail": ""
+      "name": "build youth connects to state",
+      "ok": true
     },
     {
-      "name": "Cash revenue reaches wallet",
-      "pass": true,
-      "detail": ""
+      "name": "scouting creates one prospect",
+      "ok": true
     },
     {
-      "name": "Real purchases unlock staff and second pitch",
-      "pass": true,
-      "detail": "['gate', 'runner', 'cashier', 'field2']"
+      "name": "youth training changes strength",
+      "ok": true
     },
     {
-      "name": "Live HUD equals simulation",
-      "pass": true,
-      "detail": ""
+      "name": "promotion retains all players",
+      "ok": true
     },
     {
-      "name": "Save is written to test storage adapter",
-      "pass": true,
-      "detail": ""
+      "name": "market hire debits and adds reserve",
+      "ok": true
     },
     {
-      "name": "Menu pauses simulated clock",
-      "pass": true,
-      "detail": ""
+      "name": "held click survives periodic UI update",
+      "ok": true
     },
     {
-      "name": "390x844: no document horizontal overflow",
-      "pass": true,
-      "detail": ""
+      "name": "captain button updates tactics",
+      "ok": true
     },
     {
-      "name": "390x844: primary controls visible",
-      "pass": true,
-      "detail": ""
+      "name": "formation select changes lineup",
+      "ok": true
     },
     {
-      "name": "390x844: shop is interactive",
-      "pass": true,
-      "detail": ""
+      "name": "official match starts without early table result",
+      "ok": true
     },
     {
-      "name": "360x800: no document horizontal overflow",
-      "pass": true,
-      "detail": ""
+      "name": "official match completes and updates table",
+      "ok": true
     },
     {
-      "name": "360x800: primary controls visible",
-      "pass": true,
-      "detail": ""
+      "name": "results show our team when away",
+      "ok": true
     },
     {
-      "name": "360x800: shop is interactive",
-      "pass": true,
-      "detail": ""
+      "name": "save after result succeeds",
+      "ok": true
     },
     {
-      "name": "320x568: no document horizontal overflow",
-      "pass": true,
-      "detail": ""
+      "name": "reopen restores league and money",
+      "ok": true
     },
     {
-      "name": "320x568: primary controls visible",
-      "pass": true,
-      "detail": ""
+      "name": "no horizontal document overflow 390x844",
+      "ok": true
     },
     {
-      "name": "320x568: shop is interactive",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-team click at 390x844",
+      "ok": true
     },
     {
-      "name": "768x1024: no document horizontal overflow",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-league click at 390x844",
+      "ok": true
     },
     {
-      "name": "768x1024: primary controls visible",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-youth click at 390x844",
+      "ok": true
     },
     {
-      "name": "768x1024: shop is interactive",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-market click at 390x844",
+      "ok": true
     },
     {
-      "name": "844x390: no document horizontal overflow",
-      "pass": true,
-      "detail": ""
+      "name": "no horizontal document overflow 320x568",
+      "ok": true
     },
     {
-      "name": "844x390: primary controls visible",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-team click at 320x568",
+      "ok": true
     },
     {
-      "name": "844x390: shop is interactive",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-league click at 320x568",
+      "ok": true
     },
     {
-      "name": "1024x768: no document horizontal overflow",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-youth click at 320x568",
+      "ok": true
     },
     {
-      "name": "1024x768: primary controls visible",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-market click at 320x568",
+      "ok": true
     },
     {
-      "name": "1024x768: shop is interactive",
-      "pass": true,
-      "detail": ""
+      "name": "no horizontal document overflow 844x390",
+      "ok": true
     },
     {
-      "name": "1920x1080: no document horizontal overflow",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-team click at 844x390",
+      "ok": true
     },
     {
-      "name": "1920x1080: primary controls visible",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-league click at 844x390",
+      "ok": true
     },
     {
-      "name": "1920x1080: shop is interactive",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-youth click at 844x390",
+      "ok": true
     },
     {
-      "name": "Joystick moves manager in mobile viewport",
-      "pass": true,
-      "detail": ""
+      "name": "btn-dock-market click at 844x390",
+      "ok": true
     },
     {
-      "name": "No uncaught browser JS errors",
-      "pass": true,
-      "detail": "[]"
+      "name": "no horizontal document overflow 768x1024",
+      "ok": true
+    },
+    {
+      "name": "btn-dock-team click at 768x1024",
+      "ok": true
+    },
+    {
+      "name": "btn-dock-league click at 768x1024",
+      "ok": true
+    },
+    {
+      "name": "btn-dock-youth click at 768x1024",
+      "ok": true
+    },
+    {
+      "name": "btn-dock-market click at 768x1024",
+      "ok": true
+    },
+    {
+      "name": "no horizontal document overflow 1280x720",
+      "ok": true
+    },
+    {
+      "name": "btn-dock-team click at 1280x720",
+      "ok": true
+    },
+    {
+      "name": "btn-dock-league click at 1280x720",
+      "ok": true
+    },
+    {
+      "name": "btn-dock-youth click at 1280x720",
+      "ok": true
+    },
+    {
+      "name": "btn-dock-market click at 1280x720",
+      "ok": true
+    },
+    {
+      "name": "no JavaScript errors",
+      "ok": true
+    },
+    {
+      "name": "Miguel profile is independent",
+      "ok": true
     }
-  ],
-  "passed": 37,
-  "total": 37,
-  "errors": [],
-  "purchases_without_wallet_injection": [
-    "gate",
-    "runner",
-    "cashier",
-    "field2"
   ]
 }

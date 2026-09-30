@@ -3,5 +3,7 @@ tests/
 docs/
 JOGAR.html
 assets/referencia-aprovada.png
-assets/atleta-*.png
 tools/prepare-assets.py
+
+.env*
+configuracao_privada/

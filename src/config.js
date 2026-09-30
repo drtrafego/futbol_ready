@@ -16,7 +16,7 @@ export const CFG = Object.freeze({
   interactionRadius: 1.25,
   transferInterval: 0.28,
   autosaveSeconds: 8,
-  maxSaveBytes: 180_000,
+  maxSaveBytes: 600_000,
   fields: [
     { id: 0, name: 'CAMPO DA VILA', x: -6, z: -6, intake: { x: -9, z: 2.5 } },
     { id: 1, name: 'NOVA ARENA', x: 6, z: -6, intake: { x: 3, z: 2.5 } },
@@ -42,4 +42,10 @@ export const MISSIONS = Object.freeze([
   { title: 'Recolha sua receita', text: 'Entre no círculo CAIXA para passar a receita à sua carteira.', key: 'collected', target: 12, zone: 'cash' },
   { title: 'Delegue uma tarefa', text: 'Junte 90 moedas. Abra EVOLUIR e contrate o bilheteiro.', key: 'staff', target: 1, zone: 'office' },
   { title: 'Faça a arena crescer', text: 'Abasteça, faça partidas e junte 600 moedas para o segundo campo.', key: 'field2', target: 1, zone: 'field1' },
+  { title:'Compre espaço para crescer',text:'Abra CLUBE e compre o terreno da formação. Ele libera a base e o centro de treinamento.',key:'land_academy',target:1,zone:'club' },
+  { title:'Forme os próximos craques',text:'Construa o campo da categoria de base no terreno adquirido.',key:'facility_youth',target:1,zone:'facilities' },
+  { title:'Dispute a primeira rodada',text:'Ganhe preparo em uma partida da arena. Abra a tabela e jogue uma rodada oficial.',key:'league_games',target:1,zone:'league' },
+  { title:'O clube merece um estádio',text:'Compre o terreno do estádio. Depois, construa seu campo oficial.',key:'facility_stadium',target:1,zone:'club' },
+  { title:'Chegue à fase 3',text:'Evolua o estádio até a melhoria 7. Cobertura, setores e refletores surgem no cenário.',key:'facility_stadium',target:7,zone:'facilities' },
+  { title:'Construa sua sede',text:'Compre o terreno da sede e erga a diretoria. Marketing e comissão crescem nesse espaço.',key:'facility_board',target:1,zone:'club' },
 ]);

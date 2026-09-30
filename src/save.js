@@ -1,4 +1,5 @@
 import { CFG } from './config.js';
+import { restoreExtensions } from './state-extensions.js';
 import { newGame, carryCapacity, seatCapacity } from './simulation.js';
 import { walkable } from './navigation.js';
 
@@ -56,7 +57,7 @@ export function validateState(raw) {
     const id = int(f.id, 'id do torcedor', s.nextFanId - 1, 1);
     if (ids.has(id)) fail('torcedor duplicado'); ids.add(id);
     if (!['queue', 'going', 'watching', 'leaving'].includes(f.phase)) fail('estado do torcedor');
-    const fan = { ...a, id, phase: f.phase, fieldId: int(f.fieldId, 'campo do torcedor', 1, -1), seat: int(f.seat, 'assento', 11, -1), color: int(f.color, 'uniforme', 4) };
+    const fan = { ...a, id, phase: f.phase, fieldId: int(f.fieldId, 'campo do torcedor', 1, -1), seat: int(f.seat, 'assento', 35, -1), color: int(f.color, 'uniforme', 4) };
     if (fan.phase === 'queue' && (fan.fieldId !== -1 || fan.seat !== -1)) fail('torcedor em fila com assento');
     if (fan.phase !== 'queue' && (fan.fieldId < 0 || fan.seat < 0 || !s.fields[fan.fieldId].unlocked || fan.seat >= seatCapacity(s))) fail('assento de torcedor');
     return fan;
@@ -70,157 +71,7 @@ export function validateState(raw) {
   for (const k of Object.keys(s.timers)) s.timers[k] = num(raw.timers[k], `relógio ${k}`, 1000);
   obj(raw.stats, 'estatísticas');
   for (const k of Object.keys(s.stats)) s.stats[k] = num(raw.stats[k], k, 1_000_000_000_000_000);
-
-  // Roster
-  if (Array.isArray(raw.roster)) {
-    s.roster = raw.roster.map(j => {
-      obj(j, 'jogador');
-      if (typeof j.id !== 'string' || !j.id) fail('id do jogador');
-      if (typeof j.name !== 'string' || !j.name) fail('nome do jogador');
-      if (!['GOL', 'DEF', 'MEI', 'ATA'].includes(j.pos)) fail('posição do jogador');
-      return {
-        id: j.id,
-        name: j.name,
-        pos: j.pos,
-        overall: int(j.overall, 'overall', 100, 1),
-        potential: int(j.potential, 'potencial', 100, 1),
-        age: int(j.age, 'idade', 60, 14),
-        starter: bool(j.starter, 'titular'),
-        trainings: int(j.trainings, 'treinos', 1000, 0),
-      };
-    });
-  }
-
-  // Season
-  if (raw.season) {
-    obj(raw.season, 'temporada');
-    if (!Array.isArray(raw.season.clubs) || !Array.isArray(raw.season.rounds) || !Array.isArray(raw.season.history)) fail('clubes/rodadas');
-    s.season = {
-      divisionIndex: int(raw.season.divisionIndex, 'índice divisão', 10, 0),
-      currentRound: int(raw.season.currentRound, 'rodada atual', 50, 1),
-      totalRounds: int(raw.season.totalRounds, 'total rodadas', 50, 1),
-      finished: bool(raw.season.finished, 'temporada finalizada'),
-      clubs: raw.season.clubs.map(c => {
-        obj(c, 'clube');
-        return {
-          id: String(c.id),
-          name: String(c.name),
-          sigla: String(c.sigla),
-          isPlayer: bool(c.isPlayer, 'isPlayer clube'),
-          strength: int(c.strength, 'força clube', 200, 1),
-          played: int(c.played, 'jogos clube', 100, 0),
-          won: int(c.won, 'vitórias clube', 100, 0),
-          drawn: int(c.drawn, 'empates clube', 100, 0),
-          lost: int(c.lost, 'derrotas clube', 100, 0),
-          goalsFor: int(c.goalsFor, 'gols pró', 1000, 0),
-          goalsAgainst: int(c.goalsAgainst, 'gols contra', 1000, 0),
-          goalDiff: num(c.goalDiff, 'saldo gols', 1000, -1000, true),
-          points: int(c.points, 'pontos clube', 1000, 0),
-        };
-      }),
-      rounds: raw.season.rounds.map(r => {
-        obj(r, 'rodada');
-        return {
-          roundNumber: int(r.roundNumber, 'número rodada', 50, 1),
-          played: bool(r.played, 'rodada jogada'),
-          matches: (r.matches || []).map(m => ({
-            homeId: String(m.homeId),
-            awayId: String(m.awayId),
-            played: bool(m.played, 'partida jogada'),
-            homeScore: int(m.homeScore, 'placar mandante', 100, 0),
-            awayScore: int(m.awayScore, 'placar visitante', 100, 0),
-          })),
-        };
-      }),
-      history: raw.season.history.map(r => ({
-        roundNumber: int(r.roundNumber, 'número rodada histórico', 50, 1),
-        played: bool(r.played, 'rodada histórico jogada'),
-        matches: (r.matches || []).map(m => ({
-          homeId: String(m.homeId),
-          awayId: String(m.awayId),
-          played: bool(m.played, 'partida jogada histórico'),
-          homeScore: int(m.homeScore, 'placar mandante histórico', 100, 0),
-          awayScore: int(m.awayScore, 'placar visitante histórico', 100, 0),
-        })),
-      })),
-    };
-  }
-
-  // Facilities
-  if (raw.facilities) {
-    obj(raw.facilities, 'instalações');
-    s.facilities = {};
-    for (const k of ['stands', 'gate', 'youth', 'training', 'marketing', 'coaching', 'board']) {
-      s.facilities[k] = int(raw.facilities[k] ?? 0, `instalação ${k}`, 20, 0);
-    }
-  }
-
-  // YouthList
-  if (Array.isArray(raw.youthList)) {
-    s.youthList = raw.youthList.map(y => {
-      obj(y, 'atleta base');
-      return {
-        id: String(y.id),
-        name: String(y.name),
-        pos: ['GOL', 'DEF', 'MEI', 'ATA'].includes(y.pos) ? y.pos : 'MEI',
-        overall: int(y.overall, 'overall base', 100, 1),
-        potential: int(y.potential, 'potencial base', 100, 1),
-        age: int(y.age, 'idade base', 30, 14),
-        marketValue: int(y.marketValue ?? y.estimatedValue ?? 0, 'valor base', CFG.maxMoney, 0),
-        trainings: int(y.trainings ?? 0, 'treinos base', 1000, 0),
-      };
-    });
-  }
-
-  // Market
-  if (Array.isArray(raw.market)) {
-    s.market = raw.market.map(m => {
-      obj(m, 'jogador mercado');
-      return {
-        id: String(m.id),
-        name: String(m.name),
-        pos: ['GOL', 'DEF', 'MEI', 'ATA'].includes(m.pos) ? m.pos : 'MEI',
-        overall: int(m.overall, 'overall mercado', 100, 1),
-        potential: int(m.potential, 'potencial mercado', 100, 1),
-        age: int(m.age, 'idade mercado', 50, 16),
-        cost: int(m.cost ?? m.price ?? 50, 'custo mercado', CFG.maxMoney, 0),
-      };
-    });
-  }
-
-  // Tactics
-  if (raw.tactics) {
-    obj(raw.tactics, 'tática');
-    s.tactics = {
-      formation: typeof raw.tactics.formation === 'string' ? raw.tactics.formation : '4-4-2',
-      posture: typeof raw.tactics.posture === 'string' ? raw.tactics.posture : 'equilibrada',
-      captainId: raw.tactics.captainId ? String(raw.tactics.captainId) : null,
-    };
-  }
-
-  // Club
-  if (raw.club) {
-    obj(raw.club, 'clube');
-    s.club = {
-      name: String(raw.club.name || 'Bernardo FC'),
-      sigla: String(raw.club.sigla || 'BFC'),
-      colorId: String(raw.club.colorId || 'azul'),
-      crest: String(raw.club.crest || 'bola'),
-    };
-  }
-
-  // Career
-  if (raw.career) {
-    obj(raw.career, 'carreira');
-    s.career = {
-      seasonsPlayed: int(raw.career.seasonsPlayed ?? 0, 'temporadas jogadas', 10000, 0),
-      trophies: int(raw.career.trophies ?? 0, 'troféus', 10000, 0),
-      totalMatches: int(raw.career.totalMatches ?? 0, 'jogos totais carreira', 100000, 0),
-      totalWins: int(raw.career.totalWins ?? 0, 'vitórias totais carreira', 100000, 0),
-    };
-  }
-
-  return s;
+  return restoreExtensions(s, raw);
 }
 
 export function encodeSave(state, writer = 'export') {
@@ -238,12 +89,9 @@ export function decodeSave(text) {
 
 /** localStorage é uma conveniência local, não autenticação, nuvem ou proteção contra trapaça. */
 export class SaveStore {
-  constructor(storage, saveKey = null, backupKey = null) {
-    this.storage = storage;
-    this.writable = true;
-    this.lastRaw = null;
-    this.saveKey = saveKey || CFG.saveKey;
-    this.backupKey = backupKey || CFG.backupKey;
+  constructor(storage, saveKey = CFG.saveKey, backupKey = CFG.backupKey) {
+    this.saveKey=saveKey;this.backupKey=backupKey;
+    this.storage = storage; this.writable = true; this.lastRaw = null;
     this.writer = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
   }
   load() {

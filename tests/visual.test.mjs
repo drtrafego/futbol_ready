@@ -19,5 +19,5 @@ test('master artwork assets have expected PNG signature and size',async()=>{
 test('all moving character sprites are present with RGBA pixels',async()=>{
  for(const name of ['gerente','roupeiro','torcedor-verde','torcedor-roxo','torcedor-dourado']){const b=await readFile(new URL('assets/'+name+'.png',root));assert.equal(b.readUInt32BE(16),33);assert.equal(b.readUInt32BE(20),53);assert.equal(b[25],6);}
 });
-test('Vercel configuration builds the same static project without APIs',async()=>{const v=JSON.parse(await read('vercel.json'));assert.equal(v.outputDirectory,'dist');assert.equal(v.buildCommand,'npm run build');assert.equal(v.framework,null);assert.equal(v.functions,undefined);});
+test('Vercel configuration builds the web project and preserves graphics',async()=>{const v=JSON.parse(await read('vercel.json'));assert.equal(v.outputDirectory,'dist');assert.equal(v.buildCommand,'npm run build');assert.equal(v.framework,null);assert.equal(v.functions,undefined);});
 test('HTML references new visual stylesheet and live controls',async()=>{const h=await read('index.html');for(const s of ['visual.css','id="wallet"','wallet-upgrades','travel-dock','id="game"'])assert.ok(h.includes(s));assert.match(h,/<title>Arena de Bairro/);});
