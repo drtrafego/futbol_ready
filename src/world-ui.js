@@ -29,6 +29,7 @@ export class WorldUI extends UI{
   const ct=document.getElementById('ct-resource');if(ct)ct.textContent=`${s.map.ctKits} KITS NO CT`;
   const jobs=document.getElementById('world-jobs');if(jobs)jobs.textContent=s.map.construction.length?`${s.map.construction.length} OBRA${s.map.construction.length>1?'S':''} EM ANDAMENTO`:s.map.training?'EQUIPE EM TREINAMENTO':'MAPA CONTÍNUO · ARRASTE PARA EXPLORAR';
   document.getElementById('view-button').textContent=this.worldRenderer.mapCamera.follow?'CÂMERA LIVRE':'SEGUIR GERENTE';
+  const btnMode=document.getElementById('btn-toggle-mode');if(btnMode)btnMode.textContent=this.worldRenderer.simCityMode?'🏰 Visual 3D':'🎨 Visual 2D';
   const stage=s.map.construction.length;document.body.classList.toggle('building-placement',!!this.worldRenderer.placement);
   document.getElementById('placement-bar').hidden=!this.worldRenderer.placement;
   const mission=document.getElementById('mission-text');if(s.fields[1].unlocked&&s.stats.upgrades>=5&&!s.land.academy){mission.textContent='A operação está pronta. Arraste o mapa para a direita e compre o terreno vizinho; depois escolha onde construir a base e o CT.';}

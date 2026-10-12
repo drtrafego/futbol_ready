@@ -17,7 +17,7 @@
   <div id="asset-loading" role="status"><p>Preparando sua arena…</p><small>Carregando a arte e os personagens.</small></div>
   <canvas id="game" aria-label="Arena de futebol em perspectiva 2.5D. Use WASD, setas ou controle virtual para mover o gerente."></canvas>
   <div id="ui">
- <div class="world-map-tools"><button data-world-action="zoomOut" aria-label="Diminuir zoom">−</button><button data-world-action="zoomIn" aria-label="Aumentar zoom">+</button><button data-world-focus="all">Expandir mapa ↗</button><button data-world-focus="academy">Formação</button><button data-world-focus="stadium">Estádio</button><button data-world-focus="business">Sede</button></div>
+ <div class="world-map-tools"><button data-world-action="zoomOut" aria-label="Diminuir zoom">−</button><button data-world-action="zoomIn" aria-label="Aumentar zoom">+</button><button data-world-action="toggleMode" id="btn-toggle-mode">🏰 Visual 3D</button><button data-world-focus="all">Expandir mapa ↗</button><button data-world-focus="academy">Formação</button><button data-world-focus="stadium">Estádio</button><button data-world-focus="business">Sede</button></div>
  <div class="world-status"><span id="world-jobs">MAPA CONTÍNUO · ARRASTE PARA EXPLORAR</span><button id="ct-resource" data-world-action="focusBuilding" data-world-id="training">0 KITS NO CT</button></div>
  <aside id="world-inspector" hidden><button class="inspector-close" data-world-action="closeInspector" aria-label="Fechar seleção">×</button><div class="world-inspector-body"></div></aside>
  <div id="placement-bar" hidden><b>POSICIONAR CONSTRUÇÃO</b><span>Toque no terreno livre. Verde = permitido.</span><button data-world-action="cancel">Cancelar</button></div>

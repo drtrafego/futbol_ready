@@ -31,3 +31,9 @@ body[data-district=world] .topbar,.topbar{position:absolute;top:max(12px,env(saf
 @media(max-width:680px){.bottom-actions{width:105px!important;gap:4px!important}}
 .team-footer-actions{margin-top:20px;padding:12px;background:#e5ebd7;border:1px dashed #7a9c68;border-radius:12px;text-align:center}
 .team-footer-actions button{background:#8e3838!important;border-color:#b94a4a!important;color:#fff!important;display:inline-block!important;width:auto!important;margin:0 auto!important;padding:8px 16px!important;font-weight:700!important}
+#btn-toggle-mode{background:#1d5e49!important;border-color:#8cdbb5!important;color:#f5ffea!important;font-weight:800!important}
+@media(min-width:801px){
+  #joystick,.control-wrap{display:none!important}
+  .control-hint{display:flex!important;align-items:center;gap:8px;font:700 11px system-ui;color:#fff8d6;background:#123d32cc;padding:8px 14px;border-radius:12px;border:1px solid #74966755;pointer-events:none}
+  .control-hint kbd{background:#275648;color:#fff;padding:2px 7px;border-radius:5px;border:1px solid #4a8270;font:800 11px monospace}
+}

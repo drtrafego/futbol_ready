@@ -38,6 +38,7 @@ async function boot(){
   reset:()=>{if(!store.reset()){ui.toast('Não foi possível limpar o armazenamento.');return;}sim.state=newGame(profile);ensureWorld(sim.state);sim.events=[];renderer.particles=[];renderer.roadKey='';renderer.selection=null;ui.lastMission=null;conflict=false;lastSaved=0;input.reset();focus('arena',false);persist(true);ui.update(sim.state,true);ui.open('welcome-dialog');},
   logout:async()=>{const result=persist();if(!result.ok&&!confirm('O progresso não foi salvo. Sair mesmo assim?'))return;try{await logout();}catch(error){ui.toast(error.message);}},
   worldCommand:(cmd,id)=>{
+   if(cmd==='toggleMode'){renderer.simCityMode=!renderer.simCityMode;ui.toast(renderer.simCityMode?'Visual 3D SimCity/AoE ativado!':'Visual clássico 2.5D ativado!',4);ui.update(sim.state,true);return;}
    if(cmd==='closeInspector'){renderer.selection=null;return;}
    if(cmd==='cancel'){renderer.placement=null;return;}
    if(cmd==='zoomIn'||cmd==='zoomOut'){renderer.zoomAt(cmd==='zoomIn'?1.25:.8);return;}
