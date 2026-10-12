@@ -3,7 +3,18 @@ import { FACILITIES, facilityStage, getFacilityCost } from './facilities.js';
 import { WORLD_PLOTS, WORLD_STRUCTURES, TRAINING_KIT_LIMIT, ensureWorld } from './world-model.js';
 import { trainingQuote } from './world-simulation.js';
 
-const worldButton=(label,command,id='',disabled=false)=>`<button type="button" data-world-action="${command}" data-world-id="${id}" ${disabled?'disabled':''}>${label}</button>`;
+const worldButton=(label,command,id='',disabled=false,cls='')=>`<button type="button" class="${cls}" data-world-action="${command}" data-world-id="${id}" ${disabled?'disabled':''}>${label}</button>`;
+function renderPhaseStepper(st){
+ if(!st.built)return '';
+ let nodes='';
+ for(let i=1;i<=5;i++){
+  const cls=i<st.phase?'done':i===st.phase?'active':'todo';
+  nodes+=`<span class="phase-node ${cls}">${i}</span>`;
+  if(i<5)nodes+=`<span class="phase-bar ${i<st.phase?'done':''}"></span>`;
+ }
+ return `<div class="phase-stepper"><div class="phase-stepper-title">PROGRESSO · FASE ${st.phase} DE 5</div><div class="phase-nodes-row">${nodes}</div><div class="phase-step-sub">Melhoria interna: ${st.step}/3 concluída</div></div>`;
+}
+
 export class WorldUI extends UI{
  constructor(actions,renderer){
   super(actions);this.worldRenderer=renderer;this.inspectorKey='';
@@ -31,31 +42,31 @@ export class WorldUI extends UI{
   if(force||key!==this.inspectorKey){this.inspectorKey=key;let html='';
    if(kind==='plot'){
     const plot=WORLD_PLOTS.find(p=>p.id===id),owned=s.land[id];
-    html=`<span class="world-eyebrow">${owned?'SEU TERRENO':'EXPANSÃO FÍSICA DO CLUBE'}</span><h2>${escapeText(plot?.name||'Terreno')}</h2>`;
-    if(!owned){html+=`<p>Este lote encosta na arena. A compra abre a cerca e libera circulação e construção aqui.</p><div class="world-cost">${formatNumber(plot.cost)} <small>MOEDAS DO JOGO</small></div>${worldButton(s.fields[1].unlocked?'Comprar este terreno':'Abra o segundo campo primeiro','buyLand',id,!s.fields[1].unlocked||s.wallet<plot.cost)}`;}
-    else{html+='<p>Escolha uma instalação e posicione a obra dentro deste lote.</p><div class="world-build-list">';for(const [fid,f]of Object.entries(FACILITIES)){if(f.plot!==id||s.map.placements[fid])continue;html+=worldButton(`${f.icon} ${f.name} · ${getFacilityCost(fid,0,s.facilities.board)}`,'place',fid,s.season.divisionIndex<f.minDivision);}html+='</div>';}
+    html=`<div class="inspector-badge"><span class="badge-icon">📍</span><span class="badge-txt">${owned?'TERRENO DO CLUBE':'EXPANSÃO TERRITORIAL'}</span></div><h2>${escapeText(plot?.name||'Terreno')}</h2>`;
+    if(!owned){html+=`<p class="inspector-desc">Lote contíguo à arena. A compra abre a cerca e libera circulação e novas obras aqui.</p><div class="world-cost">${formatNumber(plot.cost)} <small>MOEDAS</small></div>${worldButton(s.fields[1].unlocked?'Comprar este terreno':'Abra o segundo campo primeiro','buyLand',id,!s.fields[1].unlocked||s.wallet<plot.cost,'primary-cta')}`;}
+    else{html+='<p class="inspector-desc">Escolha uma instalação e posicione a obra dentro deste lote.</p><div class="world-build-list">';for(const [fid,f]of Object.entries(FACILITIES)){if(f.plot!==id||s.map.placements[fid])continue;html+=worldButton(`${f.icon} ${f.name} · ${getFacilityCost(fid,0,s.facilities.board)}`,'place',fid,s.season.divisionIndex<f.minDivision);}html+='</div>';}
    }else if(kind==='building'){
     const f=FACILITIES[id],st=facilityStage(level);if(!f){n.hidden=true;return;}
-    html=`<span class="world-eyebrow">${st.built?`FASE ${st.phase} · MELHORIA ${st.step}/3`:'INSTALAÇÃO A CONSTRUIR'}</span><h2>${f.name}</h2><p>${f.desc}</p>`;
-    if(job)html+=`<div class="work-status"><b id="work-status-text">EM OBRAS</b><progress id="world-work-progress" max="1"></progress><small>As melhorias entram em vigor ao concluir a obra.</small></div>`;
+    html=`<div class="inspector-badge"><span class="badge-icon">${f.icon||'🏢'}</span><span class="badge-txt">${job?'EM OBRAS':st.built?'OPERACIONAL':'A CONSTRUIR'}</span></div><h2>${f.name}</h2>${renderPhaseStepper(st)}<p class="inspector-desc">${f.desc}</p>`;
+    if(job)html+=`<div class="work-status"><div class="work-header"><span class="work-icon">⚒</span><b id="work-status-text">EM OBRAS</b></div><progress id="world-work-progress" max="1"></progress><small>As melhorias entram em vigor ao concluir a obra.</small></div>`;
     else if(!s.land[f.plot])html+=worldButton('Ver terreno necessário','focusPlot',f.plot);
-    else if(!s.map.placements[id]&&!WORLD_STRUCTURES[id].fixed)html+=worldButton('Escolher posição no terreno','place',id,s.wallet<getFacilityCost(id,level,s.facilities.board));
-    else if(!st.maxed){const next=facilityStage(level+1),cost=getFacilityCost(id,level,s.facilities.board);html+=`<p class="phase-change">${next.phase!==st.phase?`Próxima fase: ${next.phase}. A estrutura do prédio será transformada.`:`Próxima melhoria: ${next.step}/3. Acrescenta estrutura e aumenta a produção.`}</p>${worldButton(`Iniciar obra · ${formatNumber(cost)} moedas`,'upgrade',id,s.wallet<cost||s.map.construction.length>=2||s.season.divisionIndex<f.minDivision)}`;}
-    else html+='<p class="phase-change">Instalação completa. Continue desenvolvendo os outros espaços e disputando as temporadas.</p>';
-    if(s.map.placements[id])html+=worldButton('Levar o gerente até aqui','walkBuilding',id);
-    if(['pitch1','pitch2','stands','gate'].includes(id))html+=worldButton('Funcionários e operação','operation');
+    else if(!s.map.placements[id]&&!WORLD_STRUCTURES[id].fixed)html+=worldButton('Escolher posição no terreno','place',id,s.wallet<getFacilityCost(id,level,s.facilities.board),'primary-cta');
+    else if(!st.maxed){const next=facilityStage(level+1),cost=getFacilityCost(id,level,s.facilities.board);html+=`<div class="upgrade-box"><p class="phase-change">${next.phase!==st.phase?`Próxima fase: ${next.phase}. Transforma a estrutura física do prédio no mapa.`:`Próxima melhoria: ${next.step}/3. Acrescenta capacidade e aumenta a produção.`}</p>${worldButton(`Iniciar obra · ${formatNumber(cost)} moedas`,'upgrade',id,s.wallet<cost||s.map.construction.length>=2||s.season.divisionIndex<f.minDivision,'primary-cta')}</div>`;}
+    else html+='<p class="phase-change">Instalação máxima concluída. O departamento atingiu a excelência global.</p>';
+    if(s.map.placements[id])html+=worldButton('🏃 Levar o gerente até aqui','walkBuilding',id);
+    if(['pitch1','pitch2','stands','gate'].includes(id))html+=worldButton('👥 Funcionários e operação','operation');
     if(id==='training'){
-     const q=trainingQuote(s,'team');html+=`<div class="world-stock"><b>${s.map.ctKits}/${TRAINING_KIT_LIMIT}</b> kits entregues ao CT</div>`;
-     if(s.map.training)html+='<div class="work-status"><b>TREINO EM ANDAMENTO</b><progress id="world-training-progress" max="1"></progress><small id="world-training-clock"></small></div>';
-     else html+=`${worldButton(`Treinar equipe · ${q.coins} moedas + ${q.kits} kits`,'trainTeam','',!q.ok)}<small class="world-reason">${escapeText(q.reason||`+1 de força por atleta elegível, após ${q.duration}s de treino.`)}</small>`;
-     html+=worldButton('Levar os kits carregados ao CT','deliverCT','',!s.facilities.training);
-     if(!s.map.courierHired)html+=worldButton('Auxiliar logístico · 240 moedas','courier','',!s.facilities.training||s.wallet<240);
+     const q=trainingQuote(s,'team');html+=`<div class="world-stock"><div class="stock-title">ESTOQUE DO CT</div><b>${s.map.ctKits}/${TRAINING_KIT_LIMIT}</b> kits entregues fisicamente</div>`;
+     if(s.map.training)html+='<div class="work-status"><div class="work-header"><span class="work-icon">🏃</span><b>TREINO EM ANDAMENTO</b></div><progress id="world-training-progress" max="1"></progress><small id="world-training-clock"></small></div>';
+     else html+=`${worldButton(`Treinar equipe · ${q.coins} moedas + ${q.kits} kits`,'trainTeam','',!q.ok,'primary-cta')}<small class="world-reason">${escapeText(q.reason||`+1 de força por atleta elegível, após ${q.duration}s de treino.`)}</small>`;
+     html+=worldButton('📦 Levar os kits carregados ao CT','deliverCT','',!s.facilities.training);
+     if(!s.map.courierHired)html+=worldButton('🚚 Auxiliar logístico · 240 moedas','courier','',!s.facilities.training||s.wallet<240);
      else html+='<small class="world-reason">Auxiliar contratado: transporta kits do depósito ao CT sem tirar material de um campo vazio.</small>';
-     html+=worldButton('Gerenciar atletas e treinos','manage','team');
+     html+=worldButton('⚽ Gerenciar atletas e treinos','manage','team');
     }
-    if(id==='youth')html+=worldButton('Gerenciar os jovens da base','manage','youth');
-    if(id==='stadium')html+=worldButton('Classificação e partidas','manage','league');
-    if(['board','marketing','coaching'].includes(id))html+=worldButton('Administrar departamento','manage','board');
+    if(id==='youth')html+=worldButton('🌱 Gerenciar os jovens da base','manage','youth');
+    if(id==='stadium')html+=worldButton('🏆 Classificação e partidas','manage','league');
+    if(['board','marketing','coaching'].includes(id))html+=worldButton('💼 Administrar departamento','manage','board');
    }
    n.querySelector('.world-inspector-body').innerHTML=html;
   }

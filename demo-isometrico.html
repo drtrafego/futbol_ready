@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Demonstração: Motor Isométrico Estilo SimCity / Age of Empires</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; user-select:none; }
+    body { background:#0f241a; color:#fff; font-family:system-ui,-apple-system,sans-serif; overflow:hidden; width:100vw; height:100vh; }
+    #canvas { width:100%; height:100%; display:block; cursor:grab; }
+    #canvas:active { cursor:grabbing; }
+    .hud-panel { position:absolute; top:16px; left:16px; background:rgba(18,50,38,0.92); border:1px solid #4a825e; border-radius:14px; padding:16px 20px; max-width:380px; backdrop-filter:blur(8px); box-shadow:0 8px 32px rgba(0,0,0,0.4); pointer-events:none; }
+    .hud-title { font-size:16px; font-weight:800; color:#ffdf80; letter-spacing:0.5px; margin-bottom:4px; display:flex; align-items:center; gap:8px; }
+    .hud-desc { font-size:12px; color:#c7decb; line-height:1.45; }
+    .hud-instructions { margin-top:10px; font-size:11px; color:#a2cf9a; background:rgba(0,0,0,0.25); padding:8px 10px; border-radius:8px; }
+    .hud-instructions kbd { background:#255c42; padding:2px 6px; border-radius:4px; font-weight:700; color:#fff; border:1px solid #3c825d; }
+    .stats-badge { position:absolute; bottom:16px; left:16px; background:rgba(15,36,26,0.85); padding:8px 14px; border-radius:10px; font-size:11px; color:#95c697; border:1px solid #336244; }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div class="hud-panel">
+    <div class="hud-title">⚽ PROTÓTIPO ISOMÉTRICO (Y-SORTING)</div>
+    <div class="hud-desc">
+      Demonstração de <b>cenário único contínuo</b> (Age of Empires & SimCity). Prédios, atletas e torcedores compartilham a mesma malha com ordenação real de profundidade.
+    </div>
+    <div class="hud-instructions">
+      • Mova o Gerente com <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> ou <b>clique no chão</b>.<br>
+      • Ande <b>na frente</b> e <b>atrás</b> dos prédios para ver o Y-Sorting.<br>
+      • Arraste para mover a câmera e use o scroll para dar zoom.
+    </div>
+  </div>
+  <div class="stats-badge" id="stats">Entidades ativas: 25 | 60 FPS</div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    const TILE_W = 64;
+    const TILE_H = 32;
+    const GRID_SIZE = 32;
+
+    const camera = { x: 0, y: 0, zoom: 1.0 };
+    let dragging = false;
+    let dragStart = { x: 0, y: 0 };
+
+    // Math isométrico
+    function gridToScreen(gx, gy) {
+      return {
+        x: (gx - gy) * (TILE_W / 2),
+        y: (gx + gy) * (TILE_H / 2)
+      };
+    }
+
+    function screenToGrid(sx, sy) {
+      const cx = (sx - camera.x) / camera.zoom;
+      const cy = (sy - camera.y) / camera.zoom;
+      const gx = (cx / (TILE_W / 2) + cy / (TILE_H / 2)) / 2;
+      const gy = (cy / (TILE_H / 2) - cx / (TILE_W / 2)) / 2;
+      return { x: gx, y: gy };
+    }
+
+    // Mapa de tiles: 0: grama, 1: calçada, 2: terra/campo, 3: asfalto
+    const tiles = [];
+    for (let x = 0; x < GRID_SIZE; x++) {
+      tiles[x] = [];
+      for (let y = 0; y < GRID_SIZE; y++) {
+        if (x >= 8 && x <= 16 && y >= 8 && y <= 16) tiles[x][y] = 2; // Campo
+        else if (x === 18 || y === 18) tiles[x][y] = 1; // Estrada
+        else tiles[x][y] = 0; // Grama
+      }
+    }
+
+    // Entidades
+    const player = { gx: 12, gy: 14, targetX: 12, targetY: 14, speed: 4.5, isPlayer: true };
+    const athletes = [
+      { gx: 9, gy: 10, offset: 0, radius: 2, angle: 0, speed: 2.2, color: '#4aa3df' },
+      { gx: 11, gy: 12, offset: 1.5, radius: 1.8, angle: 1.5, speed: 2.5, color: '#4aa3df' },
+      { gx: 14, gy: 11, offset: 3, radius: 2.5, angle: 3, speed: 2.1, color: '#e67e22' }
+    ];
+    const fans = [];
+    for (let i = 0; i < 15; i++) {
+      fans.push({
+        gx: 18 + (Math.random() * 0.8 - 0.4),
+        gy: 4 + i * 1.8,
+        speed: 1.2 + Math.random() * 0.6,
+        color: i % 2 === 0 ? '#f1c40f' : '#2ecc71'
+      });
+    }
+
+    // Construções com volumes isométricos
+    const buildings = [
+      { type: 'stadium', gx: 8, gy: 8, gw: 9, gh: 9, name: 'ESTÁDIO PRINCIPAL (FASE 3)' },
+      { type: 'ct', gx: 21, gy: 8, gw: 5, gh: 5, name: 'CENTRO DE TREINAMENTO' },
+      { type: 'board', gx: 8, gy: 21, gw: 4, gh: 4, name: 'SEDE ADMINISTRATIVA' }
+    ];
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      camera.x = width / 2;
+      camera.y = height / 4;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Input
+    const keys = {};
+    window.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
+    window.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+
+    canvas.addEventListener('mousedown', e => {
+      dragging = true;
+      dragStart = { x: e.clientX - camera.x, y: e.clientY - camera.y };
+    });
+    window.addEventListener('mousemove', e => {
+      if (dragging) {
+        camera.x = e.clientX - dragStart.x;
+        camera.y = e.clientY - dragStart.y;
+      }
+    });
+    window.addEventListener('mouseup', () => dragging = false);
+
+    canvas.addEventListener('wheel', e => {
+      const zoomFactor = e.deltaY < 0 ? 1.15 : 0.87;
+      camera.zoom = Math.max(0.4, Math.min(2.5, camera.zoom * zoomFactor));
+    });
+
+    canvas.addEventListener('click', e => {
+      if (Math.hypot(e.clientX - (camera.x + dragStart.x), e.clientY - (camera.y + dragStart.y)) > 6) return;
+      const target = screenToGrid(e.clientX, e.clientY);
+      player.targetX = Math.max(0, Math.min(GRID_SIZE - 1, target.x));
+      player.targetY = Math.max(0, Math.min(GRID_SIZE - 1, target.y));
+    });
+
+    // Render loop
+    let lastTime = performance.now();
+    function tick(now) {
+      const dt = Math.min(0.1, (now - lastTime) / 1000);
+      lastTime = now;
+
+      // Movimentação do Jogador
+      let dx = 0, dy = 0;
+      if (keys['w'] || keys['arrowup']) { dx -= 1; dy -= 1; }
+      if (keys['s'] || keys['arrowdown']) { dx += 1; dy += 1; }
+      if (keys['a'] || keys['arrowleft']) { dx -= 1; dy += 1; }
+      if (keys['d'] || keys['arrowright']) { dx += 1; dy -= 1; }
+      if (dx !== 0 || dy !== 0) {
+        const len = Math.hypot(dx, dy);
+        player.gx += (dx / len) * player.speed * dt;
+        player.gy += (dy / len) * player.speed * dt;
+        player.targetX = player.gx;
+        player.targetY = player.gy;
+      } else {
+        const dist = Math.hypot(player.targetX - player.gx, player.targetY - player.gy);
+        if (dist > 0.08) {
+          player.gx += ((player.targetX - player.gx) / dist) * player.speed * dt;
+          player.gy += ((player.targetY - player.gy) / dist) * player.speed * dt;
+        }
+      }
+
+      // Movimentação dos Atletas
+      for (const a of athletes) {
+        a.angle += a.speed * dt;
+        a.curGx = a.gx + Math.cos(a.angle) * a.radius;
+        a.curGy = a.gy + Math.sin(a.angle) * a.radius;
+      }
+
+      // Torcedores caminhando
+      for (const f of fans) {
+        f.gy += f.speed * dt;
+        if (f.gy > GRID_SIZE) f.gy = 0;
+      }
+
+      // Render
+      ctx.fillStyle = '#143024';
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.save();
+      ctx.translate(camera.x, camera.y);
+      ctx.scale(camera.zoom, camera.zoom);
+
+      // 1. Chão (Tiles)
+      for (let x = 0; x < GRID_SIZE; x++) {
+        for (let y = 0; y < GRID_SIZE; y++) {
+          const pt = gridToScreen(x, y);
+          ctx.beginPath();
+          ctx.moveTo(pt.x, pt.y);
+          ctx.lineTo(pt.x + TILE_W / 2, pt.y + TILE_H / 2);
+          ctx.lineTo(pt.x, pt.y + TILE_H);
+          ctx.lineTo(pt.x - TILE_W / 2, pt.y + TILE_H / 2);
+          ctx.closePath();
+
+          const t = tiles[x][y];
+          if (t === 0) ctx.fillStyle = (x + y) % 2 === 0 ? '#467537' : '#4f803f';
+          else if (t === 1) ctx.fillStyle = '#b8a67d';
+          else if (t === 2) ctx.fillStyle = (x + y) % 2 === 0 ? '#338c4b' : '#399953';
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+
+      // 2. Fila de Entidades com Depth-Sorting (Y-Sorting)
+      const queue = [];
+
+      // Prédios
+      for (const b of buildings) {
+        queue.push({
+          depth: (b.gx + b.gw) + (b.gy + b.gh),
+          draw: () => drawBuilding(b)
+        });
+      }
+
+      // Jogador
+      queue.push({
+        depth: player.gx + player.gy,
+        draw: () => drawCharacter(player.gx, player.gy, '#f1c40f', 'VOCÊ (GERENTE)')
+      });
+
+      // Atletas
+      for (const a of athletes) {
+        queue.push({
+          depth: a.curGx + a.curGy,
+          draw: () => drawCharacter(a.curGx, a.curGy, a.color, 'ATLETA')
+        });
+      }
+
+      // Torcedores
+      for (const f of fans) {
+        queue.push({
+          depth: f.gx + f.gy,
+          draw: () => drawCharacter(f.gx, f.gy, f.color, '')
+        });
+      }
+
+      // Ordenar e Desenhar
+      queue.sort((a, b) => a.depth - b.depth);
+      for (const item of queue) item.draw();
+
+      ctx.restore();
+      requestAnimationFrame(tick);
+    }
+
+    // Desenho de Prédio com Volume 3D Isométrico
+    function drawBuilding(b) {
+      const topCorner = gridToScreen(b.gx, b.gy);
+      const rightCorner = gridToScreen(b.gx + b.gw, b.gy);
+      const bottomCorner = gridToScreen(b.gx + b.gw, b.gy + b.gh);
+      const leftCorner = gridToScreen(b.gx, b.gy + b.gh);
+
+      const h = b.type === 'stadium' ? 90 : b.type === 'ct' ? 65 : 75;
+
+      // Sombra projetada
+      ctx.fillStyle = 'rgba(10, 26, 18, 0.45)';
+      ctx.beginPath();
+      ctx.moveTo(leftCorner.x + 20, leftCorner.y + 10);
+      ctx.lineTo(bottomCorner.x + 20, bottomCorner.y + 10);
+      ctx.lineTo(rightCorner.x + 40, rightCorner.y - 10);
+      ctx.lineTo(topCorner.x + 40, topCorner.y - 10);
+      ctx.closePath();
+      ctx.fill();
+
+      // Face Frontal Esquerda
+      ctx.fillStyle = b.type === 'stadium' ? '#4f695f' : b.type === 'ct' ? '#c7a76c' : '#c9d1c7';
+      ctx.beginPath();
+      ctx.moveTo(leftCorner.x, leftCorner.y);
+      ctx.lineTo(bottomCorner.x, bottomCorner.y);
+      ctx.lineTo(bottomCorner.x, bottomCorner.y - h);
+      ctx.lineTo(leftCorner.x, leftCorner.y - h);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = '#274037';
+      ctx.stroke();
+
+      // Face Frontal Direita
+      ctx.fillStyle = b.type === 'stadium' ? '#3c5249' : b.type === 'ct' ? '#a68750' : '#a2aca0';
+      ctx.beginPath();
+      ctx.moveTo(bottomCorner.x, bottomCorner.y);
+      ctx.lineTo(rightCorner.x, rightCorner.y);
+      ctx.lineTo(rightCorner.x, rightCorner.y - h);
+      ctx.lineTo(bottomCorner.x, bottomCorner.y - h);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = '#274037';
+      ctx.stroke();
+
+      // Telhado / Topo
+      ctx.fillStyle = b.type === 'stadium' ? '#2ecc71' : b.type === 'ct' ? '#34495e' : '#1b6354';
+      ctx.beginPath();
+      ctx.moveTo(topCorner.x, topCorner.y - h);
+      ctx.lineTo(rightCorner.x, rightCorner.y - h);
+      ctx.lineTo(bottomCorner.x, bottomCorner.y - h);
+      ctx.lineTo(leftCorner.x, leftCorner.y - h);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Placa com nome do prédio
+      const labelY = topCorner.y - h - 16;
+      ctx.fillStyle = 'rgba(10,30,22,0.85)';
+      ctx.beginPath();
+      ctx.roundRect(bottomCorner.x - 70, labelY, 140, 20, 6);
+      ctx.fill();
+      ctx.fillStyle = '#ffdf80';
+      ctx.font = '700 9px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillText(b.name, bottomCorner.x, labelY + 13);
+    }
+
+    // Desenho de Personagem
+    function drawCharacter(gx, gy, color, label) {
+      const pt = gridToScreen(gx, gy);
+
+      // Sombra
+      ctx.fillStyle = 'rgba(10, 26, 18, 0.4)';
+      ctx.beginPath();
+      ctx.ellipse(pt.x, pt.y + TILE_H / 2, 7, 3.5, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Corpo
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.roundRect(pt.x - 5, pt.y + TILE_H / 2 - 18, 10, 16, 3);
+      ctx.fill();
+
+      // Cabeça
+      ctx.fillStyle = '#f5cba7';
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y + TILE_H / 2 - 21, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Rótulo
+      if (label) {
+        ctx.fillStyle = '#fff';
+        ctx.font = '700 8px system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillText(label, pt.x, pt.y + TILE_H / 2 - 28);
+      }
+    }
+
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>
