@@ -1,0 +1,20 @@
+import {writeFile} from 'node:fs/promises';
+import {TycoonSimulation} from '../src/tycoon-simulation.js';
+import {WORLD_STRUCTURES,structureEntry} from '../src/world-model.js';
+import {encodeTycoonSave} from '../src/tycoon-save.js';
+import {TYCOON_GOALS} from '../src/tycoon-model.js';
+const sim=new TycoonSimulation(),s=sim.state;
+s.wallet=12000;s.fields[1].unlocked=true;s.facilities.pitch2=1;s.staff={gate:true,runner:true,cashier:true};
+for(const id of ['academy','stadium','business'])s.land[id]=true;
+for(const id of ['training','youth','stadium','canteen','marketing','board']){s.facilities[id]=id==='stadium'?7:id==='canteen'?4:1;s.map.placements[id]={x:WORLD_STRUCTURES[id].x,y:WORLD_STRUCTURES[id].y};}
+s.map.placements.pitch2={...WORLD_STRUCTURES.pitch2};s.map.ctKits=16;s.tycoon.canteen.cook=true;s.tycoon.claimed=TYCOON_GOALS.slice(0,5).map(g=>g.id);
+s.map.actor={...structureEntry('canteen',s.map.placements.canteen),route:[],walk:0};
+sim.requestFood();for(let i=0;i<350;i++)sim.tick(.1);
+for(const f of s.fields)f.stock=4;
+s.preparation=3;
+await writeFile(new URL('advanced.json',import.meta.url),encodeTycoonSave(s));
+s.facilities.canteen=7;s.tycoon.canteen.autoRestock=true;sim.scoutYouth();const p=s.youthList[0];sim.promoteYouth(p.id);
+await writeFile(new URL('club.json',import.meta.url),encodeTycoonSave(s));
+sim.playLeagueRound();for(let i=0;i<250;i++)sim.tick(.1);
+await writeFile(new URL('stadium.json',import.meta.url),encodeTycoonSave(s));
+console.log('QA fixtures created with explicitly artificial starting funds. Not game defaults.');

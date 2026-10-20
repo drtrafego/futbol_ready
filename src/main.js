@@ -1,11 +1,12 @@
+// ARENA_TYCOON_06_ENTRY
 import { CFG } from './config.js';
 import { newGame, currentMission, zonePosition } from './simulation.js';
-import { WorldSimulation } from './world-simulation.js';
+import { TycoonSimulation } from './tycoon-simulation.js';
 import { ensureWorld, WORLD_STRUCTURES, WORLD_PLOTS } from './world-model.js';
-import { SaveStore, encodeSave, decodeSave } from './save.js';
-import { WorldRenderer } from './world-view.js';
+import { TycoonSaveStore, encodeTycoonSave, decodeTycoonSave } from './tycoon-save.js';
+import { TycoonRenderer } from './tycoon-view.js';
 import { WorldInput } from './world-input.js';
-import { WorldUI } from './world-ui.js';
+import { TycoonUI } from './tycoon-ui.js';
 import { authenticate, logout } from './profile.js';
 import { swapRosterPlayers, getStarters } from './roster.js';
 import { worldToArt } from './scene.js';
@@ -13,15 +14,15 @@ import { worldToArt } from './scene.js';
 async function boot(){
  const profile=await authenticate();
  const storage={getItem:k=>localStorage.getItem(k),setItem:(k,v)=>localStorage.setItem(k,v),removeItem:k=>localStorage.removeItem(k)};
- const store=new SaveStore(storage,profile.saveKey,profile.backupKey),loaded=store.load();if(loaded.status==='new')loaded.state=newGame(profile);
- const sim=new WorldSimulation(loaded.state),renderer=new WorldRenderer(document.getElementById('game'));await renderer.ready;
+ const store=new TycoonSaveStore(storage,profile.saveKey,profile.backupKey),loaded=store.load();if(loaded.status==='new')loaded.state=newGame(profile);
+ const sim=new TycoonSimulation(loaded.state),renderer=new TycoonRenderer(document.getElementById('game'));await renderer.ready;
  document.getElementById('asset-loading').hidden=true;
  let input,lastTime=performance.now(),accumulator=0,lastSaved=sim.state.t,conflict=false,lastUI=0,lastDraw=0;
  const persist=(force=false)=>{const result=store.save(sim.state,force);ui.saveStatus(result.ok);if(result.conflict){conflict=true;ui.open('menu-dialog');ui.toast(result.reason,30);}else if(!result.ok&&force)ui.toast(result.reason,8);return result;};
  const focus=(id,select=true)=>{renderer.focus(id,sim.state,select);if(id==='all'||id==='club')renderer.selection=null;input?.reset();ui.inspectorKey='';ui.update(sim.state,true);};
  const applyResult=result=>{if(!result?.ok){ui.toast(result?.reason||'Ação indisponível.',6);return false;}ui.renderKey='';ui.update(sim.state,true);persist();return true;};
  const beginPlacement=id=>{const s=sim.state;if(!WORLD_STRUCTURES[id])return;if(s.map.placements[id]||WORLD_STRUCTURES[id].fixed){focus(id);return;}focus(id,false);renderer.placement=id;renderer.hover={x:WORLD_STRUCTURES[id].x,y:WORLD_STRUCTURES[id].y};ui.close();ui.toast('Posicione a base verde no terreno e toque para confirmar. Arraste para mover o mapa.',7);};
- const ui=new WorldUI({
+ const ui=new TycoonUI({
   start:()=>{input.reset();lastTime=performance.now();if(loaded.message)ui.toast(loaded.message,9);},
   onPauseChange:()=>{input?.reset();accumulator=0;lastTime=performance.now();},
   focus,
@@ -33,8 +34,8 @@ async function boot(){
   toggleView:()=>renderer.follow(sim.state),
   toggleQuality:()=>{renderer.lowQuality=!renderer.lowQuality;renderer.resize();return renderer.lowQuality;},
   purchase:id=>{const result=sim.purchase(id);if(applyResult(result)&&id==='field2')ui.toast('Segundo campo aberto. Agora explore os terrenos ao redor da arena.',7);},
-  export:()=>{const blob=new Blob([encodeSave(sim.state)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`arena-${profile.id}-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);ui.toast('Backup exportado. Guarde seu JSON.');},
-  import:async text=>{const next=decodeSave(text);sim.state=next;ensureWorld(next);sim.events=[];renderer.particles=[];renderer.roadKey='';renderer.selection=null;ui.lastMission=null;conflict=false;lastSaved=next.t;input.reset();const result=persist(true);ui.update(next,true);ui.toast(result.ok?'Progresso importado, incluindo mapa e obras.':'Armazenamento indisponível; exporte antes de sair.',7);},
+  export:()=>{const blob=new Blob([encodeTycoonSave(sim.state)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`arena-${profile.id}-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);ui.toast('Backup exportado. Guarde seu JSON.');},
+  import:async text=>{const next=decodeTycoonSave(text);sim.state=next;ensureWorld(next);sim.events=[];renderer.particles=[];renderer.roadKey='';renderer.selection=null;ui.lastMission=null;conflict=false;lastSaved=next.t;input.reset();const result=persist(true);ui.update(next,true);ui.toast(result.ok?'Progresso importado, incluindo mapa e obras.':'Armazenamento indisponível; exporte antes de sair.',7);},
   reset:()=>{if(!store.reset()){ui.toast('Não foi possível limpar o armazenamento.');return;}sim.state=newGame(profile);ensureWorld(sim.state);sim.events=[];renderer.particles=[];renderer.roadKey='';renderer.selection=null;ui.lastMission=null;conflict=false;lastSaved=0;input.reset();focus('arena',false);persist(true);ui.update(sim.state,true);ui.open('welcome-dialog');},
   logout:async()=>{const result=persist();if(!result.ok&&!confirm('O progresso não foi salvo. Sair mesmo assim?'))return;try{await logout();}catch(error){ui.toast(error.message);}},
   worldCommand:(cmd,id)=>{
@@ -55,9 +56,13 @@ async function boot(){
    if(cmd==='trainTeam'){if(applyResult(sim.trainTeam())){ui.close();focus('training');}return;}
   },
   command:(name,id)=>{
+   if(name.startsWith('tycoon:')){const action=name.slice(7);const res=action==='teamTraining'?sim.trainTeam():sim.tycoonCommand(action,id);if(applyResult(res)&&action==='teamTraining'){ui.close();focus('training');}return;}
+   if(['sub','formation','posture','captain','resetTeam'].includes(name)&&sim.isRosterLocked){ui.toast('Aguarde a partida oficial terminar para alterar o elenco.',5);return;}
+   if(name==='resetTeam'){if(confirm('Reiniciar a carreira esportiva mantendo os atletas, recursos e instalações?'))applyResult(sim.resetTeam(profile));return;}
+
    let result;const functions={train:()=>sim.trainPlayer(id),trainYouth:()=>sim.trainYouth(id),hire:()=>sim.hireMarket(id),refresh:()=>sim.refreshMarket(),scout:()=>sim.scoutYouth(),promote:()=>sim.promoteYouth(id),sellYouth:()=>sim.sellYouth(id),captain:()=>sim.setTactic('captain',id),formation:()=>sim.setTactic('formation',id),posture:()=>sim.setTactic('posture',id),campaign:()=>sim.startCampaign(),club:()=>sim.editClub(id.name,id.sigla),season:()=>sim.nextSeason(),round:()=>sim.playLeagueRound()};
    if(name==='facility'){ui.close();focus(id);return;}if(name==='land'){ui.close();focus(id);return;}
-   if(name==='resetTeam'){if(!confirm('Deseja realmente começar um novo time e zerar todo o histórico esportivo (elenco, divisões e temporadas)?'))return;result=sim.resetTeam(profile);if(applyResult(result)){ui.toast('Novo time iniciado! Elenco renovado e histórico zerado.',6);focus('arena',false);}return;}
+   if(name==='resetTeam'){if(!confirm('Reiniciar a carreira esportiva? Os atletas e recursos atuais serão mantidos, sem gerar novos jogadores grátis.'))return;result=sim.resetTeam(profile);if(applyResult(result)){ui.toast('Carreira reiniciada. Atletas, recursos e instalações preservados.',6);focus('arena',false);}return;}
    if(name==='sell'){if(!confirm('Vender este reserva? Esta ação não pode ser desfeita.'))return;result=sim.sellPlayer(id);}
    else if(name==='sub'){const s=sim.state,p=s.roster.find(p=>p.id===id),target=getStarters(s.roster).filter(p2=>p2.pos===p?.pos).sort((a,b)=>a.overall-b.overall)[0];if(!p||!target)result={ok:false,reason:'Não há titular da mesma posição para trocar.'};else{swapRosterPlayers(s.roster,p.id,target.id);if(s.tactics.captainId===target.id)s.tactics.captainId=null;sim.emit('tactic',`${p.name} entrou no lugar de ${target.name}.`);result={ok:true};}}
    else if(functions[name])result=functions[name]();else result={ok:false,reason:'Ação não reconhecida.'};
@@ -76,7 +81,7 @@ async function boot(){
    renderer.selection={kind:p.kind,id:p.id};ui.inspectorKey='';ui.update(sim.state,true);return;
   }
   renderer.selection=null;if(!sim.goMap(p.point))ui.toast('Área fechada ou sem passagem. Toque na placa do terreno para expandir.',5);
- },()=>ui.paused||conflict,renderer);
+ },()=>ui.inputBlocked||conflict,renderer);
  window.addEventListener('resize',()=>renderer.resize());
  document.addEventListener('visibilitychange',()=>{input.reset();lastTime=performance.now();accumulator=0;if(document.hidden&&store.writable)persist();});
  window.addEventListener('pagehide',()=>{if(store.writable)persist();});

@@ -1,0 +1,101 @@
+{
+  "method": "0 moedas iniciais; nenhum saldo, material, instalação ou funcionário concedido. Entradas via métodos reais. Tempo acelerado da simulação, não duração humana.",
+  "log": [
+    {
+      "what": "Compra com receita da simulação: gate",
+      "ok": true,
+      "seconds": 43,
+      "wallet": 47
+    },
+    {
+      "what": "Compra com receita da simulação: runner",
+      "ok": true,
+      "seconds": 84,
+      "wallet": 91
+    },
+    {
+      "what": "Compra com receita da simulação: cashier",
+      "ok": true,
+      "seconds": 142,
+      "wallet": 75
+    },
+    {
+      "what": "Compra com receita da simulação: field2",
+      "ok": true,
+      "seconds": 326,
+      "wallet": 123
+    },
+    {
+      "what": "Operação e segundo campo conquistados",
+      "ok": true,
+      "seconds": 418,
+      "wallet": 723
+    },
+    {
+      "what": "Lanchonete paga com moedas ganhas",
+      "ok": true,
+      "seconds": 418,
+      "wallet": 473
+    },
+    {
+      "what": "Lanchonete construída",
+      "ok": true,
+      "seconds": 463,
+      "wallet": 845
+    },
+    {
+      "what": "Estoque pago e entrega iniciada",
+      "ok": true,
+      "seconds": 463,
+      "wallet": 821
+    },
+    {
+      "what": "Gerente caminha até balcão",
+      "ok": true,
+      "seconds": 463,
+      "wallet": 821
+    },
+    {
+      "what": "Cinco clientes reais atendidos na lanchonete",
+      "ok": true,
+      "seconds": 500,
+      "wallet": 1125
+    },
+    {
+      "what": "Comprar formação",
+      "ok": true,
+      "seconds": 500,
+      "wallet": 625
+    },
+    {
+      "what": "Construir CT",
+      "ok": true,
+      "seconds": 500,
+      "wallet": 225
+    },
+    {
+      "what": "Pegar kits reais",
+      "ok": true,
+      "seconds": 570,
+      "wallet": 773
+    },
+    {
+      "what": "Entregar kits no CT",
+      "ok": true,
+      "seconds": 605,
+      "wallet": 977
+    },
+    {
+      "what": "Iniciar treino pago",
+      "ok": true,
+      "seconds": 605,
+      "wallet": 940
+    },
+    {
+      "what": "Concluir treino e histórico",
+      "ok": true,
+      "seconds": 635,
+      "wallet": 1214
+    }
+  ]
+}

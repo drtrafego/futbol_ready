@@ -154,6 +154,20 @@ body[data-district=world] .topbar,.topbar{position:absolute;top:max(12px,env(saf
 
 </style>
   <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZD0iTTUgNVEzMi0zIDU5IDVWNDJMMzIgNjAgNSA0MloiIGZpbGw9IiMxMzQ5MzYiIHN0cm9rZT0iI2Y2ZTc4YyIgc3Ryb2tlLXdpZHRoPSI0Ii8+PHRleHQgeD0iMzIiIHk9IjM3IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMzQiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSIjZmZmMTkzIj5BPC90ZXh0Pjx0ZXh0IHg9IjMyIiB5PSI0OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjkiIGZpbGw9IiNmZmYxOTMiPkZDPC90ZXh0Pjwvc3ZnPg==" type="image/svg+xml">
+  <style>
+.tycoon-operation-note,.tycoon-info,.tycoon-match-strip,.tycoon-next{padding:16px 18px;background:#edf2df;border:1px solid #cbd9b4;border-radius:14px;margin:12px 0;color:#173f32}
+.tycoon-operation-note p,.tycoon-info,.tycoon-match-strip p{font-size:13px;line-height:1.55}
+.tycoon-operation-note button{width:100%;min-height:44px}.tycoon-claim{background:#e9c15e;color:#143c2c;border:0;border-radius:11px;min-height:42px;width:100%;font-weight:900;margin-top:10px;cursor:pointer}
+.tycoon-claim[hidden]{display:none!important}.tycoon-live-note{font-size:12px;padding:8px 12px;background:#d9efdc;border-radius:8px;color:#1b663c}.tycoon-player-story{font-size:10px;line-height:1.7;color:#597050;margin:8px 0;border-left:3px solid #d0b368;padding-left:9px}
+.tycoon-canteen-tools{border-top:1px solid #bfcca9;margin-top:16px;padding-top:8px}.tycoon-canteen-tools h3{font-size:15px}.tycoon-canteen-tools p{font-size:12px}
+.tycoon-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}.tycoon-metrics span{background:#eaf1dd;padding:14px;border-radius:12px;font-size:12px;color:#496148}.tycoon-metrics b{display:block;font-size:26px;color:#143d32;margin-bottom:5px}
+.tycoon-partners{margin:22px 0}.tycoon-journal{font-size:13px;border-left:3px solid #b3cc8c;padding:9px 14px;background:#f5f6ec}.tycoon-next h3{font-size:23px;margin:10px 0}.tycoon-next progress{width:100%;height:12px;accent-color:#338754}.tycoon-venue-note{font-size:12px;line-height:1.6;color:#355f45;padding:12px;background:#edf3e0;border-radius:10px}
+.sports-card details{font-size:12px;line-height:1.6;margin-top:10px}.sports-card details summary{cursor:pointer;color:#245940;font-weight:800}.sports-card .card-actions button{min-height:42px}.sports-dock{flex-wrap:wrap}.sports-dock button{min-height:34px}
+#sports-content{overflow-anchor:none}.tycoon-match-strip b{font-size:15px;line-height:1.6}
+@media(max-width:680px){.tycoon-metrics{grid-template-columns:1fr 1fr}.tycoon-metrics span{padding:10px}.tycoon-operation-note{padding:12px}.tycoon-operation-note p{font-size:12px}.tycoon-claim{min-height:30px;font-size:8px;margin-top:4px}.mission-card:has(.tycoon-claim:not([hidden])){max-height:130px!important}.tycoon-next h3{font-size:19px}.sports-card .card-actions button{min-height:44px}.tycoon-info{font-size:12px}#tycoon-food-live{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.tycoon-claim{animation:none}}
+
+</style>
 </head>
 <body>
   <section id="login-screen" class="login-screen"><form id="login-form" class="login-card"><span class="login-crest">A<span>FC</span></span><p class="dialog-eyebrow" id="login-mode">ACESSO AO CLUBE</p><h1>A sua próxima<br>grande conquista.</h1><p>Escolha seu perfil e entre na sua arena.</p><label>Jogador<select id="login-user"><option value="bernardo">Bernardo Cafure</option><option value="miguel">Miguel Matos</option></select></label><label id="login-password-label">Senha<input id="login-password" type="password" autocomplete="current-password" required maxlength="128"></label><button type="submit" class="primary-button">ENTRAR NO CLUBE →</button><p id="login-message" role="status"></p><small>O progresso fica separado por perfil neste navegador.</small></form></section>
@@ -2639,7 +2653,671 @@ class WorldUI extends UI{
 }
 
 
+// src/tycoon-economy.js
+/** One valuation model for academy and professionals. All amounts are virtual coins. */
+function athleteFairValue(p) {
+  if (!p || !Number.isFinite(p.overall) || !Number.isFinite(p.potential)) return 0;
+  const rating = Math.max(1, Math.min(99, p.overall));
+  const potential = Math.max(rating, Math.min(99, p.potential));
+  const youth = Math.max(0, 26 - Math.max(14, Math.min(60, p.age || 26)));
+  return Math.max(30, Math.round(180 * Math.pow(1.065, rating - 40) + (potential - rating) * 4 + youth * 2));
+}
+const athleteBuyQuote = p => Math.ceil(athleteFairValue(p) * 1.12);
+const athleteSellQuote = p => Math.floor(athleteFairValue(p) * 0.62);
+function academyIntakeQuote(s) {
+  // Every possible immediate resale is below the advertised, fixed intake price.
+  const level = s.facilities.youth || 0, division = s.season.divisionIndex || 0;
+  const highest = Math.min(90, 36 + level * 2 + division * 3 + 5);
+  return Math.ceil(athleteSellQuote({overall: highest, potential: Math.min(99, highest + 24), age: 15}) * 1.1) + 30;
+}
+function restaurantCapacity(s) { return 12 + Math.ceil((s.facilities.canteen || 0) / 3) * 6; }
+function restaurantPrice(s) { return 8 + Math.ceil((s.facilities.canteen || 0) / 3) * 2; }
+function restaurantSupplyQuote(s) {
+  const c = s.tycoon.canteen, amount = Math.min(12, restaurantCapacity(s) - c.stock);
+  let reason = '';
+  if (!s.facilities.canteen) reason = 'Construa a lanchonete no mapa.';
+  else if (s.map.construction.some(j => j.id === 'canteen')) reason = 'A lanchonete está em obras.';
+  else if (c.shipment) reason = 'Já há uma entrega a caminho.';
+  else if (amount <= 0) reason = 'Estoque cheio.';
+  else if (s.wallet < amount * 2) reason = `Faltam ${amount * 2 - s.wallet} moedas.`;
+  return {ok: !reason, reason, amount, cost: amount * 2};
+}
+
+
+// src/tycoon-model.js
+
+const CLUB_CONTRACTS = Object.freeze([
+  {id:'community', name:'Mercadinho da Vila', text:'Atenda 18 clientes na lanchonete.', metric:'served', target:18, reward:180, phase:1},
+  {id:'academy', name:'Esporte do Bairro', text:'Conclua 6 evoluções de atletas no CT.', metric:'trained', target:6, reward:220, phase:1},
+  {id:'regional', name:'Parceiro Regional', text:'Vença 2 partidas oficiais.', metric:'wins', target:2, reward:320, phase:2}
+]);
+const TYCOON_GOALS = Object.freeze([
+  {id:'first-kit', title:'Prepare o primeiro treino', text:'Pegue um kit e leve ao Campo 1.', focus:'field0', reward:15, target:1, read:s=>s.stats.delivered},
+  {id:'first-gate', title:'Receba a torcida', text:'Atenda os primeiros 2 visitantes na bilheteria.', focus:'gate', reward:20, target:2, read:s=>s.stats.admitted},
+  {id:'delegate', title:'Sua primeira contratação', text:'Contrate o bilheteiro para cuidar dos ingressos.', focus:'operation', reward:30, target:1, read:s=>+s.staff.gate},
+  {id:'second-pitch', title:'Do campinho ao clube', text:'Abra o segundo campo. A expansão continua ao redor da arena.', focus:'operation', reward:60, target:1, read:s=>+s.fields[1].unlocked},
+  {id:'food-station', title:'Uma lanchonete de verdade', text:'Construa a lanchonete no terreno original e abasteça o balcão.', focus:'canteen', reward:60, target:1, read:s=>+(s.facilities.canteen>0)},
+  {id:'first-customer', title:'Atenda no balcão', text:'Com estoque, leve o gerente à lanchonete. O pagamento só vem após o serviço.', focus:'canteen', reward:40, target:5, read:s=>s.tycoon.counters.served},
+  {id:'academy-land', title:'O espaço dos futuros craques', text:'Compre o terreno da formação à direita da arena.', focus:'academy', reward:80, target:1, read:s=>+s.land.academy},
+  {id:'training-ground', title:'A equipe evolui no campo', text:'Construa o CT, entregue kits e conclua um treinamento.', focus:'training', reward:70, target:1, read:s=>s.tycoon.counters.trained},
+  {id:'homegrown', title:'Revele o ídolo da vila', text:'Construa a base, organize uma peneira e promova um jovem.', focus:'youth', reward:100, target:1, read:s=>s.tycoon.counters.promoted},
+  {id:'official-win', title:'A primeira vitória oficial', text:'Abra a tabela e use um preparo para disputar a liga.', focus:'league', reward:100, target:1, read:s=>s.tycoon.counters.wins},
+  {id:'own-stadium', title:'O seu estádio', text:'Compre o terreno ao norte e conclua a construção do estádio.', focus:'stadium', reward:120, target:1, read:s=>+(s.facilities.stadium>0)},
+  {id:'new-venue', title:'O campinho não precisa parar', text:'Dispute uma partida no estádio enquanto a arena segue operando.', focus:'league', reward:140, target:1, read:s=>s.tycoon.counters.stadiumGames},
+  {id:'partners', title:'Parcerias do bairro', text:'Construa Marketing, cumpra e receba seu primeiro contrato fictício.', focus:'board', reward:160, target:1, read:s=>s.tycoon.counters.contracts},
+  {id:'third-phase', title:'Uma nova era do clube', text:'Leve o estádio até a fase 3: cobertura, setores e refletores.', focus:'stadium', reward:180, target:7, read:s=>s.facilities.stadium||0},
+  {id:'first-season', title:'Sua primeira temporada completa', text:'Conclua a liga, confira a classificação e receba a premiação.', focus:'league', reward:200, target:1, read:s=>s.career.seasonsPlayed}
+]);
+function emptyTycoon() {
+  return {version:1, canteen:{stock:0, cook:false, autoRestock:false, guests:[], shipment:null, clock:0, nextGuest:1},
+    counters:{served:0, missed:0, foodRevenue:0, foodCost:0, trained:0, promoted:0, wins:0, contracts:0, stadiumGames:0},
+    people:Object.create(null), arenaScorers:[], arenaLineup:[], claimed:[], partner:null, completedContracts:[], stadium:{match:null,last:null,audience:[]},
+    recordSequence:1, recentEvents:[], economyMigrated:false};
+}
+function ensureTycoon(s) {
+  if (!s.tycoon) s.tycoon = emptyTycoon();
+  const t=s.tycoon;
+  if (!t.economyMigrated) {
+    for (const p of s.market) p.cost=athleteBuyQuote(p);
+    for (const p of s.youthList) p.marketValue=athleteSellQuote(p);
+    t.economyMigrated=true;
+  }
+  for(const p of [...s.roster,...s.youthList]) if(!t.people[p.id]) t.people[p.id]={origin:p.id.startsWith('promovido_')?'base':'club',startRating:p.overall,played:0,goals:0,trainings:0,events:[]};
+  return t;
+}
+function clubObjective(s) {
+  ensureTycoon(s);
+  const g=TYCOON_GOALS.find(g=>!s.tycoon.claimed.includes(g.id));
+  if (g) return {...g,value:Math.min(g.target,g.read(s)),complete:g.read(s)>=g.target};
+  const number=s.career.seasonsPlayed+1,id=`season-${number}`;
+  return {id,title:`Temporada ${number}: escreva o próximo capítulo`,text:'Dispute a liga e continue a desenvolver o clube. A carreira não termina no segundo campo.',focus:'league',reward:100,target:s.season.totalRounds,value:s.season.rounds.filter(r=>r.played).length,complete:s.season.finished};
+}
+function partnerProgress(s) {
+  const p=s.tycoon.partner;if(!p)return null;const d=CLUB_CONTRACTS.find(d=>d.id===p.id);
+  if(!d)return null;const value=Math.max(0,s.tycoon.counters[d.metric]-p.start);
+  return {...d,token:p.token,value:Math.min(d.target,value),complete:value>=d.target};
+}
+function rememberAthlete(s,id,text) {
+  const t=ensureTycoon(s),bio=t.people[id];if(!bio)return;
+  bio.events.unshift({text,t:Math.floor(s.t)});bio.events=bio.events.slice(0,6);
+}
+function tycoonRecord(s,text,kind='club') {
+  const t=ensureTycoon(s);t.recentEvents.unshift({id:t.recordSequence++,text,kind,t:Math.floor(s.t)});t.recentEvents=t.recentEvents.slice(0,16);
+}
+function pruneAthleteRecords(s) {
+  const live=new Set([...s.roster,...s.youthList].map(p=>p.id));
+  for(const id of Object.keys(s.tycoon.people)) if(!live.has(id)) delete s.tycoon.people[id];
+}
+
+
+// src/tycoon-simulation.js
+
+
+
+
+
+
+
+
+
+
+function stadiumSeats(s) { const st=facilityStage(s.facilities.stadium);return Math.min(40,6+st.phase*4+st.step*2); }
+function tycoonVenue(s) { return s.facilities.stadium>0 && !!s.map.placements.stadium; }
+function stadiumDisplay(s) {
+  const t=ensureTycoon(s),m=t.stadium.match||t.stadium.last;
+  return m?{score:[...m.score],opponent:m.opponent,remaining:m.phase==='admission'?0:Math.max(0,m.duration-m.elapsed),lastGoal:m.lastGoal,lastGoalOurs:m.lastGoalOurs,venue:m.venue,phase:m.phase}:null;
+}
+class TycoonSimulation extends WorldSimulation {
+  constructor(state=newGame()) { super(state);ensureTycoon(state);this.gateBilling=false; }
+  get isRosterLocked() { return !!(this.state.official||this.state.tycoon.stadium.match); }
+  emit(type,text,position=null) {
+    const s=this.state,t=s?.tycoon;
+    if(t && type==='goal' && s.official){
+      const scorer=t.arenaScorers?.[s.official.cursor-1];
+      if(scorer && scorer.id && !scorer.counted){scorer.counted=true;this.recordScorer(scorer);text=`GOOOL DO ${s.club.sigla}! ${scorer.name}`;}
+    }
+    if(t && type==='officialResult' && s.official){
+      const p=matchPerspective(s.official.roundResult.playerMatch);if(p.result==='win')t.counters.wins++;
+      for(const id of t.arenaLineup||[])if(t.people[id])t.people[id].played++;
+      t.arenaScorers=[];t.arenaLineup=[];tycoonRecord(s,text,'match');
+    }
+    super.emit(type,text,position);
+  }
+  addRevenue(amount) {
+    // The inherited gate credits a decorative canteen multiplier. Remove ONLY
+    // that amount during this gate transaction. Real canteen sales settle below.
+    return super.addRevenue(Math.max(0,amount-(this.gateBilling?(this.state.facilities.canteen||0)*2:0)));
+  }
+  updateGate(dt) {
+    const s=this.state,before=new Set(s.fans.filter(f=>f.phase==='going'||f.phase==='watching').map(f=>f.id));
+    this.gateBilling=true;try{super.updateGate(dt);}finally{this.gateBilling=false;}
+    for(const f of s.fans) if(f.phase==='going'&&!before.has(f.id))this.offerCanteen(f);
+  }
+  updateFans(dt) {
+    const s=this.state,c=s.tycoon.canteen;
+    // Preserve the original spectator and reserved seat. It visits the counter,
+    // not a duplicate decorative sprite, before resuming its route to the pitch.
+    const held=new Map();
+    for(const g of c.guests){const f=s.fans.find(f=>f.id===g.fanId);if(f?.phase==='going')held.set(f.id,{x:f.x,z:f.z});}
+    super.updateFans(dt);
+    for(const [id,pos] of held){const f=s.fans.find(f=>f.id===id);if(f && f.phase!=='leaving'){Object.assign(f,pos);f.phase='going';f.route=[];}}
+  }
+  offerCanteen(fan) {
+    const s=this.state,c=s.tycoon.canteen,level=s.facilities.canteen,p=s.map.placements.canteen;
+    if(!level||!p||s.map.construction.some(j=>j.id==='canteen')||c.guests.length>=6||this.random()>.58)return;
+    const at=worldToArt(fan.x,fan.z),entry=structureEntry('canteen',p),route=worldPath(s,at,entry);
+    if(!route.length)return;
+    c.guests.push({id:c.nextGuest++,fanId:fan.id,x:at.x,y:at.y,walk:0,route,phase:'approach',wait:0,service:0,resume:structuredClone(fan.route)});
+    fan.route=[];
+  }
+  resumeDiner(g,missed=false) {
+    const s=this.state,c=s.tycoon.canteen,f=s.fans.find(f=>f.id===g.fanId);
+    if(f && f.phase!=='leaving'){f.phase='going';f.route=g.resume.length?g.resume:[{x:2.2,z:3.5}];}
+    c.guests=c.guests.filter(x=>x!==g);if(missed)c.canceled=(c.canceled||0)+1;
+    if(missed)s.tycoon.counters.missed++;
+  }
+  requestFood() {
+    const s=this.state,q=restaurantSupplyQuote(s);if(!q.ok)return q;
+    const p=s.map.placements.canteen;if(!p)return{ok:false,reason:'Posicione e conclua a lanchonete.'};
+    const start=worldToArt(CFG.supply.x,CFG.supply.z),entry=structureEntry('canteen',p),route=worldPath(s,start,entry);
+    if(!route.length)return{ok:false,reason:'Deixe um caminho livre até a lanchonete.'};
+    s.wallet-=q.cost;s.tycoon.counters.foodCost+=q.cost;
+    s.tycoon.canteen.shipment={amount:q.amount,cost:q.cost,x:start.x,y:start.y,walk:0,route};
+    this.emit('foodOrder',`${q.amount} lanches comprados. O entregador está levando as caixas ao balcão.`);
+    return{...q,started:true};
+  }
+  hireCook() {
+    const s=this.state,c=s.tycoon.canteen;
+    if(c.cook)return{ok:false,reason:'Atendente já contratado.'};
+    if(s.facilities.canteen<4)return{ok:false,reason:'A fase 2 da lanchonete libera o atendente.'};
+    if(s.wallet<180)return{ok:false,reason:'O atendente custa 180 moedas.'};
+    s.wallet-=180;c.cook=true;this.emit('hire','Atendente contratado. O gerente não precisa permanecer no balcão.');return{ok:true,cost:180};
+  }
+  toggleFoodAutomation() {
+    const s=this.state,c=s.tycoon.canteen;
+    if(s.facilities.canteen<7||!c.cook)return{ok:false,reason:'Reposição automática exige fase 3 e atendente.'};
+    c.autoRestock=!c.autoRestock;this.emit('foodOrder',`Reposição automática ${c.autoRestock?'ligada':'desligada'}. Cada lote continua custando moedas.`);return{ok:true};
+  }
+  updateCanteen(dt) {
+    const s=this.state,c=s.tycoon.canteen,p=s.map.placements.canteen;if(!p||!s.facilities.canteen)return;
+    if(c.shipment && advanceMapActor(c.shipment,dt,190)){
+      c.stock+=c.shipment.amount;c.shipment=null;this.emit('foodDelivery','Lanches entregues à lanchonete. Estoque disponível para atendimento.');
+    }
+    if(c.autoRestock&&c.cook&&s.facilities.canteen>=7&&!c.shipment&&c.stock<=3 && !s.map.construction.some(j=>j.id==='canteen'))this.requestFood();
+    const entry=structureEntry('canteen',p),working=c.cook||Math.hypot(s.map.actor.x-entry.x,s.map.actor.y-entry.y)<70;
+    const queue=c.guests.filter(g=>g.phase==='queue');
+    for(const g of [...c.guests]){
+      const f=s.fans.find(f=>f.id===g.fanId);
+      if(!f||f.phase==='leaving'){this.resumeDiner(g);continue;}
+      if(g.phase==='approach'&&advanceMapActor(g,dt,130)){g.phase='queue';queue.push(g);}
+      if(g.phase==='queue'){
+        const index=queue.indexOf(g),target={x:entry.x+Math.min(index,5)*22,y:entry.y+Math.min(index,5)*9};
+        const d=Math.hypot(g.x-target.x,g.y-target.y),step=Math.min(d,100*dt);
+        if(d>.01){g.x+=(target.x-g.x)*step/d;g.y+=(target.y-g.y)*step/d;}
+        g.wait+=dt;
+        if(index===0 && working && c.stock>0 && d<4 && !s.map.construction.some(j=>j.id==='canteen')){
+          g.service+=dt;
+          if(g.service>=Math.max(.7,2.4/(1+s.facilities.canteen*.08))){
+            const price=restaurantPrice(s);c.stock--;s.tycoon.counters.served++;s.tycoon.counters.foodRevenue+=price;
+            super.addRevenue(price);this.emit('canteenSale',`Lanche servido: +${price} moedas no caixa.`);this.resumeDiner(g);continue;
+          }
+        }
+        if(g.wait>20){this.resumeDiner(g,true);continue;}
+      }
+      const local=artToWorld(g.x,g.y);f.x=local.x;f.z=local.z;f.walk=g.phase==='approach'?2:0;f.route=[];f.phase='going';
+    }
+  }
+  refreshMarket(){const r=super.refreshMarket();if(r.ok)for(const p of this.state.market)p.cost=athleteBuyQuote(p);return r;}
+  hireMarket(id){const s=this.state,p=s.market.find(p=>p.id===id);if(p)p.cost=athleteBuyQuote(p);const r=super.hireMarket(id);if(r.ok){const t=ensureTycoon(s);const b=t.people[r.player.id];b.origin='market';rememberAthlete(s,r.player.id,'Chegou ao clube pelo mercado.');}return r;}
+  sellPlayer(id){const s=this.state,p=s.roster.find(p=>p.id===id);if(!p)return{ok:false,reason:'Atleta não encontrado.'};if(p.starter)return{ok:false,reason:'Escale um reserva antes de vender o titular.'};if(s.map.training?.ids.includes(id))return{ok:false,reason:'Este atleta está treinando.'};const value=athleteSellQuote(p);s.roster=s.roster.filter(p=>p.id!==id);if(s.tactics.captainId===id)s.tactics.captainId=null;this.credit(value);pruneAthleteRecords(s);this.emit('sale',`${p.name} vendido por ${value} moedas.`);return{ok:true,value};}
+  scoutYouth(){
+    const s=this.state,level=s.facilities.youth;if(!level)return{ok:false,reason:'Construa o campo da base.'};
+    if(s.map.construction.some(j=>j.id==='youth'))return{ok:false,reason:'O campo da base está em obras.'};
+    if(s.youthList.length>=Math.min(12,4+Math.floor(level/3)))return{ok:false,reason:'Base cheia. Promova ou venda uma promessa.'};
+    if(s.departmentTimers.scout>0)return{ok:false,reason:'A peneira anterior ainda está sendo organizada.'};
+    const cost=academyIntakeQuote(s);if(s.wallet<cost)return{ok:false,cost,reason:`A peneira custa ${cost} moedas. Faltam ${cost-s.wallet}.`};
+    const p=scoutYouthProspect(level,s.season.divisionIndex,()=>this.random(),s.sequence++);p.marketValue=athleteSellQuote(p);
+    s.wallet-=cost;s.youthList.push(p);s.departmentTimers.scout=60;ensureTycoon(s).people[p.id].origin='base';
+    rememberAthlete(s,p.id,`Chegou à base com força ${p.overall}.`);this.emit('scout',`${p.name} chegou à base. Desenvolva seu potencial antes de vender.`);return{ok:true,cost,prospect:p};
+  }
+  promoteYouth(id){
+    const s=this.state,p=s.youthList.find(p=>p.id===id),old=p?structuredClone(s.tycoon.people[id]):null;
+    const r=super.promoteYouth(id);if(r.ok){ensureTycoon(s);s.tycoon.people[r.player.id]={...old,origin:'base'};delete s.tycoon.people[id];s.tycoon.counters.promoted++;rememberAthlete(s,r.player.id,'Promovido ao profissional, sem apagar nenhum titular.');tycoonRecord(s,`${r.player.name} foi promovido ao profissional.`,'academy');}
+    return r;
+  }
+  sellYouth(id){const s=this.state,p=s.youthList.find(p=>p.id===id);if(p)p.marketValue=athleteSellQuote(p);const r=super.sellYouth(id);if(r.ok)pruneAthleteRecords(s);return r;}
+  startTraining(kind,id=''){if(this.state.tycoon.stadium.match)return{ok:false,reason:'Aguarde a partida oficial terminar.'};return super.startTraining(kind,id);}
+  setTactic(key,value){if(this.isRosterLocked)return{ok:false,reason:'A escalação fica fixa durante a partida oficial.'};return super.setTactic(key,value);}
+  upgradeFacility(id,position=null){if(id==='stadium'&&this.state.tycoon.stadium.match)return{ok:false,reason:'O estádio está recebendo uma partida. Espere o apito final para iniciar a obra.'};return super.upgradeFacility(id,position);}
+  resetTeam(profile=null){
+    if(this.isRosterLocked||this.state.map.training)return{ok:false,reason:'Aguarde a partida ou o treino terminar antes de reiniciar a carreira.'};
+    // Resetting sporting history must not mint new free reserves for resale.
+    const s=this.state;s.season=createSeason(0,s.club.name,s.club.sigla);s.official=null;s.preparation=0;
+    s.career={seasonsPlayed:0,trophies:0,totalMatches:0,totalWins:0,history:[]};
+    s.tycoon.arenaScorers=[];s.tycoon.arenaLineup=[];s.tycoon.stadium.last=null;
+    this.emit('team','Carreira reiniciada. Elenco, jovens, recursos e instalações foram preservados.');
+    return{ok:true,reason:'Carreira reiniciada sem gerar atletas ou moedas gratuitos.'};
+  }
+  claimObjective(){
+    const s=this.state,g=clubObjective(s);if(!g.complete)return{ok:false,reason:'Complete o objetivo indicado antes de receber.'};
+    if(s.tycoon.claimed.includes(g.id))return{ok:false,reason:'Recompensa já recebida.'};
+    s.tycoon.claimed.push(g.id);if(s.tycoon.claimed.length>512)s.tycoon.claimed.splice(15,s.tycoon.claimed.length-512);this.credit(g.reward);tycoonRecord(s,`Conquista: ${g.title}.`,'milestone');this.emit('milestone',`${g.title}: +${g.reward} moedas!`);return{ok:true,reward:g.reward};
+  }
+  acceptPartner(id){
+    const s=this.state,t=s.tycoon,d=CLUB_CONTRACTS.find(d=>d.id===id);
+    if(!d)return{ok:false,reason:'Contrato inexistente.'};
+    if(!s.facilities.marketing)return{ok:false,reason:'Construa Marketing para negociar parceiros fictícios.'};
+    if(facilityStage(s.facilities.marketing).phase<d.phase)return{ok:false,reason:`Exige Marketing na fase ${d.phase}.`};
+    if(t.partner)return{ok:false,reason:'Finalize o contrato ativo antes de escolher outro.'};
+    const token=`${s.career.seasonsPlayed}:${d.id}`;if(t.completedContracts.includes(token))return{ok:false,reason:'Parceiro já atendido nesta temporada. Novas ofertas na próxima.'};
+    t.partner={id,token,start:t.counters[d.metric]};this.emit('contract',`${d.name}: ${d.text} Parceria fictícia, sem anúncios.`);return{ok:true};
+  }
+  claimPartner(){const s=this.state,t=s.tycoon,p=partnerProgress(s);if(!p?.complete)return{ok:false,reason:'A meta do contrato ainda não foi cumprida.'};if(t.completedContracts.includes(p.token))return{ok:false,reason:'Contrato já pago.'};t.completedContracts.push(p.token);t.partner=null;t.counters.contracts++;this.credit(p.reward);tycoonRecord(s,`Parceria concluída: ${p.name}.`,'contract');this.emit('contract',`${p.name}: +${p.reward} moedas pelo contrato cumprido.`);return{ok:true,reward:p.reward};}
+  createScorers(timeline){
+    const s=this.state,pool=s.roster.filter(p=>p.starter),weighted=[];
+    for(const p of pool)for(let i=0;i<({ATA:5,MEI:3,DEF:1,GOL:0})[p.pos];i++)weighted.push(p);
+    const list=weighted.length?weighted:pool;
+    return timeline.map(g=>{if(!g.ours)return null;const p=list[Math.min(list.length-1,Math.floor(this.random()*list.length))];return p?{id:p.id,name:p.name,counted:false}:null;});
+  }
+  recordScorer(p){const s=this.state,b=ensureTycoon(s).people[p.id];if(!b)return;b.goals++;rememberAthlete(s,p.id,`Marcou um gol oficial pelo ${s.club.sigla}.`);}
+  playLeagueRound(){
+    const s=this.state,t=s.tycoon;if(this.isRosterLocked)return{ok:false,reason:'Uma partida oficial já está em andamento.'};
+    if(!tycoonVenue(s)){
+      const r=super.playLeagueRound();if(r.ok){t.arenaScorers=this.createScorers(s.official.timeline);t.arenaLineup=s.roster.filter(p=>p.starter).map(p=>p.id);}return r;
+    }
+    if(s.map.training)return{ok:false,reason:'Espere o treino terminar.'};
+    if(s.map.construction.some(j=>j.id==='stadium'))return{ok:false,reason:'O estádio está em obras.'};
+    if(s.season.finished)return{ok:false,reason:'Conclua a temporada antes de jogar novamente.'};
+    if(s.preparation<1)return{ok:false,reason:'Conclua uma partida local para gerar 1 preparo.'};
+    if(s.roster.filter(p=>p.starter).length!==11)return{ok:false,reason:'Escale 11 titulares.'};
+    const next=structuredClone(s.season),result=simulateRound(next,this.strength(),()=>this.random());if(!result)return{ok:false,reason:'Rodada indisponível.'};
+    const p=matchPerspective(result.playerMatch),goals=[];for(let i=0;i<p.own;i++)goals.push(true);for(let i=0;i<p.against;i++)goals.push(false);
+    for(let i=goals.length-1;i>0;i--){const j=Math.floor(this.random()*(i+1));[goals[i],goals[j]]=[goals[j],goals[i]];}
+    const duration=CFG.match.duration,timeline=goals.map((ours,i)=>({ours,at:3+(i+1)*(duration-6)/(goals.length+1)}));
+    t.stadium.match={venue:p.isHome?'stadium':'away',phase:p.isHome?'admission':'playing',opponent:p.opponent,nextSeason:next,roundResult:result,elapsed:0,duration,admissionElapsed:0,cursor:0,timeline,score:[0,0],scorers:this.createScorers(timeline),lineup:s.roster.filter(p=>p.starter).map(p=>p.id),lastGoal:-100,lastGoalOurs:true,spawnClock:0,spawned:0,admitted:0,ticketRevenue:0};
+    t.stadium.audience=[];s.preparation--;this.emit('stadiumStart',p.isHome?'Estádio recebendo a torcida. A arena continua funcionando.':`Jogo fora de casa contra ${p.opponent}. A arena continua funcionando.`);
+    return{ok:true,playerMatch:result.playerMatch,roundResult:result,venue:t.stadium.match.venue};
+  }
+  updateStadium(dt){
+    const s=this.state,t=s.tycoon,st=t.stadium,m=st.match;
+    if(!m){for(const a of [...st.audience]){if(a.phase==='leaving'&&advanceMapActor(a,dt,180))st.audience=st.audience.filter(x=>x!==a);}return;}
+    const pos=s.map.placements.stadium,entry=structureEntry('stadium',pos),audience=st.audience;
+    for(const a of audience)if(a.phase==='approach'&&advanceMapActor(a,dt,180)){
+      a.phase='seated';m.admitted++;const price=16+facilityStage(s.facilities.stadium).phase*3;
+      m.ticketRevenue+=price;super.addRevenue(price);this.emit('stadiumTicket',`Ingresso do estádio: +${price} moedas no caixa.`);
+    }
+    if(m.phase==='admission'){
+      m.admissionElapsed+=dt;m.spawnClock+=dt;
+      const target=Math.min(stadiumSeats(s),8+Math.floor((s.facilities.marketing||0)*.6));
+      if(m.spawnClock>=.75&&m.spawned<target){
+        m.spawnClock=0;const start={x:852,y:80},route=worldPath(s,start,entry);
+        if(route.length){audience.push({id:++m.spawned,x:start.x,y:start.y,walk:0,route,phase:'approach',seat:m.spawned-1});}
+      }
+      if((m.admitted>=4&&m.admissionElapsed>=6)||(m.admitted>0&&m.admissionElapsed>=20)){m.phase='playing';this.emit('start',`ESTÁDIO · ${s.club.sigla} (VOCÊ) × ${m.opponent}`);}
+      else if(m.admissionElapsed>=35){s.preparation=Math.min(3,s.preparation+1);st.match=null;st.audience=[];this.emit('warning','Acesso ao estádio bloqueado. O preparo foi devolvido.');return;}
+    } else {
+      m.elapsed=Math.min(m.duration,m.elapsed+dt);
+      while(m.cursor<m.timeline.length&&m.timeline[m.cursor].at<=m.elapsed){
+        const index=m.cursor++,g=m.timeline[index];m.score[g.ours?0:1]++;m.lastGoal=s.t;m.lastGoalOurs=g.ours;
+        if(g.ours){const p=m.scorers[index];if(p){p.counted=true;this.recordScorer(p);}this.emit('stadiumGoal',`GOOOL DO ${s.club.sigla}! ${p?.name||'Seu time'} · ${m.score[0]} × ${m.score[1]}`);}
+        else this.emit('stadiumConceded',`GOL SOFRIDO · ${m.opponent} · ${s.club.sigla} ${m.score[0]} × ${m.score[1]}`);
+      }
+      if(m.elapsed>=m.duration){
+        const p=matchPerspective(m.roundResult.playerMatch),div=s.season.divisionIndex;
+        const reward=Math.floor((p.result==='win'?150+div*80:p.result==='draw'?60+div*30:20)*(1+s.facilities.stadium*.025));
+        s.season=m.nextSeason;s.career.totalMatches++;s.stats.matches++;t.counters.stadiumGames++;
+        if(p.result==='win'){s.career.totalWins++;t.counters.wins++;}
+        for(const id of m.lineup)if(t.people[id])t.people[id].played++;
+        this.credit(reward);st.last={venue:m.venue,phase:'finished',opponent:m.opponent,score:[...m.score],elapsed:m.duration,duration:m.duration,lastGoal:m.lastGoal,lastGoalOurs:m.lastGoalOurs,admitted:m.admitted,ticketRevenue:m.ticketRevenue};
+        const text=`${p.result==='win'?'VITÓRIA':p.result==='draw'?'EMPATE':'DERROTA'} · ${s.club.sigla} ${p.own} × ${p.against} · +${reward} moedas`;
+        st.match=null;for(const a of st.audience){a.phase='leaving';a.x=entry.x+(a.seat%4)*8;a.y=entry.y+Math.floor(a.seat/4)*6;a.route=worldPath(s,a,{x:852,y:90});}tycoonRecord(s,text,'match');this.emit('stadiumResult',text);
+      }
+    }
+  }
+  nextSeason(){
+    if(this.state.tycoon.stadium.match)return{ok:false,reason:'A partida oficial ainda está em andamento.'};
+    const r=super.nextSeason();if(r.ok){for(const p of this.state.market)p.cost=athleteBuyQuote(p);this.state.tycoon.completedContracts=this.state.tycoon.completedContracts.slice(-30);}return r;
+  }
+  tick(delta,input={x:0,z:0}){
+    if(!Number.isFinite(delta)||delta<=0)return;
+    const s=this.state,t=ensureTycoon(s),training=s.map.training?{...s.map.training,ids:[...s.map.training.ids]}:null;
+    const ratings=training?new Map((training.kind==='youth'?s.youthList:s.roster).map(p=>[p.id,p.overall])):null;
+    super.tick(delta,input);
+    const dt=Math.min(.1,delta);
+    if(training&&!s.map.training){
+      for(const id of training.ids){const p=(training.kind==='youth'?s.youthList:s.roster).find(p=>p.id===id);if(p&&p.overall>(ratings.get(id)||p.overall)){t.counters.trained++;if(t.people[id])t.people[id].trainings++;rememberAthlete(s,id,`Concluiu treino e chegou à força ${p.overall}.`);if(training.kind==='youth')p.marketValue=athleteSellQuote(p);}}
+    }
+    this.updateCanteen(dt);this.updateStadium(dt);
+  }
+  tycoonCommand(name,id=''){
+    const map={food:()=>this.requestFood(),cook:()=>this.hireCook(),autoFood:()=>this.toggleFoodAutomation(),claim:()=>this.claimObjective(),partner:()=>this.acceptPartner(id),claimPartner:()=>this.claimPartner()};
+    return map[name]?map[name]():{ok:false,reason:'Ação de clube desconhecida.'};
+  }
+}
+
+
+// src/tycoon-save.js
+
+
+
+
+
+
+function readTycoonExtension(raw,s) {
+  if(raw===undefined){ensureTycoon(s);return s.tycoon;}
+  const fail=label=>{throw new Error(`Save inválido: clube 0.6 / ${label}.`);};
+  const obj=(v,label)=>{if(!v||typeof v!=='object'||Array.isArray(v))fail(label);return v;};
+  const num=(v,min,max,label,integer=false)=>{if(typeof v!=='number'||!Number.isFinite(v)||v<min||v>max||(integer&&!Number.isInteger(v)))fail(label);return v;};
+  const int=(v,max,label,min=0)=>num(v,min,max,label,true);
+  const str=(v,max,label)=>{if(typeof v!=='string'||v.length>max||!v.length)fail(label);return v;};
+  const list=(v,max,label)=>{if(!Array.isArray(v)||v.length>max)fail(label);return v;};
+  const bool=(v,label)=>{if(typeof v!=='boolean')fail(label);return v;};
+  const point=p=>{obj(p,'coordenada');return{x:num(p.x,-1100,2700,'x'),y:num(p.y,-1100,1200,'y')};};
+  const actor=a=>({...point(a),walk:0,route:list(a.route,500,'rota').map(point)});
+  const localPoint=p=>{obj(p,'ponto local');return{x:num(p.x,-25,25,'x local'),z:num(p.z,-25,25,'z local')};};
+  obj(raw,'estrutura');if(raw.version!==1)fail('versão');const t=emptyTycoon();
+  obj(raw.counters,'contadores');for(const k of Object.keys(t.counters))t.counters[k]=int(raw.counters[k],1e12,k);
+  const c=obj(raw.canteen,'lanchonete');t.canteen={stock:int(c.stock,restaurantCapacity(s),'estoque'),cook:bool(c.cook,'atendente'),autoRestock:bool(c.autoRestock,'automação'),clock:0,nextGuest:int(c.nextGuest,1e12,'sequência',1),guests:[],shipment:null};
+  if(t.canteen.autoRestock&&(!t.canteen.cook||s.facilities.canteen<7))fail('automação indisponível');
+  t.canteen.guests=list(c.guests,6,'clientes').map(g=>{
+    if(!['approach','queue'].includes(g.phase))fail('etapa do cliente');
+    const fanId=int(g.fanId,1e12,'torcedor',1);if(!s.fans.some(f=>f.id===fanId&&f.phase==='going'))fail('cliente sem torcedor');
+    return{...actor(g),id:int(g.id,t.canteen.nextGuest-1,'cliente',1),fanId,phase:g.phase,wait:num(g.wait,0,21,'espera'),service:num(g.service,0,10,'atendimento'),resume:list(g.resume,300,'rota retomada').map(localPoint)};
+  });
+  if(new Set(t.canteen.guests.map(g=>g.fanId)).size!==t.canteen.guests.length)fail('cliente duplicado');
+  if(c.shipment){obj(c.shipment,'entrega');const amount=int(c.shipment.amount,12,'quantidade',1);if(t.canteen.stock+amount>restaurantCapacity(s))fail('entrega acima da capacidade');t.canteen.shipment={...actor(c.shipment),amount,cost:int(c.shipment.cost,24,'custo')};if(t.canteen.shipment.cost!==amount*2)fail('custo de entrega');}
+  if((t.canteen.stock||t.canteen.shipment||t.canteen.guests.length)&&!s.facilities.canteen)fail('lanchonete ausente');
+  obj(raw.people,'biografias');const allowed=new Set([...s.roster,...s.youthList].map(p=>p.id));
+  if(Object.keys(raw.people).length>104)fail('quantidade de biografias');
+  for(const [id,bio]of Object.entries(raw.people)){
+    if(['__proto__','constructor','prototype'].includes(id)||!allowed.has(id))continue;
+    obj(bio,'biografia');if(!['base','market','club'].includes(bio.origin))fail('origem');
+    t.people[id]={origin:bio.origin,startRating:int(bio.startRating,99,'força inicial',1),played:int(bio.played,1e9,'jogos do atleta'),goals:int(bio.goals,1e9,'gols do atleta'),trainings:int(bio.trainings,1e9,'treinos do atleta'),events:list(bio.events,6,'eventos').map(e=>({text:str(e.text,180,'evento'),t:int(e.t,1e9,'tempo do evento')}))};
+  }
+  t.claimed=list(raw.claimed,1024,'conquistas').map(id=>str(id,80,'conquista'));if(new Set(t.claimed).size!==t.claimed.length)fail('conquista repetida');
+  t.completedContracts=list(raw.completedContracts,60,'contratos').map(id=>str(id,80,'contrato'));if(new Set(t.completedContracts).size!==t.completedContracts.length)fail('contrato repetido');
+  if(raw.partner){const p=obj(raw.partner,'parceiro');if(!CLUB_CONTRACTS.some(d=>d.id===p.id))fail('parceiro');const token=str(p.token,80,'token de contrato');if(t.completedContracts.includes(token))fail('contrato já recebido');t.partner={id:p.id,token,start:int(p.start,1e12,'início de contrato')};}
+  t.recordSequence=int(raw.recordSequence,1e12,'sequência de eventos',1);
+  t.recentEvents=list(raw.recentEvents,16,'eventos do clube').map(e=>({id:int(e.id,t.recordSequence-1,'evento',1),text:str(e.text,250,'texto'),kind:str(e.kind,24,'tipo'),t:int(e.t,1e9,'tempo')}));
+  const cleanScorer=p=>{if(p===null)return null;obj(p,'artilheiro');const id=str(p.id,120,'id artilheiro');if(!allowed.has(id))fail('artilheiro fora do elenco');return{id,name:str(p.name,80,'nome'),counted:bool(p.counted,'gol contado')};};
+  t.arenaScorers=list(raw.arenaScorers||[],200,'gols da arena').map(cleanScorer);
+  t.arenaLineup=list(raw.arenaLineup||[],11,'titulares da arena').map(id=>str(id,120,'titular'));
+  if(!s.official){t.arenaScorers=[];t.arenaLineup=[];}
+  const stadium=obj(raw.stadium,'estádio');
+  if(stadium.last){const m=obj(stadium.last,'último jogo');t.stadium.last={venue:m.venue==='away'?'away':'stadium',phase:'finished',opponent:str(m.opponent,80,'rival'),score:list(m.score,2,'placar').map(v=>int(v,100,'gol')),elapsed:CFG.match.duration,duration:CFG.match.duration,lastGoal:num(m.lastGoal,-100,s.t,'último gol'),lastGoalOurs:bool(m.lastGoalOurs,'lado do gol'),admitted:int(m.admitted,40,'público'),ticketRevenue:int(m.ticketRevenue,2000,'bilheteria')};if(t.stadium.last.score.length!==2)fail('placar');}
+  if(stadium.match){
+    const m=obj(stadium.match,'partida');if(s.official)fail('duas partidas oficiais');if(!s.facilities.stadium||!s.map.placements.stadium)fail('estádio ausente');
+    if(!['stadium','away'].includes(m.venue)||!['admission','playing'].includes(m.phase))fail('local da partida');
+    const next=cleanSeason(m.nextSeason),r=next.rounds[s.season.currentRound-1];
+    if(s.season.finished||next.divisionIndex!==s.season.divisionIndex||!r?.played)fail('rodada independente');
+    // Only the one current round may differ from the previously committed season.
+    for(let i=0;i<s.season.rounds.length;i++)if(i!==s.season.currentRound-1&&JSON.stringify(s.season.rounds[i])!==JSON.stringify(next.rounds[i]))fail('rodada alterada');
+    const results=r.matches.map(a=>{const h=next.clubs.find(c=>c.id===a.homeId),v=next.clubs.find(c=>c.id===a.awayId);return{...a,roundNumber:r.roundNumber,homeName:h.name,awayName:v.name,homeSigla:h.sigla,awaySigla:v.sigla,isPlayerMatch:h.isPlayer||v.isPlayer,isPlayerHome:h.isPlayer};});
+    const pm=results.find(a=>a.isPlayerMatch),own=pm.homeId==='player'?pm.homeScore:pm.awayScore,against=pm.homeId==='player'?pm.awayScore:pm.homeScore;
+    const timeline=list(m.timeline,200,'linha do tempo').map(g=>({at:num(g.at,0,CFG.match.duration,'instante gol'),ours:bool(g.ours,'autor gol')}));
+    if(timeline.filter(g=>g.ours).length!==own||timeline.filter(g=>!g.ours).length!==against||timeline.some((g,i)=>i&&g.at<=timeline[i-1].at))fail('linha do tempo incompatível');
+    const elapsed=num(m.elapsed,0,CFG.match.duration,'tempo de jogo'),cursor=int(m.cursor,timeline.length,'cursor');
+    if(cursor!==timeline.filter(g=>g.at<=elapsed).length)fail('cursor dos gols');
+    const scorers=list(m.scorers,200,'artilheiros').map(cleanScorer);if(scorers.length!==timeline.length)fail('artilheiros por gol');
+    const lineup=list(m.lineup,11,'titulares').map(id=>str(id,120,'titular'));if(lineup.length!==11||new Set(lineup).size!==11||lineup.some(id=>!s.roster.some(p=>p.id===id)))fail('escalação da partida');
+    const score=[timeline.slice(0,cursor).filter(g=>g.ours).length,timeline.slice(0,cursor).filter(g=>!g.ours).length];
+    if(m.phase==='admission'&&(elapsed!==0||cursor!==0))fail('gols antes de começar');
+    t.stadium.match={venue:m.venue,phase:m.phase,opponent:str(m.opponent,80,'adversário'),nextSeason:next,roundResult:{roundNumber:r.roundNumber,results,playerMatch:pm,finished:next.finished},elapsed,duration:CFG.match.duration,admissionElapsed:num(m.admissionElapsed,0,36,'tempo de entrada'),cursor,timeline,score,scorers,lineup,lastGoal:num(m.lastGoal,-100,s.t,'gol recente'),lastGoalOurs:bool(m.lastGoalOurs,'lado gol'),spawnClock:num(m.spawnClock,0,1,'entrada'),spawned:int(m.spawned,40,'visitantes'),admitted:int(m.admitted,40,'torcedores'),ticketRevenue:int(m.ticketRevenue,2000,'ingressos')};
+    t.stadium.audience=list(stadium.audience||[],40,'público').map(a=>{if(!['approach','seated'].includes(a.phase))fail('estado da torcida');return{...actor(a),id:int(a.id,40,'torcedor estádio',1),phase:a.phase,seat:int(a.seat,39,'assento')};});
+    if(new Set(t.stadium.audience.map(a=>a.id)).size!==t.stadium.audience.length||t.stadium.match.admitted!==t.stadium.audience.filter(a=>a.phase==='seated').length)fail('público duplicado');
+  }
+  if(!stadium.match){t.stadium.audience=list(stadium.audience||[],40,'torcida saindo').map(a=>{if(a.phase!=='leaving')fail('torcida sem partida');return{...actor(a),id:int(a.id,40,'torcedor estádio',1),phase:'leaving',seat:int(a.seat,39,'assento')};});}
+  t.economyMigrated=true;s.tycoon=t;ensureTycoon(s);return t;
+}
+function validateTycoonState(raw) {
+  const s=validateState(raw);s.tycoon=readTycoonExtension(raw.tycoon,s);return s;
+}
+function encodeTycoonSave(state,writer='export') {
+  const clean=validateTycoonState(state),savedAt=Date.now();clean.savedAt=savedAt;
+  const text=JSON.stringify({format:'arena-de-bairro',version:1,savedAt,writer,state:clean});
+  if(new TextEncoder().encode(text).length>CFG.maxSaveBytes)throw new Error('Save excedeu o limite. Exporte um backup e reporte o problema.');
+  return text;
+}
+function decodeTycoonSave(text) {
+  if(typeof text!=='string'||new TextEncoder().encode(text).length>CFG.maxSaveBytes)throw new Error('Save ausente ou grande demais.');
+  let data;try{data=JSON.parse(text);}catch{throw new Error('Arquivo sem JSON válido.');}
+  if(data?.format!=='arena-de-bairro'||data.version!==1)throw new Error('Formato de save não suportado.');
+  return validateTycoonState(data.state);
+}
+class TycoonSaveStore extends SaveStore {
+  load(){
+    try{
+      this.lastRaw=this.storage.getItem(this.saveKey);if(!this.lastRaw)return{state:newGame(),message:'',status:'new'};
+      try{return{state:decodeTycoonSave(this.lastRaw),message:'Clube recuperado. Economia 0.6 ativa; saldo anterior preservado.',status:'loaded'};}
+      catch{const backup=this.storage.getItem(this.backupKey);if(backup)try{return{state:decodeTycoonSave(backup),message:'Backup anterior recuperado. O arquivo inválido foi preservado.',status:'recovered'};}catch{/* preserve both originals */}this.writable=false;return{state:newGame(),status:'invalid',message:'Save inválido preservado. Importe um backup ou reinicie somente este perfil.'};}
+    }catch{this.writable=false;return{state:newGame(),status:'unavailable',message:'Armazenamento indisponível. Exporte seu progresso antes de sair.'};}
+  }
+  save(state,force=false){
+    if(!this.writable&&!force)return{ok:false,reason:'Save bloqueado. Exporte o progresso.'};
+    try{const current=this.storage.getItem(this.saveKey);if(!force&&current!==this.lastRaw){this.writable=false;return{ok:false,conflict:true,reason:'Outra aba alterou este perfil. Recarregue para não sobrescrever.'};}
+      const text=encodeTycoonSave(state,this.writer);
+      if(current)try{decodeTycoonSave(current);this.storage.setItem(this.backupKey,current);}catch{/* keep last valid backup */}
+      this.storage.setItem(this.saveKey,text);this.lastRaw=text;this.writable=true;return{ok:true};
+    }catch(error){return{ok:false,reason:`Não foi possível salvar: ${error.message}. Exporte um backup.`};}
+  }
+}
+
+
+// src/tycoon-ui.js
+
+
+
+
+
+
+
+
+const tcButton=(label,action,id='',disabled=false,cls='')=>`<button type="button" class="action-button ${cls}" data-action="${action}" data-id="${escapeText(id)}" ${disabled?'disabled':''}>${label}</button>`;
+class TycoonUI extends WorldUI {
+  constructor(actions,renderer){
+    super(actions,renderer);document.title='Arena de Bairro · Clube Vivo 0.6';this.gestureDown=false;this.lastFoodStatus='';
+    const dock=document.querySelector('.sports-dock')||document.querySelector('.travel-dock');
+    if(dock){const b=document.createElement('button');b.type='button';b.dataset.tab='life';b.textContent='Clube vivo';dock.append(b);}
+    const note=document.createElement('section');note.className='tycoon-operation-note';
+    note.innerHTML='<b>Este painel é apenas a operação inicial.</b><p>Terrenos, lanchonete, CT, base, estádio e departamentos evoluem no próprio mapa.</p>'+tcButton('VER A PRÓXIMA CONQUISTA →','tycoon:goObjective');
+    document.getElementById('upgrade-grid').before(note);
+    const claim=document.createElement('button');claim.type='button';claim.id='tycoon-claim';claim.dataset.action='tycoon:claim';claim.className='tycoon-claim';claim.hidden=true;
+    document.querySelector('.mission-card').append(claim);
+    document.addEventListener('pointerdown',e=>{if(e.target.closest('dialog,#world-inspector'))this.gestureDown=true;},true);
+    window.addEventListener('pointerup',()=>{this.gestureDown=false;this.renderKey='';this.inspectorKey='';},true);
+    window.addEventListener('pointercancel',()=>{this.gestureDown=false;},true);
+    window.addEventListener('blur',()=>{this.gestureDown=false;},true);
+    document.addEventListener('click',e=>{
+      const b=e.target.closest('[data-action]');if(!b||b.disabled)return;
+      if(b.dataset.action==='tycoon:goObjective'){e.preventDefault();e.stopImmediatePropagation();this.goObjective();}
+      if(b.dataset.action==='tycoon:share'){e.preventDefault();e.stopImmediatePropagation();void this.exportClubCard(b.dataset.id);}
+    },true);
+    document.getElementById('navigate-button').addEventListener('click',e=>{e.stopImmediatePropagation();this.goObjective();},true);
+  }
+  get paused(){return this.dialogs.some(d=>d.open && d.id!=='sports-dialog');}
+  get inputBlocked(){return this.dialogs.some(d=>d.open);}
+  goObjective(){
+    if(!this.state)return;const g=clubObjective(this.state);let focus=g.focus;if(focus==='field0'&&this.state.player.carry<1)focus='supply';this.close();
+    if(focus==='league')this.openSports('league');
+    else if(focus==='operation')this.open('upgrade-dialog');
+    else if(['supply','field0','gate','cash'].includes(focus))this.actions.travel(focus);
+    else this.actions.focus(focus);
+  }
+  showEvent(e){
+    const independent=this.state?.tycoon?.stadium.match;
+    if(['goal','conceded'].includes(e.type)&&(independent||performance.now()<(this.officialAlertUntil||0)))return;
+    if(['stadiumGoal','stadiumConceded','stadiumResult'].includes(e.type))this.officialAlertUntil=performance.now()+5000;
+    const types={stadiumGoal:'goal',stadiumConceded:'conceded',stadiumResult:'officialResult',stadiumStart:'start'};
+    super.showEvent({...e,type:types[e.type]||e.type});
+    if(['milestone','contract','foodOrder','foodDelivery','newEra','warning'].includes(e.type))this.toast(e.text,7);
+  }
+  update(s,force=false){
+    ensureTycoon(s);super.update(s,force);
+    const g=clubObjective(s),idx=TYCOON_GOALS.findIndex(x=>x.id===g.id);
+    this.nodes['mission-title'].textContent=g.title;this.nodes['mission-text'].textContent=g.text;
+    this.nodes['mission-count'].textContent=idx<0?'NOVA TEMPORADA':`${idx+1}/${TYCOON_GOALS.length}`;
+    this.nodes['mission-progress'].style.width=`${Math.min(100,g.value/g.target*100)}%`;
+    const claim=document.getElementById('tycoon-claim');if(claim){const done=this.state.tycoon.claimed.includes(g.id);claim.hidden=!g.complete||done;claim.disabled=!g.complete||done;claim.textContent=`RECEBER ${g.reward} MOEDAS ✓`;}
+    this.nodes['navigate-button'].hidden=g.complete&&!s.tycoon.claimed.includes(g.id);
+    document.getElementById('upgrade-button').innerHTML='<span>↗</span> OPERAÇÃO';
+    if(s.tycoon.stadium.match){const m=s.tycoon.stadium.match;document.getElementById('preparation-status').textContent=m.phase==='admission'?'TORCIDA ENTRANDO':`OFICIAL ${m.score[0]} × ${m.score[1]}`;}
+    for(const food of document.querySelectorAll('[data-tycoon-food-live]'))food.textContent=`${s.tycoon.canteen.stock}/${restaurantCapacity(s)} lanches · ${s.tycoon.canteen.guests.length} clientes · ${s.tycoon.counters.served} atendidos`;
+    const progress=document.getElementById('tycoon-contract-progress');if(progress){const p=partnerProgress(s);progress.textContent=p?`${p.value}/${p.target} · ${p.complete?'PRONTO PARA RECEBER':'EM ANDAMENTO'}`:'';}
+  }
+  renderSports(s){
+    const focused=document.activeElement;
+    if(this.gestureDown || (focused && /INPUT|TEXTAREA|SELECT/.test(focused.tagName) && focused.closest('#sports-content'))){this.renderKey='';return;}
+    const titles={team:'Elenco & Treinamento',league:'Campeonato & Resultados',youth:'Categoria de Base',market:'Mercado de Jogadores',board:'Diretoria & Identidade',life:'Clube vivo · Operação e conquistas'};
+    document.getElementById('sports-title').textContent=titles[this.activeTab]||'Instalações do clube';
+    document.getElementById('sports-meta').textContent=`${s.club.name} · ${formatNumber(s.wallet)} moedas · Preparo ${s.preparation}/3`;
+    this.patchHTML(document.getElementById('sports-tabs'),[['team','Elenco'],['league','Tabela'],['youth','Base'],['market','Mercado'],['facilities','Instalações'],['land','Terrenos'],['board','Diretoria'],['life','Clube vivo']].map(([id,label])=>`<button data-tab="${id}" class="${this.activeTab===id?'active':''}">${label}</button>`).join(''));
+    let html='';
+    if(this.activeTab==='team')html=this.teamHTML(s);
+    else if(this.activeTab==='youth')html=this.youthHTML(s);
+    else if(this.activeTab==='league')html=this.leagueHTML(s);
+    else if(this.activeTab==='life')html=this.lifeHTML(s);
+    else if(this.activeTab==='market')html=`<p class="tycoon-info">Mercado reequilibrado: comprar e revender sem desenvolver gera prejuízo. O atleta é avaliado pelos atributos, não pelo botão usado para transferi-lo.</p><p>Contratados chegam à reserva. Limite: 30 jogadores. ${s.departmentTimers.market>0?`Renovação em ${Math.ceil(s.departmentTimers.market)}s de jogo.`:''}</p>${tcButton('Renovar ofertas · 60 moedas','refresh','',s.wallet<60||s.departmentTimers.market>0)}<div class="sports-grid">${s.market.map(p=>`<article class="sports-card">${this.athleteHeader(p)}${tcButton(`Contratar · ${formatNumber(p.cost)} moedas`,'hire',p.id,s.wallet<p.cost||s.roster.length>=30)}</article>`).join('')}</div>`;
+    else if(this.activeTab==='board')html=`<div class="sports-grid">${['board','marketing','coaching'].map(id=>this.facilityHTML(s,id)).join('')}</div><h3>Identidade do clube</h3><div class="tactics"><label>Nome<input id="club-name" maxlength="30" value="${escapeText(s.club.name)}"></label><label>Sigla<input id="club-sigla" maxlength="4" value="${escapeText(s.club.sigla)}"></label>${tcButton('Salvar identidade','club')}</div><h3>Marketing do clube</h3><p>Campanha temporária traz mais procura por 2 minutos de jogo. Invista também na capacidade de atendimento.</p>${tcButton(s.departmentTimers.campaign>0?'Campanha ativa':'Iniciar campanha · 100 moedas','campaign','',s.departmentTimers.campaign>0||!s.facilities.marketing||s.wallet<100)}${this.partnersHTML(s)}`;
+    else html=`<p>Selecione as instalações e terrenos diretamente no mapa.</p><div class="sports-grid">${Object.keys(FACILITIES).map(id=>this.facilityHTML(s,id)).join('')}</div>`;
+    this.patchHTML(document.getElementById('sports-content'),'<p class="tycoon-live-note">● O clube continua funcionando enquanto você administra. O menu de pausa interrompe o jogo.</p>'+html);
+  }
+  patchHTML(root,html){
+    // A tiny, local DOM reconciler preserves button identity and focus while
+    // money/timers change. Delegated handlers remain attached to document.
+    if(root.dataset.tycoonHtml===html)return;
+    const template=document.createElement('template');template.innerHTML=html;
+    const patch=(parent,wanted)=>{
+      const target=[...wanted.childNodes];
+      for(let i=0;i<target.length;i++){
+        const fresh=target[i];let live=parent.childNodes[i];
+        if(!live){parent.append(fresh.cloneNode(true));continue;}
+        if(live.nodeType!==fresh.nodeType||live.nodeName!==fresh.nodeName){live.replaceWith(fresh.cloneNode(true));continue;}
+        if(live.nodeType===3){if(live.nodeValue!==fresh.nodeValue)live.nodeValue=fresh.nodeValue;continue;}
+        if(live.nodeType!==1)continue;
+        for(const a of [...live.attributes])if(!fresh.hasAttribute(a.name)&&!(a.name==='open'&&live.tagName==='DETAILS'))live.removeAttribute(a.name);
+        for(const a of [...fresh.attributes])if(!(a.name==='open'&&live.tagName==='DETAILS')&&live.getAttribute(a.name)!==a.value)live.setAttribute(a.name,a.value);
+        patch(live,fresh);
+      }
+      while(parent.childNodes.length>target.length)parent.lastChild.remove();
+    };
+    patch(root,template.content);root.dataset.tycoonHtml=html;
+  }
+  renderInspector(s,force=false){
+    if(this.gestureDown){this.inspectorKey='';return;}
+    super.renderInspector(s,force);
+    const r=this.worldRenderer,root=document.querySelector('.world-inspector-body');if(!r||!root)return;
+    if(r.selection?.kind==='building'&&r.selection.id==='canteen'&&!r.placement){
+      let box=root.querySelector('.tycoon-canteen-tools');if(!box){box=document.createElement('section');box.className='tycoon-canteen-tools';root.append(box);}
+      const c=s.tycoon.canteen,key=JSON.stringify([c.stock,!!c.shipment,c.cook,c.autoRestock,c.guests.length,s.wallet,s.facilities.canteen,s.map.construction.length]);
+      if(box.dataset.key!==key){box.dataset.key=key;this.patchHTML(box,this.canteenHTML(s));}
+    }
+    if(r.selection?.kind==='building'&&r.selection.id==='stadium'&&!root.querySelector('.tycoon-venue-note'))root.insertAdjacentHTML('beforeend','<p class="tycoon-venue-note">O estádio tem placar e bilheteria próprios. Partidas locais continuam na arena durante o jogo oficial. Fora de casa não há receita de ingressos.</p>');
+  }
+  athleteHeader(p){
+    const b=this.state?.tycoon?.people[p.id];return super.athleteHeader(p)+(b?`<p class="tycoon-player-story">${b.origin==='base'?'🌱 FORMADO NA BASE':b.origin==='market'?'🤝 CONTRATADO':'⚽ ATLETA DO CLUBE'}<br>${b.played} jogos oficiais · ${b.goals} gols · ${b.trainings} evoluções<br><small>Histórico registrado desde a atualização 0.6</small></p>`:'');
+  }
+  teamHTML(s){
+    const locked=!!(s.official||s.tycoon.stadium.match),cap=s.roster.find(p=>p.id===s.tactics.captainId),team=trainingQuote(s,'team');
+    const card=p=>{const q=trainingQuote(s,'player',p.id),bio=s.tycoon.people[p.id];return `<article class="sports-card">${this.athleteHeader(p)}<div class="card-actions">${tcButton(`Treinar · ${q.coins} moedas + 1 kit`,'train',p.id,locked||!q.ok)}${p.starter?tcButton(p.id===s.tactics.captainId?'Capitão ✓':'Dar faixa','captain',p.id,locked):tcButton('Escalar ⇄','sub',p.id,locked)}${!p.starter?tcButton(`Vender · +${athleteSellQuote(p)}`,'sell',p.id,s.map.training?.ids.includes(p.id)):''}${tcButton('Cartão do atleta ↗','tycoon:share',p.id)}</div>${bio?.events.length?`<details><summary>História no clube</summary>${bio.events.map(e=>`<p>${escapeText(e.text)}</p>`).join('')}</details>`:''}</article>`;};
+    return `<section class="training-resources"><b>Desenvolvimento com moedas, kits e tempo</b><p>CT: ${s.map.ctKits} kits. ${escapeText(locked?'Partida oficial em andamento.':team.reason||'Os titulares podem treinar.')}</p>${tcButton(`Treinar titulares · ${team.coins} moedas + ${team.kits} kits`,'tycoon:teamTraining','',locked||!team.ok)}<button class="action-button" data-look="training">VER E ABASTECER O CT ↗</button></section><div class="tactics"><label>Formação<select id="tactic-formation" ${locked?'disabled':''}>${['4-4-2','4-3-3','3-5-2','5-3-2'].map(f=>`<option ${f===s.tactics.formation?'selected':''}>${f}</option>`).join('')}</select></label><label>Postura<select id="tactic-posture" ${locked?'disabled':''}>${['equilibrada','ofensiva','defensiva'].map(f=>`<option ${f===s.tactics.posture?'selected':''}>${f}</option>`).join('')}</select></label><p>Capitão: <b>${escapeText(cap?.name||'Nenhum')}</b></p></div><h3>Titulares</h3><div class="sports-grid">${getStarters(s.roster).map(card).join('')}</div><h3>Reservas (${getReserves(s.roster).length})</h3><div class="sports-grid">${getReserves(s.roster).map(card).join('')}</div><section class="team-footer-actions">${tcButton('Reiniciar carreira mantendo os atletas','resetTeam','',locked||!!s.map.training)}</section>`;
+  }
+  youthHTML(s){
+    const cost=academyIntakeQuote(s),locked=!!(s.official||s.tycoon.stadium.match);
+    return `<p class="tycoon-info">O jovem conserva sua história e seu valor de venda ao ser promovido. Treinar melhora os atributos; jogos registram partidas e gols. Promover sozinho não cria moedas.</p><div class="sports-grid">${this.facilityHTML(s,'youth')}${this.facilityHTML(s,'training')}</div><div class="inline-actions">${tcButton(`Organizar peneira · ${formatNumber(cost)} moedas`,'scout','',!s.facilities.youth||s.wallet<cost||s.departmentTimers.scout>0)}<button class="action-button" data-look="youth">VER CAMPO DA BASE ↗</button></div><div class="sports-grid">${s.youthList.length?s.youthList.map(p=>{const q=trainingQuote(s,'youth',p.id);return `<article class="sports-card">${this.athleteHeader(p)}${tcButton(`Treinar · ${q.coins} moedas + 1 kit`,'trainYouth',p.id,locked||!q.ok)}${tcButton('Promover ao profissional','promote',p.id,s.roster.length>=30||s.map.training?.ids.includes(p.id))}${tcButton(`Vender · +${athleteSellQuote(p)} moedas`,'sellYouth',p.id,s.map.training?.ids.includes(p.id))}</article>`;}).join(''):'<p>Seu próximo ídolo pode começar aqui. Construa a base e organize uma peneira.</p>'}</div>`;
+  }
+  leagueHTML(s){
+    const m=s.tycoon.stadium.match,venue=tycoonVenue(s),view={...s,official:m||s.official,fields:[{...s.fields[0],remaining:venue?0:s.fields[0].remaining},s.fields[1]]};
+    const title=m?`${m.venue==='away'?'FORA DE CASA':'NO SEU ESTÁDIO'} · ${s.club.sigla} ${m.score[0]} × ${m.score[1]} ${m.opponent}`:venue?'ESTÁDIO INDEPENDENTE · A ARENA CONTINUA FUNCIONANDO':'OFICIAIS NO CAMPO 1 · CONSTRUA SEU ESTÁDIO';
+    return `<section class="tycoon-match-strip"><b>${escapeText(title)}</b><p>${m?.phase==='admission'?`Torcida entrando: ${m.admitted} ingressos pagos.`:venue?'O placar oficial não substitui o placar das partidas locais.':'Até a construção do estádio, espere o Campo 1 ficar livre.'}</p>${m?.venue==='stadium'?`<span>${m.admitted}/${stadiumSeats(s)} torcedores · ${m.ticketRevenue} moedas em ingressos</span>`:''}</section>`+super.leagueHTML(view);
+  }
+  canteenHTML(s){
+    const c=s.tycoon.canteen,q=restaurantSupplyQuote(s),phase=facilityStage(s.facilities.canteen).phase;
+    return `<h3>Operação do balcão</h3><p data-tycoon-food-live>${c.stock}/${restaurantCapacity(s)} lanches · ${c.guests.length} clientes</p><p>Cada atendimento gera ${restaurantPrice(s)} moedas no caixa. Sem estoque ou atendimento, não há venda.</p>${tcButton(c.shipment?'Entrega de caixas a caminho':`Comprar ${q.amount} lanches · ${q.cost} moedas`,'tycoon:food','',!q.ok)}${!c.cook?tcButton('Contratar atendente · 180 moedas','tycoon:cook','',phase<2||s.wallet<180):'<p>✓ Atendente trabalhando no balcão.</p>'}${phase>=3?tcButton(`Reposição automática: ${c.autoRestock?'LIGADA':'DESLIGADA'}`,'tycoon:autoFood','',!c.cook):'<small>Fase 2: atendente. Fase 3: reposição automática paga.</small>'}<button class="action-button" data-world-action="walkBuilding" data-world-id="canteen">Levar gerente ao balcão</button>`;
+  }
+  partnersHTML(s){
+    const p=partnerProgress(s),t=s.tycoon;
+    return `<section class="tycoon-partners"><h3>Contratos fictícios do clube</h3><p>São objetivos da carreira. Não são anúncios, SDKs ou pagamentos reais.</p>${p?`<article class="sports-card"><h3>${p.name}</h3><p>${p.text}</p><strong id="tycoon-contract-progress">${p.value}/${p.target}</strong>${tcButton(`Receber ${p.reward} moedas`,'tycoon:claimPartner','',!p.complete)}</article>`:`<div class="sports-grid">${CLUB_CONTRACTS.map(d=>`<article class="sports-card"><h3>${d.name}</h3><p>${d.text}</p><b>Prêmio: ${d.reward} moedas</b>${tcButton(t.completedContracts.includes(`${s.career.seasonsPlayed}:${d.id}`)?'Concluído nesta temporada':'Aceitar contrato','tycoon:partner',d.id,!s.facilities.marketing||facilityStage(s.facilities.marketing).phase<d.phase||t.completedContracts.includes(`${s.career.seasonsPlayed}:${d.id}`))}</article>`).join('')}</div>`}</section>`;
+  }
+  lifeHTML(s){const g=clubObjective(s),c=s.tycoon.counters;return `<section class="tycoon-next"><small>PRÓXIMA CONQUISTA</small><h3>${g.title}</h3><p>${g.text}</p><progress max="${g.target}" value="${g.value}"></progress><p>${g.value}/${g.target}</p>${tcButton(g.complete?`Receber ${g.reward} moedas`:'Ir ao objetivo',g.complete?'tycoon:claim':'tycoon:goObjective')}</section><div class="tycoon-metrics"><span><b>${c.served}</b> lanches servidos</span><span><b>${c.trained}</b> atletas evoluídos</span><span><b>${c.stadiumGames}</b> jogos no novo ciclo</span><span><b>${c.promoted}</b> jovens promovidos</span></div><h3>Lanchonete · negócio dentro do mapa</h3>${s.facilities.canteen?this.canteenHTML(s):'<p>Selecione a lanchonete no mapa e conclua a obra para abrir o balcão.</p><button class="action-button" data-look="canteen">CONSTRUIR LANCHONETE ↗</button>'}${this.partnersHTML(s)}<h3>A história do clube</h3>${s.tycoon.recentEvents.length?s.tycoon.recentEvents.map(e=>`<p class="tycoon-journal">${escapeText(e.text)}</p>`).join(''):'<p>As próximas conquistas serão registradas aqui.</p>'}${tcButton('Gerar cartão do meu clube ↗','tycoon:share')}`;}
+  async exportClubCard(id=''){
+    try{
+      const s=this.state,p=s.roster.find(p=>p.id===id),bio=p?s.tycoon.people[p.id]:null;
+      const canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350;const c=canvas.getContext('2d');
+      c.fillStyle='#123e32';c.fillRect(0,0,1080,1350);
+      const game=document.getElementById('game');c.drawImage(game,0,0,game.width,game.height,0,180,1080,690);
+      const grad=c.createLinearGradient(0,630,0,980);grad.addColorStop(0,'#123e3200');grad.addColorStop(1,'#123e32');c.fillStyle=grad;c.fillRect(0,630,1080,350);
+      c.fillStyle='#ffedac';c.font='800 26px system-ui';c.fillText('ARENA DE BAIRRO · MINHA HISTÓRIA',60,75);
+      c.fillStyle='#fffbe9';c.font='900 48px system-ui';c.fillText(s.club.name.slice(0,30),60,138,960);
+      c.font='900 50px system-ui';c.fillText(p?p.name:'Do campinho ao estádio',60,965,950);
+      c.fillStyle='#d4e8bd';c.font='600 30px system-ui';
+      const lines=p?[`${bio?.origin==='base'?'Formado na minha base':'Atleta do meu clube'} · ${p.pos}`,`Força ${bio?.startRating||p.overall} → ${p.overall} · potencial ${p.potential}`,`${bio?.played||0} jogos oficiais · ${bio?.goals||0} gols`]:[`${s.career.seasonsPlayed} temporadas · ${s.career.trophies} títulos`,`${s.tycoon.counters.promoted} jovens promovidos`,`${s.tycoon.counters.served} clientes atendidos na lanchonete`];
+      lines.forEach((line,i)=>c.fillText(line,60,1035+i*53,950));
+      c.fillStyle='#b2ccb8';c.font='500 21px system-ui';c.fillText('Conquistas reais desta partida · sem ranking online',60,1280,950);
+      const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw new Error('Falha ao gerar imagem.');
+      const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=p?'arena-meu-atleta.png':'arena-meu-clube.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);this.toast('Cartão gerado no seu dispositivo. Compartilhe onde preferir.',6);
+    }catch(error){this.toast(`Não foi possível gerar o cartão: ${error.message}`,7);}
+  }
+}
+
+
+// src/tycoon-view.js
+
+
+
+
+
+
+
+class TycoonRenderer extends WorldRenderer {
+  draw(s,dt){ensureTycoon(s);super.draw(s,dt);}
+  drawHome(s,dt){
+    // Compatibility with the current procedural renderer, which reads `cash`.
+    // This is only a read view; all wallet/cash transactions stay in Simulation.
+    super.drawHome({...s,cash:s.cashDesk},dt);
+    if(this.simCityMode)this.drawProgressiveHomeStands(s);
+  }
+  drawProgressiveHomeStands(s){
+    const c=this.ctx,p=WORLD_STRUCTURES.stands,cap=seatCapacity(s),level=s.facilities.stands||0,stage=facilityStage(level),rows=Math.max(1,Math.ceil(cap/12));
+    c.save();c.fillStyle='#d5cca8';c.fillRect(p.x-p.w/2-28,p.y-57,p.w+56,124);
+    for(let row=0;row<rows;row++){
+      const y=p.y-10+row*14,count=Math.min(12,cap-row*12);c.fillStyle='#b7af8c';c.fillRect(p.x-p.w/2,y-5,p.w,12);
+      for(let n=0;n<count;n++){const x=p.x-p.w/2+16+n*28;c.fillStyle=n%3?'#215e49':'#edd894';c.fillRect(x-4,y-6,9,10);if(fieldFans(s,0).length>row*12+n){const jump=s.fields[0].lastGoalOurs&&s.t-s.fields[0].lastGoal<2.3?Math.abs(Math.sin(s.t*10+n))*5:0;this.actorSprite(x,y-jump,'torcedor-verde.png',20,s.t,jump>0);}}
+    }
+    if(stage.phase>=3){c.fillStyle='#1d5844';c.beginPath();c.moveTo(p.x-p.w/2-12,p.y-40);c.lineTo(p.x+p.w/2+12,p.y-40);c.lineTo(p.x+p.w/2+25,p.y-57);c.lineTo(p.x-p.w/2-25,p.y-57);c.closePath();c.fill();}
+    if(stage.phase>=4){c.fillStyle='#eff3cb';for(const x of[p.x-p.w/2-15,p.x+p.w/2+15]){c.fillRect(x-2,p.y-46,4,64);c.fillRect(x-10,p.y-50,20,7);}}
+    this.plate(p.x-120,p.y+51,240,25,`${cap} LUGARES · ${level?`FASE ${stage.phase}`:'ARQUIBANCADA INICIAL'}`,'#fbe8a1',11);
+    this.hot('building','stands',p.x-p.w/2-16,p.y-58,p.w+32,135);c.restore();
+  }
+  pitch(s,id,p,stage){
+    if(id!=='stadium'){super.pitch(s,id,p,stage);return;}
+    const display=stadiumDisplay(s),m=s.tycoon.stadium.match;
+    const field=display?{...s.fields[0],...display}:{...s.fields[0],score:[0,0],remaining:0,lastGoal:-100,lastGoalOurs:true};
+    super.pitch({...s,fields:[field,s.fields[1]],official:null},id,p,stage);
+    const sp=WORLD_STRUCTURES[id],y=p.y-sp.h*.71/2;
+    this.plate(p.x-215,y-111,430,32,`${s.club.sigla} (VOCÊ) ${field.score[0]} × ${field.score[1]} ${display?.opponent||'ADVERSÁRIO'}`,'#f8eba4',13);
+    if(m?.venue==='stadium'){const width=sp.w*.84,height=sp.h*.71;for(const a of s.tycoon.stadium.audience.filter(a=>a.phase==='seated')){const row=Math.floor(a.seat/12),x=p.x-width/2+12+(a.seat%12)*(width-24)/11,yy=p.y+height/2+20+row*14;const jump=m.lastGoalOurs&&s.t-m.lastGoal<2.5?Math.abs(Math.sin(s.t*12+a.seat))*5:0;this.actorSprite(x,yy-jump,'torcedor-verde.png',19,s.t,jump>0);}}
+    this.plate(p.x-240,y-146,480,29,m?(m.venue==='away'?'FORA DE CASA · ACOMPANHAMENTO DA RODADA':m.phase==='admission'?`ESTÁDIO · TORCIDA ENTRANDO ${m.admitted}`:`ESTÁDIO · ${Math.ceil(m.duration-m.elapsed)}s`):'ESTÁDIO PRÓPRIO · ARENA LIVRE PARA OPERAR','#cfebc5',12);
+    if(m?.venue==='stadium')this.plate(p.x-200,p.y+sp.h/2+104,400,28,`${m.admitted} INGRESSOS PAGOS · ${m.ticketRevenue} MOEDAS`,'#efe4ae',12);
+  }
+  drawActors(s){
+    super.drawActors(s);const t=ensureTycoon(s),c=t.canteen,pos=s.map.placements.canteen;
+    if(c.shipment){const a=c.shipment;this.actorSprite(a.x,a.y,'roupeiro.png',42,s.t,a.walk>1);this.ctx.fillStyle='#dcb362';this.ctx.fillRect(a.x+12,a.y-20,15,14);this.plate(a.x-51,a.y-68,102,21,'LANCHES A CAMINHO','#fff0ad',9);}
+    if(pos&&s.facilities.canteen){
+      const p=structureEntry('canteen',pos);
+      if(c.cook)this.actorSprite(p.x-25,p.y-25,'torcedor-dourado.png',37,s.t,c.guests.length>0);
+      for(let i=0;i<Math.min(6,c.stock);i++){this.ctx.fillStyle='#efc07a';this.ctx.fillRect(p.x+12+i*9,p.y-29,7,6);}
+      this.plate(pos.x-130,pos.y-95,260,27,`${c.stock}/${restaurantCapacity(s)} LANCHES · FILA ${c.guests.length}`,c.stock?'#dcf4bc':'#ffc6a4',11);
+      for(const g of c.guests)if(g.phase==='queue')this.plate(g.x-18,g.y-52,36,19,c.stock?'…':'!',c.stock?'#ecf6ca':'#ffc4a3',11);
+    }
+    for(const a of t.stadium.audience||[])if(a.phase==='approach'||a.phase==='leaving')this.actorSprite(a.x,a.y,'torcedor-verde.png',34,s.t,a.walk>1);
+    const g=clubObjective(s),target=WORLD_STRUCTURES[g.focus];
+    if(target&&!this.selection&&!this.placement){const p=s.map.placements[g.focus]||target;this.ctx.save();this.ctx.strokeStyle='#ffe5a1';this.ctx.lineWidth=2;this.ctx.setLineDash([6,9]);this.ctx.beginPath();this.ctx.ellipse(p.x,structureEntry(g.focus,p).y,32+Math.sin(s.t*2)*3,13,0,0,Math.PI*2);this.ctx.stroke();this.ctx.restore();}
+  }
+}
+
+
 // src/main.js
+// ARENA_TYCOON_06_ENTRY
 
 
 
@@ -2654,15 +3332,15 @@ class WorldUI extends UI{
 async function boot(){
  const profile=await authenticate();
  const storage={getItem:k=>localStorage.getItem(k),setItem:(k,v)=>localStorage.setItem(k,v),removeItem:k=>localStorage.removeItem(k)};
- const store=new SaveStore(storage,profile.saveKey,profile.backupKey),loaded=store.load();if(loaded.status==='new')loaded.state=newGame(profile);
- const sim=new WorldSimulation(loaded.state),renderer=new WorldRenderer(document.getElementById('game'));await renderer.ready;
+ const store=new TycoonSaveStore(storage,profile.saveKey,profile.backupKey),loaded=store.load();if(loaded.status==='new')loaded.state=newGame(profile);
+ const sim=new TycoonSimulation(loaded.state),renderer=new TycoonRenderer(document.getElementById('game'));await renderer.ready;
  document.getElementById('asset-loading').hidden=true;
  let input,lastTime=performance.now(),accumulator=0,lastSaved=sim.state.t,conflict=false,lastUI=0,lastDraw=0;
  const persist=(force=false)=>{const result=store.save(sim.state,force);ui.saveStatus(result.ok);if(result.conflict){conflict=true;ui.open('menu-dialog');ui.toast(result.reason,30);}else if(!result.ok&&force)ui.toast(result.reason,8);return result;};
  const focus=(id,select=true)=>{renderer.focus(id,sim.state,select);if(id==='all'||id==='club')renderer.selection=null;input?.reset();ui.inspectorKey='';ui.update(sim.state,true);};
  const applyResult=result=>{if(!result?.ok){ui.toast(result?.reason||'Ação indisponível.',6);return false;}ui.renderKey='';ui.update(sim.state,true);persist();return true;};
  const beginPlacement=id=>{const s=sim.state;if(!WORLD_STRUCTURES[id])return;if(s.map.placements[id]||WORLD_STRUCTURES[id].fixed){focus(id);return;}focus(id,false);renderer.placement=id;renderer.hover={x:WORLD_STRUCTURES[id].x,y:WORLD_STRUCTURES[id].y};ui.close();ui.toast('Posicione a base verde no terreno e toque para confirmar. Arraste para mover o mapa.',7);};
- const ui=new WorldUI({
+ const ui=new TycoonUI({
   start:()=>{input.reset();lastTime=performance.now();if(loaded.message)ui.toast(loaded.message,9);},
   onPauseChange:()=>{input?.reset();accumulator=0;lastTime=performance.now();},
   focus,
@@ -2674,8 +3352,8 @@ async function boot(){
   toggleView:()=>renderer.follow(sim.state),
   toggleQuality:()=>{renderer.lowQuality=!renderer.lowQuality;renderer.resize();return renderer.lowQuality;},
   purchase:id=>{const result=sim.purchase(id);if(applyResult(result)&&id==='field2')ui.toast('Segundo campo aberto. Agora explore os terrenos ao redor da arena.',7);},
-  export:()=>{const blob=new Blob([encodeSave(sim.state)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`arena-${profile.id}-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);ui.toast('Backup exportado. Guarde seu JSON.');},
-  import:async text=>{const next=decodeSave(text);sim.state=next;ensureWorld(next);sim.events=[];renderer.particles=[];renderer.roadKey='';renderer.selection=null;ui.lastMission=null;conflict=false;lastSaved=next.t;input.reset();const result=persist(true);ui.update(next,true);ui.toast(result.ok?'Progresso importado, incluindo mapa e obras.':'Armazenamento indisponível; exporte antes de sair.',7);},
+  export:()=>{const blob=new Blob([encodeTycoonSave(sim.state)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`arena-${profile.id}-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);ui.toast('Backup exportado. Guarde seu JSON.');},
+  import:async text=>{const next=decodeTycoonSave(text);sim.state=next;ensureWorld(next);sim.events=[];renderer.particles=[];renderer.roadKey='';renderer.selection=null;ui.lastMission=null;conflict=false;lastSaved=next.t;input.reset();const result=persist(true);ui.update(next,true);ui.toast(result.ok?'Progresso importado, incluindo mapa e obras.':'Armazenamento indisponível; exporte antes de sair.',7);},
   reset:()=>{if(!store.reset()){ui.toast('Não foi possível limpar o armazenamento.');return;}sim.state=newGame(profile);ensureWorld(sim.state);sim.events=[];renderer.particles=[];renderer.roadKey='';renderer.selection=null;ui.lastMission=null;conflict=false;lastSaved=0;input.reset();focus('arena',false);persist(true);ui.update(sim.state,true);ui.open('welcome-dialog');},
   logout:async()=>{const result=persist();if(!result.ok&&!confirm('O progresso não foi salvo. Sair mesmo assim?'))return;try{await logout();}catch(error){ui.toast(error.message);}},
   worldCommand:(cmd,id)=>{
@@ -2696,9 +3374,13 @@ async function boot(){
    if(cmd==='trainTeam'){if(applyResult(sim.trainTeam())){ui.close();focus('training');}return;}
   },
   command:(name,id)=>{
+   if(name.startsWith('tycoon:')){const action=name.slice(7);const res=action==='teamTraining'?sim.trainTeam():sim.tycoonCommand(action,id);if(applyResult(res)&&action==='teamTraining'){ui.close();focus('training');}return;}
+   if(['sub','formation','posture','captain','resetTeam'].includes(name)&&sim.isRosterLocked){ui.toast('Aguarde a partida oficial terminar para alterar o elenco.',5);return;}
+   if(name==='resetTeam'){if(confirm('Reiniciar a carreira esportiva mantendo os atletas, recursos e instalações?'))applyResult(sim.resetTeam(profile));return;}
+
    let result;const functions={train:()=>sim.trainPlayer(id),trainYouth:()=>sim.trainYouth(id),hire:()=>sim.hireMarket(id),refresh:()=>sim.refreshMarket(),scout:()=>sim.scoutYouth(),promote:()=>sim.promoteYouth(id),sellYouth:()=>sim.sellYouth(id),captain:()=>sim.setTactic('captain',id),formation:()=>sim.setTactic('formation',id),posture:()=>sim.setTactic('posture',id),campaign:()=>sim.startCampaign(),club:()=>sim.editClub(id.name,id.sigla),season:()=>sim.nextSeason(),round:()=>sim.playLeagueRound()};
    if(name==='facility'){ui.close();focus(id);return;}if(name==='land'){ui.close();focus(id);return;}
-   if(name==='resetTeam'){if(!confirm('Deseja realmente começar um novo time e zerar todo o histórico esportivo (elenco, divisões e temporadas)?'))return;result=sim.resetTeam(profile);if(applyResult(result)){ui.toast('Novo time iniciado! Elenco renovado e histórico zerado.',6);focus('arena',false);}return;}
+   if(name==='resetTeam'){if(!confirm('Reiniciar a carreira esportiva? Os atletas e recursos atuais serão mantidos, sem gerar novos jogadores grátis.'))return;result=sim.resetTeam(profile);if(applyResult(result)){ui.toast('Carreira reiniciada. Atletas, recursos e instalações preservados.',6);focus('arena',false);}return;}
    if(name==='sell'){if(!confirm('Vender este reserva? Esta ação não pode ser desfeita.'))return;result=sim.sellPlayer(id);}
    else if(name==='sub'){const s=sim.state,p=s.roster.find(p=>p.id===id),target=getStarters(s.roster).filter(p2=>p2.pos===p?.pos).sort((a,b)=>a.overall-b.overall)[0];if(!p||!target)result={ok:false,reason:'Não há titular da mesma posição para trocar.'};else{swapRosterPlayers(s.roster,p.id,target.id);if(s.tactics.captainId===target.id)s.tactics.captainId=null;sim.emit('tactic',`${p.name} entrou no lugar de ${target.name}.`);result={ok:true};}}
    else if(functions[name])result=functions[name]();else result={ok:false,reason:'Ação não reconhecida.'};
@@ -2717,7 +3399,7 @@ async function boot(){
    renderer.selection={kind:p.kind,id:p.id};ui.inspectorKey='';ui.update(sim.state,true);return;
   }
   renderer.selection=null;if(!sim.goMap(p.point))ui.toast('Área fechada ou sem passagem. Toque na placa do terreno para expandir.',5);
- },()=>ui.paused||conflict,renderer);
+ },()=>ui.inputBlocked||conflict,renderer);
  window.addEventListener('resize',()=>renderer.resize());
  document.addEventListener('visibilitychange',()=>{input.reset();lastTime=performance.now();accumulator=0;if(document.hidden&&store.writable)persist();});
  window.addEventListener('pagehide',()=>{if(store.writable)persist();});

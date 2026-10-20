@@ -1,0 +1,65 @@
+{
+  "method": "HTTP local em servidor real. Usuários temporários criados apenas em memória; não foram utilizadas as senhas do usuário nem testada a Vercel.",
+  "results": [
+    {
+      "name": "production HTML is served",
+      "ok": true
+    },
+    {
+      "name": "production bundle contains new modules",
+      "ok": true
+    },
+    {
+      "name": "HTML does not contain temporary secret",
+      "ok": true
+    },
+    {
+      "name": "image asset served",
+      "ok": true
+    },
+    {
+      "name": "private env unavailable",
+      "ok": true
+    },
+    {
+      "name": "server implementation not public",
+      "ok": true
+    },
+    {
+      "name": "anonymous session has no user",
+      "ok": true
+    },
+    {
+      "name": "wrong password rejected",
+      "ok": true
+    },
+    {
+      "name": "cross-origin login rejected",
+      "ok": true
+    },
+    {
+      "name": "temporary test login accepted",
+      "ok": true
+    },
+    {
+      "name": "session uses HttpOnly cookie",
+      "ok": true
+    },
+    {
+      "name": "session uses SameSite",
+      "ok": true
+    },
+    {
+      "name": "cookie restores correct identity",
+      "ok": true
+    },
+    {
+      "name": "logout clears session cookie",
+      "ok": true
+    },
+    {
+      "name": "second temporary account accepted",
+      "ok": true
+    }
+  ]
+}
